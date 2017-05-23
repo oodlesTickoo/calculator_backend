@@ -1,0 +1,1141 @@
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>SuitArt Business Card</title>
+    <style>
+        @font-face {
+            font-family: Pragmatica Light;
+            src: url(fonts/Pragmatica-Light.ttf);
+        }
+
+        @font-face {
+            font-family: Pragmatica Extra Light;
+            src: url(fonts/Pragmatica-ExtraLight.ttf);
+        }
+
+        @font-face {
+            font-family: Pragmatica Medium;
+            src: url(fonts/Pragmatica-Medium.ttf);
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Sackers Gothic Std';
+            font-weight: 500;
+            font-size: 20px;
+            background: rgb(241, 241, 241);
+            -webkit-print-color-adjust: exact;
+            box-sizing: border-box;
+        }
+
+        .page {
+            position: relative;
+            height: auto;
+            min-height: 750px;
+            /*width: 50mm;*/
+            width: 590px;
+            display: block;
+            /*background: black;*/
+            page-break-after: auto;
+            /*margin: 50px;*/
+            /*overflow: hidden;*/
+            margin: 0 auto 5px;
+        }
+
+        @media print {
+            body {
+                background: black;
+            }
+            .page {
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .page.first {
+            border-left: 5px solid green;
+        }
+
+        .bottom {
+            position: absolute;
+            left: 5mm;
+            right: 5mm;
+            bottom: 5mm;
+        }
+
+        .group {
+            margin-top: 3mm;
+        }
+
+        .line {
+            color: white;
+            position: relative;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .logo {
+            position: relative;
+            width: 80%;
+            left: 10%;
+            top: 15%;
+        }
+        /* new css start */
+
+        .page .first-page {
+            background: url(images/image1.jpg);
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            min-height: 750px;
+        }
+
+        .first-page .transparent-box {
+            position: absolute;
+            top: 12mm;
+            left: 10mm;
+            width: calc(100% - 20mm);
+            background: rgba(0, 181, 222, 0.6);
+        }
+
+        .first-page .transparent-box .content {
+            padding: 20px;
+        }
+
+        .first-page .transparent-box .content h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0;
+            color: #fff;
+            font-family: Pragmatica Light;
+            font-weight: normal;
+        }
+
+        .first-page .transparent-box .content h4 {
+            font-size: 21px;
+            text-transform: uppercase;
+            margin: 0;
+            color: #fff;
+            font-family: Pragmatica Extra Light;
+            font-weight: normal;
+            padding: 6px 0 8px 0px;
+        }
+
+        .first-page .transparent-box .content p {
+            font-size: 16px;
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0;
+            color: #000;
+            font-family: Pragmatica Extra Light;
+            font-weight: normal;
+            text-align: justify;
+        }
+
+        .first-page .transparent-box .content .right {
+            float: right;
+        }
+
+        .first-page .transparent-box .content .right h5 {
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            text-align: right;
+            font-weight: normal;
+        }
+
+        .first-page .transparent-box .content .right img {
+            width: 75%;
+            float: right;
+            padding: 10px 0px 25px 0px;
+        }
+
+        .page .content-page {
+            background: #fff;
+            padding: 15px 65px;
+            min-height: 750px;
+        }
+
+        .page .content-page .based {
+            font-size: 20px;
+            text-align: center;
+            font-family: Pragmatica Light;
+            color: #23b7e0;
+            margin-bottom: 20px;
+        }
+
+        .page .content-page .based.fsmall {
+            font-size: 16px;
+            text-align: left;
+        }
+        .page .content-page .risk-profile {
+            margin-left: 20px;
+        }
+        .page .content-page .risk-profile li:before {
+          content: '';
+          background: #23b8e3;
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          margin-right: 11px;
+          vertical-align: middle;
+        }
+        .page .content-page h5 {
+            margin: 0;
+            padding-top: 13px;
+            font-family: Pragmatica Light;
+            font-weight: normal;
+            font-size: 21px;
+        }
+
+        .page .content-page h2 {
+            margin: 23px 0 22px 0px;
+            padding-top: 15px;
+            padding: 21px 0 23px 0px;
+            font-family: Pragmatica Light;
+            font-weight: normal;
+            font-size: 27px;
+            border-top: 1px solid #98def1;
+            border-bottom: 1px solid #98def1;
+            width: 88%;
+        }
+        .page .content-page h2 p {
+          text-transform: uppercase;
+          font-size: 15px;
+          padding-bottom: 10px;
+          color: #23b8e3;
+        }
+        .page .content-page h4 {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            font-family: Pragmatica Light;
+            padding-top: 15px;
+            font-size: 19px;
+            color: #23b8e3;
+        }
+        .page .content-page h3 {
+          margin: 0;
+          padding: 0;
+          font-weight: normal;
+          font-family: Pragmatica Light;
+          padding-top: 20px;
+          font-size: 17px;
+          color: #3ac0e5;
+        }
+        .page .content-page h6 {
+            font-family: Pragmatica Light;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            color: #000;
+            padding-top: 12px;
+            font-weight: normal;
+        }
+        .page .content-page p {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            font-family: Pragmatica Light;
+            padding-top: 8px;
+            font-size: 13px;
+            text-align: justify;
+        }
+
+        .page .content-page ul {
+            margin: 7px 0 0 0px;
+            padding: 0;
+        }
+
+        .page .content-page li {
+            list-style-type: none;
+            font-size: 13px;
+            padding: 5px 0px;
+            font-family: Pragmatica Light;
+        }
+
+        .page .detail-page {
+            background: url(images/image2.jpg);
+            width: calc(100% - 30px);
+            background-size: cover;
+            padding: 15px;
+            min-height: 750px;
+        }
+
+        .page .detail-page h2 {
+            margin-top: 38px;
+            margin-bottom: 0;
+            color: #fff;
+            padding: 21px 0 23px 22px;
+            font-family: Pragmatica Light;
+            font-weight: normal;
+            font-size: 27px;
+            border-top: 1px solid #d8d0d0;
+            border-bottom: 1px solid #9c9898;
+        }
+
+        .page .detail-page .padding-left {
+            padding-left: 25px;
+        }
+
+        .page .detail-page h4 {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            font-family: Pragmatica Light;
+            padding-top: 15px;
+            font-size: 19px;
+            color: #fff;
+        }
+
+        .page .detail-page p {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+            font-family: Pragmatica Light;
+            padding-top: 4px;
+            color: #fff;
+            font-size: 13px;
+            text-align: justify;
+        }
+
+        .page .detail-page .detail-part {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        table th {
+            background: #23b8e3;
+            width: 50%;
+            padding: 4px 7px;
+            font-size: 15px;
+            color: #fff;
+            font-family: Pragmatica Light;
+            text-align: left;
+            border-right: 1px solid #00888e;
+        }
+
+        table th:last-child {
+            border: 0;
+        }
+
+        table th.border-zero {
+            border: 0;
+        }
+
+        table td {
+            border-bottom: 1px solid #00b3bb;
+            padding: 4px 7px;
+            color: #fff;
+            font-family: Pragmatica Extra Light;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        table td.text-right {
+            text-align: right;
+        }
+
+        .page .sections-page {
+            background-color: #23b8e3;
+            padding: 15px;
+            min-height: 750px;
+        }
+
+        .page .sections-page .section-part {
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .page .sections-page .section-part .section {
+            background: #65cde9;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .page .sections-page h2 {
+            margin: 0;
+            padding: 25px 0px;
+            font-size: 29px;
+            color: #fff;
+            font-family: Pragmatica Extra Light;
+        }
+
+        .page .sections-page .section-part .section h4 {
+            margin: 0;
+            padding: 0;
+            font-family: Pragmatica Extra Light;
+            font-size: 15px;
+        }
+
+        .page .sections-page .section-part .section p {
+            margin: 0;
+            padding: 0;
+            font-family: Pragmatica Extra Light;
+            font-size: 14px;
+        }
+
+        .page .financial-page {
+            background: url(images/image3.jpg);
+            width: calc(100% - 30px);
+            background-size: cover;
+            height: calc(100% - 30px);
+            padding: 15px;
+            min-height: 750px;
+        }
+
+        .page .financial-page .financial-page-content {
+            width: 86%;
+            margin: 0 auto;
+        }
+
+        .page .financial-page h2 {
+            color: #fff;
+            font-family: Pragmatica Extra Light;
+            font-size: 29px;
+            padding-top: 40px;
+            padding-bottom: 15px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .page .financial-page p {
+            color: #000;
+            font-family: Pragmatica Extra Light;
+            font-size: 17px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .page .financial-page .financial-bottom h3 {
+            color: #000;
+            font-family: Pragmatica Extra Light;
+            font-size: 24px;
+            padding-top: 40px;
+            padding-bottom: 15px;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .page .financial-page .financial-bottom p {
+            color: #fff;
+            padding-top: 8px;
+            text-align: justify;
+            font-size: 14px;
+        }
+
+        .page .financial-page .financial-bottom p.dear-name {
+            padding-bottom: 8px;
+        }
+
+        .page .financial-page .financial-bottom .financial-sincerly {
+            padding-top: 40px;
+        }
+
+        .page .financial-page .financial-bottom .financial-sincerly span {
+            color: #fff;
+            text-align: justify;
+            font-size: 14px;
+            font-family: Pragmatica Extra Light;
+        }
+
+        .new-table th {
+            border-right: 0;
+            font-size: 14px;
+        }
+
+        .new-table td {
+            color: #000;
+            border-bottom: 0;
+            padding-top: 12px;
+            font-family: Pragmatica Light;
+        }
+
+        .chart-img img {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .strategy-info {
+            background: #23b8e3;
+            color: #fff;
+            padding: 10px !important;
+            margin-top: 8px !important;
+        }
+
+        .strategy-padding {
+            padding-top: 30px;
+        }
+        ul.left-margin {
+          margin-left: 25px !important;
+        }
+        .mt20 {
+          margin-top: 20px !important;
+        }
+        .contact-info {
+          margin: 15px 0;
+        }
+        .contact-info div span:first-child {
+            width: 14%;
+            color: #23b8e3;
+            font-weight: 600;
+        }
+        .contact-info div span {
+            display: inline-block;
+            font-size: 13px;
+            font-family: Pragmatica Light;
+        }
+        .arrow-lines li {
+          background: url(images/arrow.png);
+          background-repeat: no-repeat;
+          padding-left: 18px !Important;
+          padding-top: 0 !important;
+          margin-top: 8px;
+          background-size: 2.5%;
+          background-position: 0px 3px;
+        }
+        .arrow-lines li ul li {
+          background: none;
+          padding-left: 0 !important;
+        }
+        .arrow-lines li ul li:before {
+          content: '';
+          background: #23b8e3;
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          margin-right: 11px;
+          vertical-align: middle;
+        }
+        .small-heading {
+            color: #23b8e3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="first-page">
+            <div class="transparent-box">
+                <div class="content">
+                    <h2>Mr. Robert Thornewasdfghjkl</h2>
+                    <h4>YOUR WEALTH REPORT</h4>
+                    <p>16 February 2017</p>
+                    <div class="right">
+                        <h5>Prapare for the best.</h5>
+                        <img src="images/logo.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="financial-page">
+            <div class="financial-page-content">
+                <h2>Mr. Robert Thorne</h2>
+                <p>2 NEW LONDON</p>
+                <p>LONDON</p>
+                <p>16 February 2017</p>
+                <div class="financial-bottom">
+                    <h3>Understand your financial future today</h3>
+                    <p class="dear-name">Dear Tim & Layla,</p>
+                    <p>Welcome to your personalised Wealth Review report.</p>
+                    <p>It's a unique overview of your financial wellbeing today - with projections of how your wealth is likely to shape up in the future.</p>
+                    <p>This sort of information can be valuable when it comes to making decisions about your wealth and how it is managed. Your Wealth Review report can take the 'what if' out of the choices you make.</p>
+                    <p>Remember, your Wealth Review report is based on the information you enter. By providing more comprehensive details, the report will be more accurate, and you'll gain greater value from the projections it provides.</p>
+                    <p>You are free to add to, or change the information you enter at any time.</p>
+                    <p>Simply log back into Wealth Review using your unique login and password to generate an updated report. If you've forgotten your password you can reset it via the login page.</p>
+                    <p>We hope you find the Wealth Review report to be a valuable tool. And of course, if there is anything you would like to discuss please contact BT on 1300 856 023 (8.00am to 8.00pm Monday to Friday AEST).</p>
+                    <div class="financial-sincerly">
+                        <span>Yours Sincerely,</br>
+                Russell Medcraft,</br>
+                Financial Choice Pty Ltd</br>
+                Australian Financial Services License No. 413567<span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <h2>My <br>Contact<br> Details:</h2>
+            <div class="contact-info">
+                <div>
+                  <span>Office:</span> <span>Level 4, Suite 4.13, 32 Delhi Road North Ryde NSW 2113</span>
+                </div>
+                <div>
+                  <span> E-mail:</span> <span>russell@financialchoice.com.au</span>
+                </div>
+                <div>
+                  <span>Post:</span> <span>PO Box 115 North Ryde BC NSW 1670</span>
+                </div>
+                <div>
+                  <span>Phone:</span> <span>1300664118</span>
+                </div>
+            </div>
+            <h4>Important Information regarding your superannuation and the provision of advice.</h4>
+            <ul class="arrow-lines">
+              <li>Financial advisers have a legal obligation to collect relevant and accurate information about their clients
+              in the Fact Find questionnaire in order to construct your objectives-based advice.</li>
+              <li>Many super funds offer a new type of account called MySuper.</li>
+              <li>MySuper has replaced most existing default accounts offered by super funds. If you don't choose a
+              super fund yourself your employer must now pay your employer contributions into a MySuper account.</li>
+              <li>MySuper accounts generally offer:
+                <ul>
+                  <li>Lower fees (and restrictions on the type of fees you can be charged) generally around 1.00% p.a. of your
+                  account balance.</li>
+                  <li>Simple features so you don't pay for services you don't need</li>
+                  <li>Single or life stage investment options</li>
+                  <li>Life insurance on an opt-out basis</li>
+                </ul>
+              </li>
+              <li>Can I choose my own fund if I find one that is better for me?</li>
+              <li>Your employer will pay into any super fund that you choose even a self-managed super fund if you are
+              not restricted by an employment agreement.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="page">
+        <div class="sections-page">
+            <div class="section-part">
+              <h2>Contents</h2>
+              <div class="section">
+                <h4>SECTION 1</h4>
+                <p>Summary of my advice to you</p>
+              </div>
+              <div class="section">
+                <h4>SECTION 2</h4>
+                <p>Important information about you that we have collected from you and your superannuation</p>
+              </div>
+              <div class="section">
+                <h4>SECTION 3</h4>
+                <p>My recommendations to you and comparison of fees and projection of your benefits and possible alternatives</p>
+              </div>
+              <div class="section">
+                <h4>SECTION 4</h4>
+                <p>What else you need to know and if all is OK what you need to do to proceed with our advice and how we get paid</p>
+              </div>
+              <div class="section">
+                <h4>SECTION 5</h4>
+                <p>Summary of my advice to you</p>
+              </div>
+              <div class="section">
+                <h4>SECTION 6</h4>
+                <p>Summary of my advice to you</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <h2><p>Section One:</p>SUMMARY OF MY ADVICE </br>TO YOU</h2>
+            <ul class="arrow-lines">
+                <li>What my advice to you is</li>
+                <li>I recommend that you select the best superannuation fund available in the market place to meet your needs</li>
+                <li>I recommend that you get the best Insurance cover for you to protect what’s important to you</li>
+                <li>I recommend that you select the best investment mix of growth and defensive assets to match your investment risk profile</li>
+            </ul>
+            <h4>Why my advice is appropriate to you</h4>
+            <p>Selecting the best superannuation fund will make sure that you achieve your goal of being able to retire in comfort and not have to rely on the government pension. By reducing the fees you pay means that you have more of the employer’s contribution
+                going into your investment account. Also by making additional voluntary contributions as part of your planning means that you can have additional savings over and above the limits that have now been placed on the tax free pension cap.</p>
+            <p>By also choosing the right amount and type of protection that is paid for from your superannuation means that if something were to happen to you then your future is protected and the retirement projection we have set will be reached.
+            </p>
+            <h4>Risks in my advice.</h4>
+            <p>All investments carry a certain level of risk and you have to be comfortable with the level of investment risk you are taking on. There is also the legislative risk that you will wear by investing in the superannuation structure and the biggest
+                risk is not doing anything at all and staying in a poor performing high fee fund that is not appropriate for you.</p>
+            <h4>What my advice doesn’t cover</h4>
+            <p>I have outlined in our goals based advice section what we are giving advice on. This advice does not include Property investing, Estate Planning, Budgeting, General insurance, medical insurance and insurance outside superannuation. You can
+                instruct us to provide specialist advice in these areas if you want to at an additional cost.</p>
+            <h4>Fees and commissions.</h4>
+            <p>We are a fee based practise and we charge both an advice fee and an asset management fee that is calculated and disclosed at end of this document.</p>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <h2><p>Section Two:</p>IMPORTANT INFORMATION<br> ABOUT YOU</h2>
+            <ul class="arrow-lines">
+              <li>What are your goals and objectives when it comes to Retirement Planning?</li>
+              <li>What are your current personal circumstances that might impact on your Retirement Planning?</li>
+              <li>How much money do you currently have to invest and how much can you save toward your future over and
+              above what your employer is obligated to pay into your Superannuation fund or that you can pay if you are self
+              employed</li>
+              <li>What are you current assets and Liabilities-Your net worth</li>
+              <li>What is your attitude to investment risk and how long do you want to invest for?</li>
+              </ul>
+              <h4>Goals Based Advice.</h4>
+              <p>What is it and how can you benefit? The main objective in seeking advice is giving you an expert that can
+              motivate you to gain better control over your finances and allow you to concentrate on your career and family
+              without having to worry about whether you are on track or not.</p>
+              <p>These are some of the goals that we will provide advice on.</p>
+              <h4>Protect right.</h4>
+              <p>You are now earning a living and you understand the importance of the monthly pay check and might consider to
+              yourself what would happen if I lost my job.</p>
+              <p>You have minimum sick leave of a couple of weeks a year but what would you do if you had an accident that
+              meant that you were on crutches or in hospital for a long time recovering. Would your employer keep your job
+              open if you were away for 3 months or longer? Income protection and total disability cover is imperative for you.</p>
+              <p>Our calculators will show you how much cover you should have and who has the best cover based on your
+              current income and occupation. If you have loved ones or a big mortgage then we can help you plan so that you
+              don’t leave a massive burden behind if you die.<p>
+              <h4>Retire right.</h4>
+              <ul>
+                <li>We can make sure your money that you have saved in superannuation will go the distance.</li>
+                <li>Our calculators will choose the lowest cost fund.</li>
+                <li>Calculate how much you will need when you reach your retirement age.</li>
+                <li>Calculate how much government pension you will be entitled to based on your assets at retirement</li>
+                <li>Calculate how long you are expected to live after you retire and how much you might want to bequest to family or a charity.</li>
+                <li>Be debt free at retirement.</li>
+                <li>We will calculate how you can be debt free by paying more off your loans and then making additional payments
+                to your superannuation to get you back on track.</li>
+              </ul>
+          </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+          <h4>Giving my kids the best possible start in life.</h4>
+          <p>For many parents the idea of giving their kids a good start in life often comes down to a value for money
+          education. You can either send them to the best private school and pay for extra-curricular activities or send them
+          to a high achieving public school and invest the difference in an investment fund and gift that to them to buy
+          their first home when they finish university.</p>
+          <p>Our calculators have the current fees of all the leading private schools and we can calculate what the opportunity
+          cost will be and how much you will be able to transfer to your children when the time is right to purchase their
+          first property.</p>
+          <p>Other areas that you can get advice on from us but we have not included in this document.</p>
+          <h4>Invest in property.</h4>
+          <p>For some individuals property is the single best investment they can make. That can be inside or outside your
+          superannuation fund. We will help you get a valuation on any property in Australia and give you an anticipated
+          rental return.</p>
+          <p>Our calculators will even estimate your positive or negative Cashflow that will impact on the tax you pay. We
+          can set up a superannuation fund for the single purpose of investing your superannuation dollars and leveraging
+          that to achieve your ultimate goal. That will be your choice. We will provide you the cost comparison of doing
+          so.</p>
+          <p>Manage my month to month cash flow better.</p>
+          <p>It is very liberating to know that all your bills are paid on time and you always have spare cash to meet all your
+          financial commitments and be able to splurge every so often.</p>
+          <p>Our aggregation of all you transactions over the last 12 months will help you set the building blocks for better
+          budgeting. This is done by using our sophisticated software and bank data feeds.</p>
+          <p>Finally, save for something big to reward yourself.</p>
+          <p>You may want to save for a deposit and stop renting. You may want to update the car or put money away for that
+          special wedding and holiday. The only way you can make it all happen is with clear goals that have a price tag
+          attached to them and then start saving and investing. We can allocate some of your spare cash into an investment
+          that has a time line of 3 years and more. Our investment models are ideally suited to get you better returns than
+          simply putting money in the bank.</p>
+          <p>Pursue your passion or start a business.</p>
+          <p>Either way you will need to have some money accumulated to do what you want. The most effective way to do
+          this is by paying yourself first. What that means is setting up a periodic payment plan into a special bank account
+          that you do not have day to day access to. We can assist you from protecting the money against its worst enemy
+          YOU</p>
+          </div>
+    </div>
+    <div class="page">
+        <div class="detail-page">
+            <h2>Your </br>Personal</br> Details</h2>
+            <div class="padding-left">
+                <h4>Below are the details that you have provided about yourself.</h4>
+                <p>Please ensure these details are accurate, as the education and information we provide throughout this report will be largely based on these details. The data on pages 4 and 5 has been supplied by you, with the last update being 14/3/2016.</p>
+            </div>
+            <div class="detail-part">
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Your Personal Details</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>Tim</td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>Male</td>
+                    </tr>
+                    <tr>
+                        <td>Date of birth</td>
+                        <td>23</td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>1 November 1993</td>
+                    </tr>
+                    <tr>
+                        <td>Marital Status</td>
+                        <td>Single</td>
+                    </tr>
+                </table>
+
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th class="border-zero">Your Income</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Yearly income before tax</td>
+                        <td class="text-right">100000</td>
+                    </tr>
+                    <tr>
+                        <td>yearly income after tax</td>
+                        <td class="text-right">99999</td>
+                    </tr>
+                    <tr>
+                        <td>Centrelink Benefits</td>
+                        <td class="text-right">74000</td>
+                    </tr>
+                    <tr>
+                        <td>total income</td>
+                        <td class="text-right">100000</td>
+                    </tr>
+                    <tr>
+                        <td>Total yearly expenses</td>
+                        <td class="text-right">50000</td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th class="border-zero">Your Assets</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>House</td>
+                        <td class="text-right">100000</td>
+                    </tr>
+                    <tr>
+                        <td>NAB Bank</td>
+                        <td class="text-right">99000</td>
+                    </tr>
+                    <tr>
+                        <td>SuperannuationFunds</td>
+                        <td class="text-right">55000</td>
+                    </tr>
+                    <tr>
+                        <td>Property</td>
+                        <td class="text-right">5555</td>
+                    </tr>
+                    <tr>
+                        <td>Other Assets</td>
+                        <td class="text-right">53555</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <h2>Your <br>Risk<br> Profile</h2>
+            <div class="based">Based on your current superannuation report you are a Balanced Growth investment profile.</div>
+            <p>A Balanced Growth investment allocation generally has the following features:</p>
+            <ul class="risk-profile">
+              <li>30% exposure to defensive (cash and fixed interest) assets</li>
+              <li>70% exposure to growth (shares and property) assets.</li>
+            </ul>
+            <p>With the above information in mind, once your superannuation has been consolidated into your account, I
+            am recommending you invest 30% of your existing superannuation monies into defensive assets (cash, term
+            deposits and bonds) and the remainder of your super balance into growth investments such as Australian
+            and international shares and listed property.</p>
+            <p>Please note that if you are not happy with the asset mix that I have recommended we can certainly make
+            changes before the advice is implemented. Some long term expected returns are below</p>
+            <table cellspacing="0" cellpadding="0" class="new-table">
+              <tr>
+                <th>Property/Profile</th>
+                <th>Conservative</th>
+                <th>Moderate</th>
+                <th>Balanced</th>
+                <th>Balanced Growth</th>
+                <th>Growth</th>
+              </tr>
+              <tr>
+                <td>Expected Long Term Return (p.a.)</td>
+                <td>3.7%</td>
+                <td>4.6%</td>
+                <td>5.3%</td>
+                <td>5.8%</td>
+                <td>6.3%</td>
+              </tr>
+              <tr>
+                <td>Volatility</td>
+                <td>3.7%</td>
+                <td>4.6%</td>
+                <td>5.3%</td>
+                <td>5.8%</td>
+                <td>6.3%</td>
+              </tr>
+              <tr>
+                <td>Chance of negative return over 20 year period</td>
+                <td>3.7%</td>
+                <td>4.6%</td>
+                <td>5.3%</td>
+                <td>5.8%</td>
+                <td>6.3%</td>
+              </tr>
+              <tr>
+                <td>Defensive assets/ Growth assets split</td>
+                <td>3.7%</td>
+                <td>4.6%</td>
+                <td>5.3%</td>
+                <td>5.8%</td>
+                <td>6.3%</td>
+              </tr>
+            </table>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <h2><p>Section 3</p>My recommendations <br>to you</h2>
+            <div class="based fsmall">Strategy one. Selecting the best superannuation fund to invest in.</div>
+            <table cellspacing="0" cellpadding="0" class="new-table">
+              <tr>
+                <th>Your current My Super nominated fund</th>
+                <th>Other superannuation funds that you are a member of</th>
+                <th>Current balance</th>
+                <th>Insurance cover and monthly premium</th>
+              </tr>
+              <tr>
+                <td>AMP</td>
+                <td>-</td>
+                <td>$200,000</td>
+                <td>$300,000/$54.00 mth</td>
+              </tr>
+              <tr>
+                <td>-</td>
+                <td>Australian Super</td>
+                <td>$25,000</td>
+                <td>$100,000/$15.00 mth</td>
+              </tr>
+            </table>
+            <div class="chart-img">
+              <img src="uploads/yup.png" >
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <div class="based fsmall strategy-padding">Strategy 2. Planning for the correct level of retirement inco</div>
+            <div class="chart-img">
+              <img src=<%=image1%>>
+            </div>
+            <p class="strategy-info">By moving to ING Living Super you will be able to purchase se ETF's and
+            direct shares that will give you greater international exposure than you
+            currently get through your employer fund</p>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+          <h4>Are you on track with your future plans?</h4>
+          <p>We have calculated from our financial advice tools that you are underfunded to achieve a comfortable
+          retirement that has been set by the Australian Superannuation Funds Association.(ASFA)</p>
+          <p>ASFA surveyed retirees and studied their lifestyles and determined that to lead a comfortable life in
+          Retirement a couple would need to accumulate enough superannuation savings to generate an income of
+          about $60,000 per year in today’s dollars.</p>
+          <p>The retirement age has now been set at age 67 and your retirement income will have a gap/exceed your
+          desired target of $100,000 by $10,636 p.a. Your anticipated lump sum would be $1,381,315 that is below
+          the limit recently set by the budget as the maximum amount per person.</p>
+          <h4>What can you do to meet your target?</h4>
+          <h6>How do you achieve your desired retirement income or make your super last longer?</h6>
+          <ul class="left-margin">
+          <li>Delay retirement and make additional superannuation contributions, either through salary sacrifice
+          and after-tax contributions.</li>
+          <li>Reduce your desired retirement income goal</li>
+          <li>Reduce your spending in the first year of retirement or</li>
+          <li>Switch to a growth portfolio to achieve a higher return over the long term.</li>
+        </ul>
+          <p>Based on these figures you will achieve your desired long term objective through better planning and
+          investment advice.</p>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <div class="based fsmall strategy-padding">Strategy 3. Planning for the correct level of insurance</div>
+            <div class="chart-img">
+              <img src=<%=image2%> >
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+            <div class="based fsmall strategy-padding">Strategy 3. Choosing the right investment mix of growth versus</div>
+            <h3>Growth</h3>
+            <p>You are prepared to accept higher volatility in the short to medium term to accumulate growth assets over
+            the long-term. Your Investment Mix will spread across all asset sectors but will mainly consist of more
+            aggressive investments.</p>
+            <h3>Balanced Growth</h3>
+            <p>You are willing to consider assets with higher volatility in the short-term (such as equities and property) to
+            achieve capital growth over the medium to longer term. Your investment mix will comprise a greater share of
+            growth assets.</p>
+            <h3>Balanced</h3>
+            <p>You are willing to chase medium to long-term goals while accepting the risk of short to medium-term
+            negative returns. Your Investment mix is likely to include an equal mix of assets such as equities and
+            property.</p>
+            <h3>Moderate</h3>
+            <p>You seek a combination of income and growth, but must continue to be low to moderate. Generally you are
+            willing to chase improved short-term returns while accepting some limited short-term volatility. mix is likely
+            to include an equal mix of assets such as equities and property.</p>
+            <h3>Conservative</h3>
+            <p>Protection of capital is your main objective. You are prepared to accept very limited short-term volatility for
+            slightly improved short-medium term returns</p>
+            <div class="strategy-info mt20">
+            <h6>Asset allocation may be the most important investment decision an investor can make</h6>
+            <p>Asset allocation rather than individual stock selection helps drive long term investment
+            results. Academic studies show that determining which mix of investment classes to invest
+            in and when to change the mix will explain 90% of the return variability over time.</p>
+            <p>Chasing last year’s star performer, an individual stock or a trendy investment class may
+            deliver short term out performance but a disciplined, risk controlled process is most likely
+            a better alternative for investors with a long term time horizon.</p>
+          </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="content-page">
+          <h4>Superannuation selection.</h4>
+          <p>You need to select the best possible superannuation fund that is currently available to you so that you
+          can plan the long term with some surety and predictability.</p>
+          <p>You also need to be continually reviewing the selection with your adviser to make changes if necessary or
+          if a lower cost administration platform becomes available. Our service and advice continually researches
+          and review the marketplace of public offer superannuation funds as well as the option of a self-managed
+          superannuation fund.</p>
+          <p>We are obligated by law to act in your best interest always and it is our job to make sure that you are in
+          the lowest cost superannuation fund and that we have the best possible insurance arrangement
+          available. If we cannot find all the components within one superannuation fund then we will create the
+          solution by combining the best administration with the best insurance protection with the best
+          investment management.</p>
+          <p>We have chosen the low cost superannuation fund that also allows external insurers to have premiums
+          paid. A basic level of insurance is granted on the initial sign on and then is accepted without underwriting
+          for the first three years. This will give us enough time to explore the current insurance arrangements that
+          are in place with other funds before we transfer and consolidate so that we do not lose any valuable
+          cover that cannot be replaced.</p>
+          <h4>Insurance selection and amount of cover</h4>
+          <p>A valuable part of your retirement planning and a mandatory area is personal insurance. Most
+          superannuation funds provide a default level of insurance that is based on your age and income. The
+          level of cover and policy structure is in most cases not in your best interests because it hasn’t been
+          designed with your personal objectives and financial situation in mind. Our calculators have designed the
+          optimum level of cover for you and our product comparison software has compared the wording and
+          definitions so that you have the best available and most up to date cover.</p>
+          <h4>Investment selection and risk profile</h4>
+          <p>Your current “My Super” arrangements are designed to match your asset allocation with your current
+          stage in life. This is inappropriate and does not suit your purpose of working beyond your expected
+          retirement date. This process does not take into account other investments you may have and does not
+          allow for a more global asset selection that is tailored to your preferences. With the assistance of our
+          adviser and the global asset consultants we are able to achieve above benchmark performance by
+          actively managing these portfolios for you. With advice that is in your best interest you will be able to
+          reach your goal much quicker that is available to you in a public offer fund.</p>
+          <h4>Does my advice have any disadvantages?</h4>
+          </div>
+        </div>
+        <div class="page">
+            <div class="content-page">
+              <p>In retirement planning there are some disadvantages and they are the cost of moving from one fund to
+              another and the tax consequences of selling assets that crystallise gains. In some cases managed funds
+              have already accounted for these transaction costs in the unit price. You may be out of the market whilst
+              one fund is being transferred to another and you may suffer some financial loss.</p>
+              <p>Another disadvantage in consolidating superannuation accounts is the risk of losing valuable insurance
+              cover and not being able to replace that cover. We adopt a partial roll over process to make sure all cover
+              is preserved whilst the new cover is confirmed and then we roll over the remainder.</p>
+              <p>Automated consolidation under general advice that banks and large institution organise disregards the
+              transfer of cover and you may suffer substantial loss of benefits if you try to consolidate without the
+              benefit of an adviser.</p>
+              <p>If you choose to have your insurance paid by your new superannuation fund you can reduce the end
+              benefit substantially by the cost of the cover and you may not reach your goal in the desired time frame.
+              It may be best to pay for your income protection cover from your own pocket rather than via your
+              superannuation fund.</p>
+              <h4>The consequences of replacing one product with another.</h4>
+              <p>All superannuation funds have small exit fees or transaction fees that are a result or members opening
+              and closing accounts. The other consequence of replacing one superannuation account with another is
+              the loss of underwriting free insurance cover.</p>
+              <p>In most cases insurance cover that has been in force for more than three years will not be subject to
+              rigorous non-disclosure examination to avoid the insurer paying a claim. If you are replacing an old
+              superannuation policy with a new style fund then you wear the risk of medical evidence being used to
+              avoid the payment of a claim if extenuating circumstances are in play.</p>
+              <p>What my advice does not deal with</p>
+              <p>Because you are requesting advice of a limited nature we cannot look at your overall situation and
+              address all your advice needs. This is aavailable to you but an additional fee will apply.</p>
+              <p>We have not dealt with your general insurance needs like house, contents and car insurance.</p>
+              <p>We have not dealt with your taxation issues</p>
+              <p>We have not dealt with your Estate Planning needs</p>
+              <p>We have not dealt with you Investment and property issues</p>
+              <p>We have not dealt with your lending issues</p>
+              <p>We have not dealt with your Cashflow management.</p>
+            </div>
+        </div>
+        <div class="page">
+            <div class="content-page">
+                <h2><p>Section Three:</p> WHAT ELSE YOU NEED<br> TO KNOW</h2>
+                <p class="small-heading">What are the fees for this advice?</p>
+                <p>I will charge you $550 (inclusive of GST) for this statement of advice</p>
+                <p>We will charge an investment management fee of 0.08% monthly of your investment amount to manage
+                and rebalance your investments.</p>
+                <p>We charge a fee of 20% of the insurance premium to manage the insurance claims and product selection.</p>
+                <p class="small-heading">Will we be paid any commissions?</p>
+                <p>We are a fee based financial advice business that charges you a fee for our services and investment
+                management. If we are nominated to service an old legacy product that includes the payment of a trail
+                commission then we will be entitled to receive that amount and we will rebate it to you on request.</p>
+                <p class="small-heading">What product fees do we receive?</p>
+                <p>We do not receive any monetary benefit from any product provider.</p>
+                <p>All the product fees are included in the attached product disclosure statement (PDS)</p>
+                <p>Other question that you might have.</p>
+                <p class="small-heading">Am I restricted to an approved product list?</p>
+                <p>Advisers under our licence are all restricted to advise a limited list of product that have undergone our
+                research and strict criteria. If the product is not on this list and it is in your best interest to recommend it
+                then we will provide special dispensation to arrange to deal in this product.</p>
+                <p class="small-heading">Is our business associated with any of the product providers?</p>
+                <p>No we are not. Our Company and the ASIC licence holder is an independent business and all shares are
+                privately held.</p>
+                <p class="small-heading">Do I guarantee the performance of the investments that I recommend?</p>
+                <p>No I do not. These investments are market related and I cannot guarantee their performance except that
+                are judged to be appropriate for you.</p>
+                <p>Can you change your mind.</p>
+                <p>Yes you can change your mind after placing the investments and get your money back after transaction
+                fees and market movements. With some managed funds and insurance products the manager of the
+                product provides a cooling off period of 14 days if you are not happy.</p>
+                <p>Our financial planning fees are not refundable.</p>
+                <p class="small-heading">Does my advice have a time limit?</p>
+                <p>Yes my advice is only valid for 30 days from the date of our letter. If you have not decided to invest within
+                that period of time and or your situation changes then we will charge a separate financial planning fee.</p>
+                <p class="small-heading">Is my personal information protected and private?</p>
+                <p>Yes it is and your information is backed up and stored off site in cases of fires.</p>
+            </div>
+        </div>
+        <div class="page">
+            <div class="content-page">
+                <h2><p>Authority to Proceed:</p>THE STEPS TO IMPLEMENT THIS<br> ADVICE.</h2>
+                <p>Before you sign this document to proceed with our advice I would like to make sure that:</p>
+                <ul class="arrow-lines">
+                <li>You have received our financial services guide</li>
+                <li>You have received an electronic version of all product disclosure documents and investment
+                summaries and research reports.</li>
+                <li>Discussed your superannuation preferences with us and assessed your insurance needs and goals
+                and objectives in a way that you understand</li>
+                <li>Discussed the risks of investing and understand how the sharemarket works</li>
+                <li>Discussed and understand how we charge</li>
+                <li>Read this advice document and are clear with its contents</li>
+                <li>Made sure all your personal information is accurate.</li>
+                <li>Asked any questions that you have.</li>
+                <p>By signing this appointment you agree to appoint AFSL 413567 as your financial adviser and that all
+                superannuation products and investment and insurance products are serviced by you and transferred
+                under this authority to you as my financial adviser.</p>
+                <p>Please implement these recommendations without any changes.</p>
+                <p><b>Signed</b></p>
+                <p>Rocky John:</p>
+            </div>
+        </div>
+        <div class="page">
+          <div class="content-page">
+            <h2><p>Authority to Proceed:</p>THE STEPS TO IMPLEMENT THIS<br> ADVICE.</h2>
+            <h2><p>Authority to Proceed:</p>THE STEPS TO IMPLEMENT THIS<br> ADVICE.</h2>
+            <img src="<%=image1%>" />
+          </div>
+        </div>
+    </div>
+</body>
+
+</html>
