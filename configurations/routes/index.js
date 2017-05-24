@@ -5,7 +5,7 @@
 
 
 // variable to include the different Routing module
-var routingFiles = ["Authentication", "Registration", "Calculator"]
+var routingFiles = ["Authentication", "Registration", "Calculator","User"]
 
 // for-loop on routingFiles array to export each routes
 routingFiles.forEach(function(routes) {

@@ -1,3 +1,4 @@
+var FieldName = require('./../../../application-utilities/FieldName');
 module.exports.UserService = (function() {
 
     function save(userObj) {
@@ -57,16 +58,89 @@ module.exports.UserService = (function() {
                 if(!err && result.nModified > 0){
                     resolve(userObj);
                 } else {
-                    reject({'User not updated'});
+                    reject({'message':'User not updated'});
                 }
             })
         })
     }
 
+    function list(type){
+        var match = {
+            '$match': {
+                'CUSTOMFIELDS': {
+                    '$elemMatch': {
+                        'CUSTOM_FIELD_ID': FieldName.USER_TYPE,
+                        'FIELD_VALUE': type
+                    }
+                }
+            }
+        };
+        var project = {
+            '$project': {
+                'name': {
+                    '$concat': [
+                        '$FIRST_NAME', ' ', '$LAST_NAME'
+                    ]
+                }
+            }
+        };
+        return new Promise(function(resolve, reject){
+            domain.User.aggregate([match, project], function(err, result){
+                if(err)
+                    reject(err);
+                else
+                    resolve(result);
+            })
+        })
+    }
+
+    function listAdvisorClient(){
+        
+        return new Promise(function(resolve, reject){
+            domain.User.find({}, function(err, result){
+                if(err)
+                    reject(err);
+                else
+                    resolve(_clientAdvisorData(result));
+            })
+        })
+    }
+
+    function _clientAdvisorData(data){
+        var map = {};
+        data.forEach(function(user){
+            user.CUSTOMFIELDS.forEach(function(customField){
+                if(customField.CUSTOM_FIELD_ID === FieldName.USER_TYPE && customField.FIELD_VALUE === 'ADVISOR'){
+                    if(!map[user.CONTACT_ID+'']){
+                        map[user.CONTACT_ID+''] = {};
+                    }
+                    if(!map[user.CONTACT_ID+''].advisor){
+                        map[user.CONTACT_ID+''].advisor = {};
+                        map[user.CONTACT_ID+''].advisor.CONTACT_ID = user.CONTACT_ID;
+                        map[user.CONTACT_ID+''].advisor.FIRST_NAME = user.FIRST_NAME;
+                        map[user.CONTACT_ID+''].advisor.LAST_NAME = user.LAST_NAME;
+                    }
+                } else if(customField.CUSTOM_FIELD_ID === FieldName.ADVISOR_ID && customField.FIELD_VALUE){
+                    
+                    if(!map[customField.FIELD_VALUE+'']){
+                        map[customField.FIELD_VALUE+''] = {};
+                    }
+                    if(!map[customField.FIELD_VALUE+''].clients){
+                        map[customField.FIELD_VALUE+''].clients = [];
+                    }
+                    map[customField.FIELD_VALUE+''].clients.push({CONTACT_ID: user.CONTACT_ID, FIRST_NAME: user.FIRST_NAME, LAST_NAME: user.LAST_NAME});
+                }
+            })
+        })
+        return Object.values(map);
+    }
+
     return {
         save: save,
         update: update,
-        searchUser: searchUser
+        searchUser: searchUser,
+        list: list,
+        listAdvisorClient: listAdvisorClient
     }
 
 })();

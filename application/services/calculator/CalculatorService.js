@@ -454,25 +454,7 @@ module.exports.CalculatorService = (function() {
           } else {
             configurationHolder.ResponseUtil.responseHandler(res, searchUser[0], "Login successful", false, 200);
           }
-        })/*
-        async.auto({
-            user: function(next) {
-                getUser(next, data);
-            },
-            isUserExist: function(next, results) {
-                if (results.user) {
-                    next(null, true);
-                } else {
-                    createUser(next, data);
-                }
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "Login successful", false, 200);
-            }
-        });*/
+        })
     };
 
     var getData = function(data, res) {
@@ -497,17 +479,6 @@ module.exports.CalculatorService = (function() {
         }).catch(function(err){
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
         })
-        /*async.auto({
-            updateUser: function(next) {
-                updateUser(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "User updated", false, 200);
-            }
-        });*/
     };
 
     var saveAttachment = function(data, res) {
@@ -538,32 +509,23 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var getMasterClientList = function(data, res) {
-        async.auto({
-            masterClientList: function(next) {
-                requestMasterClientList(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "master Client List successfully captured", false, 200);
-            }
-        });
+    var getMasterClientList = function(res) {
+
+        UserService.list('CLIENT').then(function(result){
+            configurationHolder.ResponseUtil.responseHandler(res, result, "Master Client list successfully captured", false, 200);
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
     };
 
-    var getMasterAdvisorList = function(data, res) {
-        async.auto({
-            masterAdvisorList: function(next) {
-                requestMasterAdvisorList(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "User Data successfully captured", false, 200);
-            }
-        });
+    var getMasterAdvisorList = function(res) {
+
+        UserService.listAdvisorClient().then(function(result){
+            configurationHolder.ResponseUtil.responseHandler(res, result, "User Data successfully captured", false, 200);
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
+
     };
 
     function _getPhoneNumberFromUserObject(userObj) {

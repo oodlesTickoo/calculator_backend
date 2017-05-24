@@ -32,11 +32,11 @@ module.exports.CalculatorController = (function() {
     };
 
     var getMasterClientList = function(req, res) {
-        CalculatorService.getMasterClientList(req.body, res);
+        CalculatorService.getMasterClientList(res);
     };
 
     var getMasterAdvisorList = function(req, res) {
-        CalculatorService.getMasterAdvisorList(req.body, res);
+        CalculatorService.getMasterAdvisorList(res);
     };
 
     //public methods are  return

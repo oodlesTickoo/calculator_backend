@@ -1,0 +1,6 @@
+
+ module.exports = {
+ 	USER_TYPE: 'CONTACT_FIELD_150',
+ 	ADVISOR_ID: 'CONTACT_FIELD_151',
+ 	FILE_ID: 'CONTACT_FIELD_152'
+ }
