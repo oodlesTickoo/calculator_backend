@@ -14,7 +14,7 @@ module.exports.AuthorizationMiddleware = (function() {
         domain.User.findOne({
             _id: results.authorizationTokenObject.user
         }, function(err, userObject) {
-            if (roleInAccessLevel.indexOf(userObject.role) > -1) {
+            if (!err && userObject) {
                 authorized = true;
                 req.loggedInUser = userObject;
                 next(results, authorized);

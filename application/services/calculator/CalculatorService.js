@@ -1,3 +1,4 @@
+var UserService = require('./../user/UserService').UserService; 
 module.exports.CalculatorService = (function() {
     var pdf = require('html-pdf');
     var fs = require('fs');
@@ -207,8 +208,8 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function createUser(next, data) {
-        var body = {
+    function createUser(data) {
+        /*var body = {
             "FIRST_NAME": data.firstName,
             "LAST_NAME": data.lastName,
             "CONTACTINFOS": [{
@@ -218,7 +219,7 @@ module.exports.CalculatorService = (function() {
                 "TYPE": "EMAIL",
                 "DETAIL": data.email
             }],
-        };
+        };*/
         var options = {
             url: configurationHolder.config.insightly.url,
             headers: {
@@ -226,38 +227,43 @@ module.exports.CalculatorService = (function() {
                 'Content-Type': configurationHolder.config.insightly.contentType
             },
             json: true,
-            body: body,
+            body: data,
             method: "POST"
         };
-        request(options, function(error, response, body) {
+        return new Promise(function(resolve, reject){
+            request(options, function(error, response, body) {
             // console.log('REQUEST RESULTS:', error, response.statusCode, body);
             if (error) {
-                next(error, null);
+                reject(error);
             } else {
-                next(null, body);
+                resolve(body);
             }
         });
+        })
     }
 
-    function getUser(next, data) {
+    function getUser(mobileNumber) {
         var options = {
-            url: configurationHolder.config.insightly.url + configurationHolder.config.insightly.searchContact + "phone_number=" + data.mobile,
+            url: configurationHolder.config.insightly.url + configurationHolder.config.insightly.searchContact + "phone_number=" + mobileNumber,
             headers: {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function(error, response, body) {
-            if (error) {
-                next(error, null);
-            } else {
-                body = JSON.parse(body);
-                if (body && body.length > 0) {
-                    next(null, body[0]);
+
+        return new Promise(function(resolve, reject){
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
                 } else {
-                    next(null, false);
+                    body = JSON.parse(body);
+                    if (body && body.length > 0) {
+                        resolve(body[0]);
+                    } else {
+                        reject(null);
+                    }
                 }
-            }
-        });
+            });
+        })  
     }
 
     function insightlyBody(data) {
@@ -274,7 +280,7 @@ module.exports.CalculatorService = (function() {
         };
     }
 
-    function updateUser(next, data) {
+    function updateUser(data) {
 
         var options = {
             url: configurationHolder.config.insightly.url,
@@ -283,17 +289,19 @@ module.exports.CalculatorService = (function() {
                 'Content-Type': 'application/json'
             },
             json: true,
-            body: insightlyBody(),
+            body: data,
             method: "PUT"
         };
-        request(options, function(error, response, body) {
-            if (error) {
-                next(error, null);
-            } else {
-                body = JSON.parse(body);
-                next(null, body);
-            }
-        });
+        return new Promise(function(resolve, reject){
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = JSON.parse(body);
+                    resolve(body);
+                }
+            });
+        })
     }
 
     function addAttachment(next, data) {
@@ -433,6 +441,20 @@ module.exports.CalculatorService = (function() {
     }
 
     var login = function(data, res) {
+        var phoneNumber = _getPhoneNumberFromUserObject(data);
+        UserService.searchUser(phoneNumber).then(function(searchUser){
+          if(!searchUser || searchUser.length === 0){
+            createUser(data).then(function(result){
+                return UserService.save(result)
+            }).then(function(result){
+                configurationHolder.ResponseUtil.responseHandler(res, result, "Login successful", false, 200);
+            }).catch(function(err){
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+            })
+          } else {
+            configurationHolder.ResponseUtil.responseHandler(res, searchUser[0], "Login successful", false, 200);
+          }
+        })/*
         async.auto({
             user: function(next) {
                 getUser(next, data);
@@ -450,7 +472,7 @@ module.exports.CalculatorService = (function() {
             } else {
                 configurationHolder.ResponseUtil.responseHandler(res, results, "Login successful", false, 200);
             }
-        });
+        });*/
     };
 
     var getData = function(data, res) {
@@ -468,7 +490,14 @@ module.exports.CalculatorService = (function() {
     };
 
     var saveData = function(data, res) {
-        async.auto({
+        updateUser(data).then(function(result){
+            return UserService.update(data);
+        }).then(function(result){
+            configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
+        })
+        /*async.auto({
             updateUser: function(next) {
                 updateUser(next, data);
             }
@@ -478,7 +507,7 @@ module.exports.CalculatorService = (function() {
             } else {
                 configurationHolder.ResponseUtil.responseHandler(res, results, "User updated", false, 200);
             }
-        });
+        });*/
     };
 
     var saveAttachment = function(data, res) {
@@ -536,6 +565,18 @@ module.exports.CalculatorService = (function() {
             }
         });
     };
+
+    function _getPhoneNumberFromUserObject(userObj) {
+        var phoneNumber = null;
+        if (userObj && userObj.CONTACTINFOS) {
+            userObj.CONTACTINFOS.forEach(function(contactInfo) {
+                if (contactInfo.TYPE === 'PHONE') {
+                    phoneNumber = contactInfo.DETAIL;
+                }
+            })
+        }
+        return phoneNumber;
+    }
 
     //public methods are  return
     return {

@@ -1,81 +1,72 @@
-module.exports.UserService = (function () {
+module.exports.UserService = (function() {
 
-
-   var createUser =  function (next,results,userObject,addressObject,res) {
-
-
-       var newUser = new domain.User(userObject)
-       newUser.save(function(err,createdUserObj) {
-           if (err){
-               configurationHolder.ResponseUtil.responseHandler(res,err,err.message,true,400)
-           }
-            else{
-               next(null,createdUserObj)
-           }
-
-       });
-
-    }
-
-    /* generate registrationToken and return it to the calling function
-     * @payload  User's email
-     * return registrationToken
-     */
-    var generateRegistrationToken = function(next,results,res){
-        var registrationObj = new domain.RegistrationToken({email:results.saveUser.email,user:results.saveUser._id,registrationToken:uuid.v1()})
-        registrationObj.save(function(err,registrationObj){
-            if(err){
-                configurationHolder.ResponseUtil.responseHandler(res,null,"Unauthorized User",true,401)
-            }else{
-                next(null,registrationObj);
-            }
+    function save(userObj) {
+        return new Promise(function(resolve, reject) {
+            var user = _modifyContactObj(userObj);
+            user = new domain.User(userObj);
+            user.save(function(err, createdUser) {
+                if (!err && createdUser) {
+                    resolve(createdUser);
+                } else {
+                    reject(err);
+                }
+            })
         })
     }
 
-    var emailSendToUser = function(next,results,res){
-
-        configurationHolder.EmailUtil.email("",results.saveUser.email,"dddd",results.generateRegistrationToken.registrationToken);
-        next(null,"email sent");
+    function _modifyContactObj(contactObj) {
+        contactObj.CONTACT_ID = Number(contactObj.CONTACT_ID + '');
+        contactObj.OWNER_USER_ID = contactObj.OWNER_USER_ID ? Number(contactObj.OWNER_USER_ID + '') : null
+        contactObj.VISIBLE_TEAM_ID = contactObj.VISIBLE_TEAM_ID ? Number(contactObj.VISIBLE_TEAM_ID + '') : null
+        return contactObj;
     }
 
-    var registrationUser =  function (userObject,addressObject,res) {
-        async.auto({
-            saveUser:function (next, results) {
-                return createUser(next,results, userObject, addressObject, res);
-            },
-            generateRegistrationToken:['saveUser', function (next, results) {
-                generateRegistrationToken(next, results,res)
-            }],
-            isEmailSend:['generateRegistrationToken', function (next, results) {
-                emailSendToUser(next, results,res);
-            }]
-        },function(err,results) {
-            if(err){
-                configurationHolder.ResponseUtil.responseHandler(res,err,err.message,true,400)
-            }else{
-                configurationHolder.ResponseUtil.responseHandler(res,results,"User Created Successfully",false,200)
+   /* function save(userObj, res) {
+        return searchUser(_getPhoneNumberFromUserObejct(userObj)).then(function(result) {
+            if (!result || result.length == 0) {
+                _saveUser(userObj).then(function(result) {
+                    configurationHolder.ResponseUtil.responseHandler(res, result, "User Created Successfully", false, 200);
+                }).catch(function(err) {
+                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+                })
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, null, 'User already exists', true, 400);
             }
+        }).catch(function(err) {
 
-        });
+        })
+    }*/
+
+    function searchUser(phoneNumber) {
+        return new Promise(function(resolve, reject) {
+            domain.User.find({
+                'CONTACTINFOS.DETAIL': phoneNumber
+            }, function(err, result) {
+                if (!err) {
+                    resolve(result);
+                } else {
+                    reject(err);
+                }
+            })
+        })
     }
-   
 
-   var verifyUser = function (req,res) {
-       
-   }
-   
-   var resetPasword = function (req,res) {
-   }
-   
-   
-   var updatePassword = function (req,res) {
-   }
-   
-  //public methods are  return
-  return {
-      registrationUser: registrationUser,
-      //verifyUserAction: verifyUserAction,
-      //resetPaswordAction : resetPaswordAction,
-      //updatePasswordAction : updatePasswordAction
-  }
+    function update(userObj){
+        return new Promise(function(resolve, reject){
+            db.User.update({'CONTACT_ID': userObj.CONTACT_ID},userObj, function(err, result){
+                if(!err && result.nModified > 0){
+                    resolve(userObj);
+                } else {
+                    reject({'User not updated'});
+                }
+            })
+        })
+    }
+
+    return {
+        save: save,
+        update: update,
+        searchUser: searchUser
+    }
+
 })();
