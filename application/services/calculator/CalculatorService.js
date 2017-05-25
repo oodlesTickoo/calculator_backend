@@ -1,4 +1,9 @@
-var UserService = require('./../user/UserService').UserService; 
+var UserService = require('./../user/UserService').UserService;
+var AuthService = require('./../user/AuthService').AuthService;
+const Constants = require('./../../../application-utilities/Constants');
+const FieldName = require('./../../../application-utilities/FieldName');
+var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
+
 module.exports.CalculatorService = (function() {
     var pdf = require('html-pdf');
     var fs = require('fs');
@@ -9,7 +14,6 @@ module.exports.CalculatorService = (function() {
     var request = require('request');
     var FormData = require('form-data');
     // require('request-debug')(request);
-
 
     function renderFile(next, fileName, data) {
         ejs.renderFile(configurationHolder.config.publicFolder + fileName, {
@@ -24,7 +28,13 @@ module.exports.CalculatorService = (function() {
     }
 
     function generateImage(next, html, imageFileName) {
-        webshot(html, 'uploads/' + imageFileName, { siteType: 'html', shotSize: { width: "all", height: "all" } }, function(err, res) {
+        webshot(html, 'uploads/' + imageFileName, {
+            siteType: 'html',
+            shotSize: {
+                width: "all",
+                height: "all"
+            }
+        }, function(err, res) {
             console.log(err, res);
             if (err) {
                 next(err, null);
@@ -89,7 +99,9 @@ module.exports.CalculatorService = (function() {
             } else {
                 var img = fs.readFileSync(results.image);
                 fs.unlink(results.image);
-                res.writeHead(200, { 'Content-Type': 'image/png' });
+                res.writeHead(200, {
+                    'Content-Type': 'image/png'
+                });
                 res.end(img, 'binary');
             }
         });
@@ -191,15 +203,24 @@ module.exports.CalculatorService = (function() {
     };
 
     function generatePdf(next, pdfFileName, image1, image2) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', { image1: image1, image2: image2 }, {}, function(err, html) {
+        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
+            image1: image1,
+            image2: image2
+        }, {}, function(err, html) {
             if (html) {
-                var options = { format: 'Letter', base: 'file://' + __dirname + '/../../../' };
+                var options = {
+                    format: 'Letter',
+                    base: 'file://' + __dirname + '/../../../'
+                };
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {
                         next(err, null);
                     } else {
-                        next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                        next(null, {
+                            'filePath': configurationHolder.config.downloadUrl + pdfFileName,
+                            'fileName': pdfFileName
+                        });
                     }
                 });
             } else {
@@ -230,15 +251,15 @@ module.exports.CalculatorService = (function() {
             body: data,
             method: "POST"
         };
-        return new Promise(function(resolve, reject){
+        return new Promise(function(resolve, reject) {
             request(options, function(error, response, body) {
-            // console.log('REQUEST RESULTS:', error, response.statusCode, body);
-            if (error) {
-                reject(error);
-            } else {
-                resolve(body);
-            }
-        });
+                // console.log('REQUEST RESULTS:', error, response.statusCode, body);
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(body);
+                }
+            });
         })
     }
 
@@ -250,7 +271,7 @@ module.exports.CalculatorService = (function() {
             }
         };
 
-        return new Promise(function(resolve, reject){
+        return new Promise(function(resolve, reject) {
             request(options, function(error, response, body) {
                 if (error) {
                     reject(error);
@@ -263,7 +284,7 @@ module.exports.CalculatorService = (function() {
                     }
                 }
             });
-        })  
+        })
     }
 
     function insightlyBody(data) {
@@ -292,7 +313,7 @@ module.exports.CalculatorService = (function() {
             body: data,
             method: "PUT"
         };
-        return new Promise(function(resolve, reject){
+        return new Promise(function(resolve, reject) {
             request(options, function(error, response, body) {
                 if (error) {
                     reject(error);
@@ -357,7 +378,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("clientList",clientList);
+                    console.log("clientList", clientList);
                     next(null, clientList);
                 } else {
                     next(null, false);
@@ -383,7 +404,7 @@ module.exports.CalculatorService = (function() {
             } else {
 
                 body = JSON.parse(body);
-                var clientList=[];
+                var clientList = [];
                 if (body && body.length > 0) {
                     var num = 0;
                     for (i = 0; i < body.length; i++) {
@@ -394,7 +415,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("clientList",clientList);
+                    console.log("clientList", clientList);
                     next(null, clientList);
                 } else {
                     next(null, false);
@@ -420,7 +441,7 @@ module.exports.CalculatorService = (function() {
             } else {
 
                 body = JSON.parse(body);
-                var advisorList=[];
+                var advisorList = [];
                 if (body && body.length > 0) {
                     var num = 0;
                     for (i = 0; i < body.length; i++) {
@@ -431,7 +452,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("advisorList",advisorList);
+                    console.log("advisorList", advisorList);
                     next(null, advisorList);
                 } else {
                     next(null, false);
@@ -442,20 +463,65 @@ module.exports.CalculatorService = (function() {
 
     var login = function(data, res) {
         var phoneNumber = _getPhoneNumberFromUserObject(data);
-        UserService.searchUser(phoneNumber).then(function(searchUser){
-          if(!searchUser || searchUser.length === 0){
-            createUser(data).then(function(result){
-                return UserService.save(result)
-            }).then(function(result){
-                configurationHolder.ResponseUtil.responseHandler(res, result, "Login successful", false, 200);
-            }).catch(function(err){
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
-            })
-          } else {
-            configurationHolder.ResponseUtil.responseHandler(res, searchUser[0], "Login successful", false, 200);
-          }
+        UserService.searchUser(phoneNumber).then(function(searchUser) {
+            if (!searchUser || searchUser.length === 0) {
+                createUser(data).then(function(result) {
+                    return UserService.save(result)
+                }).then(function(result) {
+                    _loginResponseData(result, res);
+                }).catch(function(err) {
+                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+                })
+            } else {
+                _loginResponseData(searchUser[0], res);
+            }
         })
     };
+
+    function _loginResponseData(userObj, res) {
+        ClientAdvisorService.createClientAdvisor(userObj, function() {
+            var role = _getUserRoleFromUserObject(userObj);
+            var promises = [];
+            promises.push(AuthService.generateAuthToken(userObj));
+            switch (role) {
+                case Constants.USER_ROLE.ADVISOR:
+                    {
+                        promises.push(UserService.clientsOfAnAdvisor(userObj.CONTACT_ID));
+                        break;
+                    }
+                case Constants.USER_ROLE.ADMINISTRATOR:
+                    {
+                        promises.push(UserService.clientsOfAnAdvisor(userObj.CONTACT_ID));
+                        promises.push(ClientAdvisorService.groupByAdvisor());
+                        promises.push(ClientAdvisorService.list());
+                        break;
+                    }
+            }
+            Promise.all(promises).then(function(results) {
+                var returnOnject = {};
+                returnOnject.me = userObj;
+                returnOnject.token = results[0].auth_token;
+                returnOnject.role = role;
+                switch (role) {
+                    case Constants.USER_ROLE.ADVISOR:
+                        {
+                            returnOnject.my_clients = results[1];
+                            break;
+                        }
+                    case Constants.USER_ROLE.ADMINISTRATOR:
+                        {
+                            returnOnject.my_clients = results[1];
+                            returnOnject.advisors = results[2];
+                            returnOnject.clientAdvisor = results[3]
+                            break;
+                        }
+                }
+                configurationHolder.ResponseUtil.responseHandler(res, returnOnject, "Successfully login", false, 200);
+            }).catch(function(err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+            });
+        })
+    }
 
     var getData = function(data, res) {
         async.auto({
@@ -472,11 +538,11 @@ module.exports.CalculatorService = (function() {
     };
 
     var saveData = function(data, res) {
-        updateUser(data).then(function(result){
+        updateUser(data).then(function(result) {
             return UserService.update(data);
-        }).then(function(result){
+        }).then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
-        }).catch(function(err){
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
         })
     };
@@ -511,18 +577,18 @@ module.exports.CalculatorService = (function() {
 
     var getMasterClientList = function(res) {
 
-        UserService.list('CLIENT').then(function(result){
+        UserService.list('CLIENT').then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "Master Client list successfully captured", false, 200);
-        }).catch(function(err){
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
     };
 
     var getMasterAdvisorList = function(res) {
 
-        UserService.listAdvisorClient().then(function(result){
+        UserService.listAdvisorClient().then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User Data successfully captured", false, 200);
-        }).catch(function(err){
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
 
@@ -538,6 +604,17 @@ module.exports.CalculatorService = (function() {
             })
         }
         return phoneNumber;
+    }
+
+    function _getUserRoleFromUserObject(userObj) {
+        var role = '';
+        for (var i = 0; i < userObj.CUSTOMFIELDS.length; i++) {
+            if (userObj.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.USER_TYPE) {
+                role = userObj.CUSTOMFIELDS[i].FIELD_VALUE;
+                break;
+            }
+        }
+        return role;
     }
 
     //public methods are  return

@@ -94,6 +94,37 @@ module.exports.UserService = (function() {
         })
     }
 
+    function clientsOfAnAdvisor(advisorId){
+        var match = {
+            '$match': {
+                'CUSTOMFIELDS': {
+                    '$elemMatch': {
+                        'CUSTOM_FIELD_ID': FieldName.ADVISOR_ID,
+                        'FIELD_VALUE': advisorId+''
+                    }
+                }
+            }
+        };
+        var project = {
+            '$project': {
+                'name': {
+                    '$concat': [
+                        '$FIRST_NAME', ' ', '$LAST_NAME'
+                    ]
+                },
+                'CONTACT_ID': '$CONTACT_ID'
+            }
+        };
+        return new Promise(function(resolve, reject){
+            domain.User.aggregate([match, project], function(err, result){
+                if(err)
+                    reject(err);
+                else
+                    resolve(result);
+            })
+        })
+    }
+
     function listAdvisorClient(){
         
         return new Promise(function(resolve, reject){
@@ -140,7 +171,8 @@ module.exports.UserService = (function() {
         update: update,
         searchUser: searchUser,
         list: list,
-        listAdvisorClient: listAdvisorClient
+        listAdvisorClient: listAdvisorClient,
+        clientsOfAnAdvisor: clientsOfAnAdvisor
     }
 
 })();

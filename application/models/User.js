@@ -2,7 +2,7 @@ var UserSchema = new mongooseSchema({
    CONTACT_ID:{ type: Number, unique : true, required: true },
     SALUTATION: { type: String, trim: true },
     FIRST_NAME: { type: String, trim: true },
-    LAST_NAME: { type: String, trim: true, trim: true },
+    LAST_NAME: { type: String, trim: true },
     BACKGROUND: { type: String, trim: true },
     IMAGE_URL: { type: String, trim: true },
     DEFAULT_LINKED_ORGANISATION: { type: String, trim: true },

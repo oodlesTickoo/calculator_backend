@@ -1,29 +1,29 @@
 var AuthenticationTokenSchema = new mongooseSchema({
-    authToken: {
+    auth_token: {
         type: String,
         default: '',
         required: true,
         trim: true,
         validate: [stringNotNull, 'Authentocation token required']
     },
-    email: {
+    contact_id:{ 
+        type: Number,
+        required: true 
+    },
+    first_name: {
         type: String,
-        default: '',
         required: true,
-        trim: true,
-        validate: [stringNotNull, 'Email required']
+        trim: true
     },
-    user: {
-        type: mongooseSchema.ObjectId,
-        ref: 'user'
+    last_name: {
+        type: String,
+        required: true,
+        trim: true
     },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    updated: {
-        type: Date,
-        default: Date.now
+    role:{
+        type: String,
+        required: true,
+        trim: true
     }
 });
 
