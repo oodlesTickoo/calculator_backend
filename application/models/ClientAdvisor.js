@@ -1,12 +1,12 @@
 var ClientAdvisorSchema = new mongooseSchema({
     
     client:{
-        CONTACT_ID:{ type: Number, unique : true, required: true },
+        CONTACT_ID:{ type: Number, required: true },
         FIRST_NAME: { type: String, trim: true },
         LAST_NAME: { type: String, trim: true }
     },
     advisor:{
-        CONTACT_ID:{ type: Number, unique : true, required: true },
+        CONTACT_ID:{ type: Number,required: true },
         FIRST_NAME: { type: String, trim: true },
         LAST_NAME: { type: String, trim: true }
     }

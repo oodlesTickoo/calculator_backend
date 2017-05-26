@@ -15,10 +15,10 @@ module.exports.AuthorizationMiddleware = (function() {
         if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
             authorized = true
             req.loggedInUser = {
-                contact_id: results.authorizationTokenObject.contact_id,
-                role: results.authorizationTokenObject.contact_id,
-                first_name: results.authorizationTokenObject.first_name,
-                last_name: results.authorizationTokenObject.last_name
+                CONTACT_ID: results.authorizationTokenObject.contact_id,
+                ROLE: results.authorizationTokenObject.contact_id,
+                FIRST_NAME: results.authorizationTokenObject.first_name,
+                LAST_NAME: results.authorizationTokenObject.last_name
             }
             next(results, authorized)
         } else{
@@ -52,7 +52,7 @@ module.exports.AuthorizationMiddleware = (function() {
 
             console.log("authToken",authToken);
             console.log("accessLevel",accessLevel);
-            if (accessLevel === Constants.ROUTE_ACCESS.ANNONIMOUS) {
+            if (accessLevel === Constants.ROUTE_ACCESS_ROLE.ANNONIMOUS) {
                 console.log("if");
                 CustomLogger.info("executed in accesslevel ");
                 req.loggedInUser = null;

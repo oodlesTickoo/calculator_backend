@@ -2,6 +2,7 @@ var UserService = require('./../user/UserService').UserService;
 var AuthService = require('./../user/AuthService').AuthService;
 const Constants = require('./../../../application-utilities/Constants');
 const FieldName = require('./../../../application-utilities/FieldName');
+const path = require('path');
 var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
 
 module.exports.CalculatorService = (function() {
@@ -25,6 +26,10 @@ module.exports.CalculatorService = (function() {
                 next(null, htmlStr);
             }
         });
+    }
+
+    function _getPdfFilePath(contactId){
+        return path.join(__dirname, '..', '..', '..', 'uploads',contactId+'.pdf');
     }
 
     function generateImage(next, html, imageFileName) {
@@ -107,7 +112,7 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var requestPdf = function(data, res) {
+    var requestPdf = function(data, loggedInUser, res) {
         async.auto({
             webshotIa: function(next, results) {
                 var data = {
@@ -188,21 +193,21 @@ module.exports.CalculatorService = (function() {
                 generateWebShot(next, 'sfc', data);
             },
             pdf: ['webshotIa', 'webshotSFC', function(next, results) {
-                var pdfFileName = (new Date()).getTime() + "-super-calculator.pdf";
+                var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
 
                 console.log("55555555555555555", results.webshotIa, results.webshotSFC);
-                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC);
+                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, loggedInUser);
             }]
         }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", true, 400);
+                configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", false, 200);
             }
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2) {
+    function generatePdf(next, pdfFileName, image1, image2, loggedInUser) {
         ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
             image1: image1,
             image2: image2
@@ -217,9 +222,13 @@ module.exports.CalculatorService = (function() {
                     if (err) {
                         next(err, null);
                     } else {
-                        next(null, {
-                            'filePath': configurationHolder.config.downloadUrl + pdfFileName,
-                            'fileName': pdfFileName
+                        _saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
+                            _updatePdfFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
+                                next(null, null);
+                            });
+                        }).catch(function(err){
+                            console.log(err)
+                            next(err, null);
                         });
                     }
                 });
@@ -318,7 +327,7 @@ module.exports.CalculatorService = (function() {
                 if (error) {
                     reject(error);
                 } else {
-                    body = JSON.parse(body);
+                    //body = JSON.parse(body);
                     resolve(body);
                 }
             });
@@ -615,6 +624,47 @@ module.exports.CalculatorService = (function() {
             }
         }
         return role;
+    }
+
+    function _saveAttachmentToInsightly(filePath, contactId) {
+        console.log("File Path", filePath);
+        var options = {
+            url: configurationHolder.config.insightly.url + '/' + contactId + '' + configurationHolder.config.insightly.saveAttachment,
+            headers: {
+                'Authorization': configurationHolder.config.insightly.auth,
+                'Content-Type': 'multipart/form-data'
+            },
+            body: '',
+            method: "POST",
+            formData: {
+                attachments: [
+                    fs.createReadStream(filePath),
+                ]
+            }
+        };
+        return new Promise(function(resolve, reject){
+            request(options, function(error, response, body) {
+                if (error) {
+                    request(error);
+                } else {
+                    body = JSON.parse(body);
+                    resolve(body);
+                }
+            });
+        });
+    }
+
+    function _updatePdfFileToUser(contactId, fileId, filePath, callback){
+        UserService.updatePdfFile(contactId, fileId).then(function(userData){
+            delete userData['_id'];
+            return updateUser(userData);
+        }).then(function(userData){
+            fs.unlinkSync(filePath);
+            callback();
+        }).catch(function(err){
+            console.log("Error ", err)
+            callback()
+        });
     }
 
     //public methods are  return

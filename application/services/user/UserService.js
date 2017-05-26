@@ -137,6 +137,39 @@ module.exports.UserService = (function() {
         })
     }
 
+    function updatePdfFile(contactId, fileId){
+        return new Promise(function(resolve, reject){
+            domain.User.findOne({
+                CONTACT_ID: contactId
+            }, function(err, result){
+                if(err || !result){
+                    reject(err);
+                } else {
+                    var fileIndex = -1;
+                    for(var i=0;i<result.CUSTOMFIELDS.length;i++){
+                       if(result.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.FILE_ID){
+                            fileIndex = i;
+                            result.CUSTOMFIELDS[i].FIELD_VALUE = fileId+'';
+                            break;
+                        }
+                    }
+                    if(fileIndex === -1){
+                        result.CUSTOMFIELDS.push({
+                            CUSTOM_FIELD_ID: FieldName.FILE_ID,
+                            FIELD_VALUE: fileId+''
+                        });
+                    }
+                    result.save(function(err, data){
+                        if(err)
+                            reject(err);
+                        else
+                            resolve(data);
+                    })
+                }
+            });
+        })
+    }
+
     function _clientAdvisorData(data){
         var map = {};
         data.forEach(function(user){
@@ -172,7 +205,8 @@ module.exports.UserService = (function() {
         searchUser: searchUser,
         list: list,
         listAdvisorClient: listAdvisorClient,
-        clientsOfAnAdvisor: clientsOfAnAdvisor
+        clientsOfAnAdvisor: clientsOfAnAdvisor,
+        updatePdfFile: updatePdfFile
     }
 
 })();
