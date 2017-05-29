@@ -7,4 +7,6 @@ module.exports.routePath = function() {
     router.post('/api/v1/data', configurationHolder.security.authority("ANONYMOUS"), CalculatorController.saveData);
     router.post('/api/v1/file', configurationHolder.security.authority("ANONYMOUS"), CalculatorController.saveAttachment);
     router.get('/api/v1/file', configurationHolder.security.authority(Constants.ROUTE_ACCESS_ROLE.ANONYMOUS), CalculatorController.getFile);
+    router.post('/api/v1/upload', configurationHolder.security.authority(Constants.ROUTE_ACCESS_ROLE.ANONYMOUS), CalculatorController.upload);
+
 };

@@ -222,8 +222,8 @@ module.exports.CalculatorService = (function() {
                     if (err) {
                         next(err, null);
                     } else {
-                        _saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
-                            _updatePdfFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
+                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
+                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
                                 next(null, null);
                             });
                         }).catch(function(err){
@@ -626,7 +626,7 @@ module.exports.CalculatorService = (function() {
         return role;
     }
 
-    function _saveAttachmentToInsightly(filePath, contactId) {
+    function saveAttachmentToInsightly(filePath, contactId) {
         console.log("File Path", filePath);
         var options = {
             url: configurationHolder.config.insightly.url + '/' + contactId + '' + configurationHolder.config.insightly.saveAttachment,
@@ -648,14 +648,16 @@ module.exports.CalculatorService = (function() {
                     request(error);
                 } else {
                     body = JSON.parse(body);
+                    console.log(body);
                     resolve(body);
                 }
             });
         });
     }
 
-    function _updatePdfFileToUser(contactId, fileId, filePath, callback){
-        UserService.updatePdfFile(contactId, fileId).then(function(userData){
+    function updateFileToUser(contactId, fileId, filePath, callback){
+        var format = filePath.split('.')[filePath.split('.').length - 1]
+        UserService.updateFile(contactId, fileId, format).then(function(userData){
             delete userData['_id'];
             return updateUser(userData);
         }).then(function(userData){
@@ -677,7 +679,9 @@ module.exports.CalculatorService = (function() {
         saveAttachment: saveAttachment,
         getAssignedClientList: getAssignedClientList,
         getMasterClientList: getMasterClientList,
-        getMasterAdvisorList: getMasterAdvisorList
+        getMasterAdvisorList: getMasterAdvisorList,
+        saveAttachmentToInsightly: saveAttachmentToInsightly,
+        updateFileToUser: updateFileToUser
     };
 
 })();

@@ -43,6 +43,10 @@ module.exports.CalculatorController = (function() {
         FileService.get(res, Number(req.query.contact_id), req.query.file_format);
     };
 
+    var upload = function(req, res) {
+        FileService.upload(req.files.file, req.query.contact_id, res);
+    };
+
     //public methods are  return
     return {
         webShot: webShot,
@@ -54,7 +58,8 @@ module.exports.CalculatorController = (function() {
         getAssignedClientList:getAssignedClientList,
         getMasterClientList:getMasterClientList,
         getMasterAdvisorList:getMasterAdvisorList,
-        getFile: getFile
+        getFile: getFile,
+        upload: upload
     };
 
 })();

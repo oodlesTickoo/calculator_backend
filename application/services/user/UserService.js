@@ -137,7 +137,8 @@ module.exports.UserService = (function() {
         })
     }
 
-    function updatePdfFile(contactId, fileId){
+    function updateFile(contactId, fileId, format){
+        var fileField = (format === 'pdf')? FieldName.FILE_ID: FieldName.DOC_FILE;
         return new Promise(function(resolve, reject){
             domain.User.findOne({
                 CONTACT_ID: contactId
@@ -147,7 +148,7 @@ module.exports.UserService = (function() {
                 } else {
                     var fileIndex = -1;
                     for(var i=0;i<result.CUSTOMFIELDS.length;i++){
-                       if(result.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.FILE_ID){
+                       if(result.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === fileField){
                             fileIndex = i;
                             result.CUSTOMFIELDS[i].FIELD_VALUE = fileId+'';
                             break;
@@ -155,7 +156,7 @@ module.exports.UserService = (function() {
                     }
                     if(fileIndex === -1){
                         result.CUSTOMFIELDS.push({
-                            CUSTOM_FIELD_ID: FieldName.FILE_ID,
+                            CUSTOM_FIELD_ID: fileField,
                             FIELD_VALUE: fileId+''
                         });
                     }
@@ -206,7 +207,7 @@ module.exports.UserService = (function() {
         list: list,
         listAdvisorClient: listAdvisorClient,
         clientsOfAnAdvisor: clientsOfAnAdvisor,
-        updatePdfFile: updatePdfFile
+        updateFile: updateFile
     }
 
 })();
