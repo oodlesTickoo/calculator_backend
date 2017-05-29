@@ -501,7 +501,7 @@ module.exports.CalculatorService = (function() {
                 case Constants.USER_ROLE.ADMINISTRATOR:
                     {
                         promises.push(UserService.clientsOfAnAdvisor(userObj.CONTACT_ID));
-                        promises.push(ClientAdvisorService.groupByAdvisor());
+                        promises.push(UserService.listAdvisorClient());
                         promises.push(ClientAdvisorService.list());
                         break;
                     }
