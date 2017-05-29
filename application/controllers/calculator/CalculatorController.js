@@ -1,4 +1,5 @@
 var CalculatorService = require("../../services/calculator/CalculatorService").CalculatorService;
+var FileService = require("../../services/calculator/FileService").FileService;
 
 
 module.exports.CalculatorController = (function() {
@@ -38,6 +39,9 @@ module.exports.CalculatorController = (function() {
     var getMasterAdvisorList = function(req, res) {
         CalculatorService.getMasterAdvisorList(res);
     };
+    var getFile = function(req, res) {
+        FileService.get(res, Number(req.query.contact_id), req.query.file_format);
+    };
 
     //public methods are  return
     return {
@@ -49,7 +53,8 @@ module.exports.CalculatorController = (function() {
         saveAttachment: saveAttachment,
         getAssignedClientList:getAssignedClientList,
         getMasterClientList:getMasterClientList,
-        getMasterAdvisorList:getMasterAdvisorList
+        getMasterAdvisorList:getMasterAdvisorList,
+        getFile: getFile
     };
 
 })();
