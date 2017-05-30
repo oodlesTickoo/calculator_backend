@@ -3,11 +3,12 @@
  */
 
 global.configurationHolder = require('./configurations/DependencyInclude.js');
-
+var multipart = require('connect-multiparty');
 global.app = module.exports = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(multipart());
 
 
 app.use(errorHandler());

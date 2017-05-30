@@ -3,25 +3,27 @@
  *
  */
 var async = require('async');
+const Constants = require('./../application-utilities/Constants'); 
 
 module.exports.AuthorizationMiddleware = (function() {
     /*
      *  Verify user is authorized to access the functionality or not
      */
     var verifyIsRoleInAccessLevel = function(next, results, res, req, accessLevel) {
-        var roleInAccessLevel = configurationHolder.config.accessLevels[accessLevel];
-        var authorized = false;
-        domain.User.findOne({
-            _id: results.authorizationTokenObject.user
-        }, function(err, userObject) {
-            if (roleInAccessLevel.indexOf(userObject.role) > -1) {
-                authorized = true;
-                req.loggedInUser = userObject;
-                next(results, authorized);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
+        var roleInAccessLevel = Constants.ROUTE_ACCESS[accessLevel];
+        var authorized = false
+        if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
+            authorized = true
+            req.loggedInUser = {
+                CONTACT_ID: results.authorizationTokenObject.contact_id,
+                ROLE: results.authorizationTokenObject.contact_id,
+                FIRST_NAME: results.authorizationTokenObject.first_name,
+                LAST_NAME: results.authorizationTokenObject.last_name
             }
-        });
+            next(results, authorized)
+        } else{
+            configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
+        }
     };
 
     /*
@@ -29,7 +31,7 @@ module.exports.AuthorizationMiddleware = (function() {
      */
     var findRoleByAuthToken = function(next, results, req, res, authToken) {
         domain.AuthenticationToken.findOne({
-            authToken: authToken
+            auth_token: authToken
         }, function(err, authObj) {
             if (err || authObj == null) {
                 configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
@@ -46,11 +48,11 @@ module.exports.AuthorizationMiddleware = (function() {
      */
     var authority = function(accessLevel) {
         return function(req, res, next) {
-            var authToken = req.get("Authorization");
+            const authToken = req.get(Constants.AUTH_HEADER);
 
             console.log("authToken",authToken);
             console.log("accessLevel",accessLevel);
-            if (authToken == null && accessLevel == "anonymous") {
+            if (accessLevel === Constants.ROUTE_ACCESS_ROLE.ANONYMOUS) {
                 console.log("if");
                 CustomLogger.info("executed in accesslevel ");
                 req.loggedInUser = null;

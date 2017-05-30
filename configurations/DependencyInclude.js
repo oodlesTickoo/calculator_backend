@@ -10,6 +10,7 @@ global.async = require('async')
 global.crypto = require('crypto')
 global.uuid = require('node-uuid');
 global.winston = require('winston');
+global.cors = require('cors')
 
 // Database dependencies and Connection setting 
 global.mongoose = require('mongoose');

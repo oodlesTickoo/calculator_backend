@@ -1,13 +1,3 @@
-//add Roles in the system
-var roles = ['ROLE_ANONYMOUS', 'ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN'];
-
-// Add different accessLevels 
-var accessLevels = {
-    'anonymous': ['ROLE_USER', 'ROLE_ANONYMOUS', 'ROLE_ADMIN', 'ROLE_SUPERADMIN'],
-    'user': ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPERADMIN'],
-    'admin': ['ROLE_ADMIN', 'ROLE_SUPERADMIN'],
-    'superadmin': ['ROLE_SUPERADMIN']
-};
 
 var configVariables = function() {
     var config;
@@ -34,8 +24,6 @@ var configVariables = function() {
                 }
 
             };
-            config.roles = roles;
-            config.accessLevels = accessLevels;
             break;
         case 'staging':
             config = {
@@ -53,8 +41,6 @@ var configVariables = function() {
                 verificationEmailSubject: 'Welcome!'
 
             }
-            config.roles = roles
-            config.accessLevels = accessLevels
             break;
         case 'production':
             config = {
@@ -72,8 +58,6 @@ var configVariables = function() {
                 verificationEmailSubject: 'Welcome!'
 
             }
-            config.roles = roles
-            config.accessLevels = accessLevels
             break;
         case 'test':
             config = {
@@ -90,8 +74,6 @@ var configVariables = function() {
                 emailPassword: '!abc@oodles',
                 verificationEmailSubject: 'Welcome!'
             }
-            config.roles = roles
-            config.accessLevels = accessLevels
             break;
     }
     return config;

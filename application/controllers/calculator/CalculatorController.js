@@ -1,5 +1,7 @@
 var CalculatorService = require("../../services/calculator/CalculatorService").CalculatorService;
-
+var FileService = require("../../services/calculator/FileService").FileService;
+var ClientAdvisorService = require("../../services/user/ClientAdvisorService").ClientAdvisorService;
+var UserService = require("../../services/user/UserService").UserService;
 
 module.exports.CalculatorController = (function() {
 
@@ -8,7 +10,7 @@ module.exports.CalculatorController = (function() {
     };
 
     var requestPdf = function(req, res) {
-        CalculatorService.requestPdf(req.body, res);
+        CalculatorService.requestPdf(req.body, req.loggedInUser, res);
     };
 
     var login = function(req, res) {
@@ -32,11 +34,25 @@ module.exports.CalculatorController = (function() {
     };
 
     var getMasterClientList = function(req, res) {
-        CalculatorService.getMasterClientList(req.body, res);
+        CalculatorService.getMasterClientList(res);
     };
 
     var getMasterAdvisorList = function(req, res) {
-        CalculatorService.getMasterAdvisorList(req.body, res);
+        CalculatorService.getMasterAdvisorList(res);
+    };
+    var getFile = function(req, res) {
+        FileService.get(res, Number(req.query.contact_id), req.query.file_format);
+    };
+
+    var upload = function(req, res) {
+        FileService.upload(req.files.file, req.query.contact_id, res);
+    };
+    var linkAdvisorToClient = function(req, res) {
+        CalculatorService.linkAdvisorToClient(Number(req.body.client_id), Number(req.body.advisor_id), res);
+    };
+
+    var customFieldUpdate = function(req, res) {
+        UserService.customFieldUpdate(req.loggedInUser.CONTACT_ID, req.body.custom_field, res);
     };
 
     //public methods are  return
@@ -49,7 +65,11 @@ module.exports.CalculatorController = (function() {
         saveAttachment: saveAttachment,
         getAssignedClientList:getAssignedClientList,
         getMasterClientList:getMasterClientList,
-        getMasterAdvisorList:getMasterAdvisorList
+        getMasterAdvisorList:getMasterAdvisorList,
+        getFile: getFile,
+        upload: upload,
+        linkAdvisorToClient: linkAdvisorToClient,
+        customFieldUpdate: customFieldUpdate
     };
 
 })();

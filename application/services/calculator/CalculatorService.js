@@ -1,3 +1,10 @@
+var UserService = require('./../user/UserService').UserService;
+var AuthService = require('./../user/AuthService').AuthService;
+const Constants = require('./../../../application-utilities/Constants');
+const FieldName = require('./../../../application-utilities/FieldName');
+const path = require('path');
+var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
+
 module.exports.CalculatorService = (function() {
     var pdf = require('html-pdf');
     var fs = require('fs');
@@ -8,7 +15,6 @@ module.exports.CalculatorService = (function() {
     var request = require('request');
     var FormData = require('form-data');
     // require('request-debug')(request);
-
 
     function renderFile(next, fileName, data) {
         ejs.renderFile(configurationHolder.config.publicFolder + fileName, {
@@ -22,8 +28,18 @@ module.exports.CalculatorService = (function() {
         });
     }
 
+    function _getPdfFilePath(contactId){
+        return path.join(__dirname, '..', '..', '..', 'uploads',contactId+'.pdf');
+    }
+
     function generateImage(next, html, imageFileName) {
-        webshot(html, 'uploads/' + imageFileName, { siteType: 'html', shotSize: { width: "all", height: "all" } }, function(err, res) {
+        webshot(html, 'uploads/' + imageFileName, {
+            siteType: 'html',
+            shotSize: {
+                width: "all",
+                height: "all"
+            }
+        }, function(err, res) {
             console.log(err, res);
             if (err) {
                 next(err, null);
@@ -88,13 +104,15 @@ module.exports.CalculatorService = (function() {
             } else {
                 var img = fs.readFileSync(results.image);
                 fs.unlink(results.image);
-                res.writeHead(200, { 'Content-Type': 'image/png' });
+                res.writeHead(200, {
+                    'Content-Type': 'image/png'
+                });
                 res.end(img, 'binary');
             }
         });
     };
 
-    var requestPdf = function(data, res) {
+    var requestPdf = function(data, loggedInUser, res) {
         async.auto({
             webshotIa: function(next, results) {
                 var data = {
@@ -175,30 +193,43 @@ module.exports.CalculatorService = (function() {
                 generateWebShot(next, 'sfc', data);
             },
             pdf: ['webshotIa', 'webshotSFC', function(next, results) {
-                var pdfFileName = (new Date()).getTime() + "-super-calculator.pdf";
+                var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
 
                 console.log("55555555555555555", results.webshotIa, results.webshotSFC);
-                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC);
+                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, loggedInUser);
             }]
         }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", true, 400);
+                configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", false, 200);
             }
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', { image1: image1, image2: image2 }, {}, function(err, html) {
+    function generatePdf(next, pdfFileName, image1, image2, loggedInUser) {
+        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
+            image1: image1,
+            image2: image2
+        }, {}, function(err, html) {
             if (html) {
-                var options = { format: 'Letter', base: 'file://' + __dirname + '/../../../' };
+                var options = {
+                    format: 'Letter',
+                    base: 'file://' + __dirname + '/../../../'
+                };
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {
                         next(err, null);
                     } else {
-                        next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
+                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
+                                next(null, null);
+                            });
+                        }).catch(function(err){
+                            console.log(err)
+                            next(err, null);
+                        });
                     }
                 });
             } else {
@@ -207,8 +238,8 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function createUser(next, data) {
-        var body = {
+    function createUser(data) {
+        /*var body = {
             "FIRST_NAME": data.firstName,
             "LAST_NAME": data.lastName,
             "CONTACTINFOS": [{
@@ -218,7 +249,7 @@ module.exports.CalculatorService = (function() {
                 "TYPE": "EMAIL",
                 "DETAIL": data.email
             }],
-        };
+        };*/
         var options = {
             url: configurationHolder.config.insightly.url,
             headers: {
@@ -226,38 +257,67 @@ module.exports.CalculatorService = (function() {
                 'Content-Type': configurationHolder.config.insightly.contentType
             },
             json: true,
-            body: body,
+            body: data,
             method: "POST"
         };
-        request(options, function(error, response, body) {
-            // console.log('REQUEST RESULTS:', error, response.statusCode, body);
-            if (error) {
-                next(error, null);
-            } else {
-                next(null, body);
-            }
-        });
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                // console.log('REQUEST RESULTS:', error, response.statusCode, body);
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(body);
+                }
+            });
+        })
     }
 
-    function getUser(next, data) {
+    function getUser(mobileNumber) {
         var options = {
-            url: configurationHolder.config.insightly.url + configurationHolder.config.insightly.searchContact + "phone_number=" + data.mobile,
+            url: configurationHolder.config.insightly.url + configurationHolder.config.insightly.searchContact + "phone_number=" + mobileNumber,
             headers: {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function(error, response, body) {
-            if (error) {
-                next(error, null);
-            } else {
-                body = JSON.parse(body);
-                if (body && body.length > 0) {
-                    next(null, body[0]);
+
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
                 } else {
-                    next(null, false);
+                    body = JSON.parse(body);
+                    if (body && body.length > 0) {
+                        resolve(body[0]);
+                    } else {
+                        reject(null);
+                    }
                 }
+            });
+        })
+    }
+
+    function getById(contactId) {
+        var options = {
+            url: configurationHolder.config.insightly.url +'/'+contactId,
+            headers: {
+                'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
-        });
+        };
+
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = JSON.parse(body);
+                    if (body) {
+                        resolve(body);
+                    } else {
+                        reject({'message':'User not found'});
+                    }
+                }
+            });
+        })
     }
 
     function insightlyBody(data) {
@@ -274,7 +334,7 @@ module.exports.CalculatorService = (function() {
         };
     }
 
-    function updateUser(next, data) {
+    function updateUser(data) {
 
         var options = {
             url: configurationHolder.config.insightly.url,
@@ -283,17 +343,19 @@ module.exports.CalculatorService = (function() {
                 'Content-Type': 'application/json'
             },
             json: true,
-            body: insightlyBody(),
+            body: data,
             method: "PUT"
         };
-        request(options, function(error, response, body) {
-            if (error) {
-                next(error, null);
-            } else {
-                body = JSON.parse(body);
-                next(null, body);
-            }
-        });
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    //body = JSON.parse(body);
+                    resolve(body);
+                }
+            });
+        })
     }
 
     function addAttachment(next, data) {
@@ -349,7 +411,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("clientList",clientList);
+                    console.log("clientList", clientList);
                     next(null, clientList);
                 } else {
                     next(null, false);
@@ -375,7 +437,7 @@ module.exports.CalculatorService = (function() {
             } else {
 
                 body = JSON.parse(body);
-                var clientList=[];
+                var clientList = [];
                 if (body && body.length > 0) {
                     var num = 0;
                     for (i = 0; i < body.length; i++) {
@@ -386,7 +448,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("clientList",clientList);
+                    console.log("clientList", clientList);
                     next(null, clientList);
                 } else {
                     next(null, false);
@@ -412,7 +474,7 @@ module.exports.CalculatorService = (function() {
             } else {
 
                 body = JSON.parse(body);
-                var advisorList=[];
+                var advisorList = [];
                 if (body && body.length > 0) {
                     var num = 0;
                     for (i = 0; i < body.length; i++) {
@@ -423,7 +485,7 @@ module.exports.CalculatorService = (function() {
                             num++;
                         }
                     }
-                    console.log("advisorList",advisorList);
+                    console.log("advisorList", advisorList);
                     next(null, advisorList);
                 } else {
                     next(null, false);
@@ -433,25 +495,66 @@ module.exports.CalculatorService = (function() {
     }
 
     var login = function(data, res) {
-        async.auto({
-            user: function(next) {
-                getUser(next, data);
-            },
-            isUserExist: function(next, results) {
-                if (results.user) {
-                    next(null, true);
-                } else {
-                    createUser(next, data);
-                }
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        var phoneNumber = _getPhoneNumberFromUserObject(data);
+        UserService.searchUser(phoneNumber).then(function(searchUser) {
+            if (!searchUser || searchUser.length === 0) {
+                createUser(data).then(function(result) {
+                    return UserService.save(result)
+                }).then(function(result) {
+                    _loginResponseData(result, res);
+                }).catch(function(err) {
+                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+                })
             } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "Login successful", false, 200);
+                _loginResponseData(searchUser[0], res);
             }
-        });
+        })
     };
+
+    function _loginResponseData(userObj, res) {
+        ClientAdvisorService.createClientAdvisor(userObj, function() {
+            var role = _getUserRoleFromUserObject(userObj);
+            var promises = [];
+            promises.push(AuthService.generateAuthToken(userObj));
+            switch (role) {
+                case Constants.USER_ROLE.ADVISOR:
+                    {
+                        promises.push(UserService.clientsOfAnAdvisor(userObj.CONTACT_ID));
+                        break;
+                    }
+                case Constants.USER_ROLE.ADMINISTRATOR:
+                    {
+                        promises.push(UserService.clientsOfAnAdvisor(userObj.CONTACT_ID));
+                        promises.push(UserService.listAdvisorClient());
+                        promises.push(ClientAdvisorService.list());
+                        break;
+                    }
+            }
+            Promise.all(promises).then(function(results) {
+                var returnOnject = {};
+                returnOnject.me = userObj;
+                returnOnject.token = results[0].auth_token;
+                returnOnject.role = role;
+                switch (role) {
+                    case Constants.USER_ROLE.ADVISOR:
+                        {
+                            returnOnject.my_clients = results[1];
+                            break;
+                        }
+                    case Constants.USER_ROLE.ADMINISTRATOR:
+                        {
+                            returnOnject.my_clients = results[1];
+                            returnOnject.advisors = results[2];
+                            returnOnject.clientAdvisor = results[3]
+                            break;
+                        }
+                }
+                configurationHolder.ResponseUtil.responseHandler(res, returnOnject, "Successfully login", false, 200);
+            }).catch(function(err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+            });
+        })
+    }
 
     var getData = function(data, res) {
         async.auto({
@@ -468,17 +571,13 @@ module.exports.CalculatorService = (function() {
     };
 
     var saveData = function(data, res) {
-        async.auto({
-            updateUser: function(next) {
-                updateUser(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "User updated", false, 200);
-            }
-        });
+        updateUser(data).then(function(result) {
+            return UserService.update(data);
+        }).then(function(result) {
+            configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
+        }).catch(function(err) {
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
+        })
     };
 
     var saveAttachment = function(data, res) {
@@ -509,33 +608,108 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var getMasterClientList = function(data, res) {
-        async.auto({
-            masterClientList: function(next) {
-                requestMasterClientList(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "master Client List successfully captured", false, 200);
-            }
-        });
+    var getMasterClientList = function(res) {
+
+        UserService.list('CLIENT').then(function(result) {
+            configurationHolder.ResponseUtil.responseHandler(res, result, "Master Client list successfully captured", false, 200);
+        }).catch(function(err) {
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
     };
 
-    var getMasterAdvisorList = function(data, res) {
-        async.auto({
-            masterAdvisorList: function(next) {
-                requestMasterAdvisorList(next, data);
-            }
-        }, function(err, results) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, results, "User Data successfully captured", false, 200);
-            }
-        });
+    var getMasterAdvisorList = function(res) {
+
+        UserService.listAdvisorClient().then(function(result) {
+            configurationHolder.ResponseUtil.responseHandler(res, result, "User Data successfully captured", false, 200);
+        }).catch(function(err) {
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
+
     };
+
+    function _getPhoneNumberFromUserObject(userObj) {
+        var phoneNumber = null;
+        if (userObj && userObj.CONTACTINFOS) {
+            userObj.CONTACTINFOS.forEach(function(contactInfo) {
+                if (contactInfo.TYPE === 'PHONE') {
+                    phoneNumber = contactInfo.DETAIL;
+                }
+            })
+        }
+        return phoneNumber;
+    }
+
+    function _getUserRoleFromUserObject(userObj) {
+        var role = '';
+        for (var i = 0; i < userObj.CUSTOMFIELDS.length; i++) {
+            if (userObj.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.USER_TYPE) {
+                role = userObj.CUSTOMFIELDS[i].FIELD_VALUE;
+                break;
+            }
+        }
+        return role;
+    }
+
+    function saveAttachmentToInsightly(filePath, contactId) {
+        console.log("File Path", filePath);
+        var options = {
+            url: configurationHolder.config.insightly.url + '/' + contactId + '' + configurationHolder.config.insightly.saveAttachment,
+            headers: {
+                'Authorization': configurationHolder.config.insightly.auth,
+                'Content-Type': 'multipart/form-data'
+            },
+            body: '',
+            method: "POST",
+            formData: {
+                attachments: [
+                    fs.createReadStream(filePath),
+                ]
+            }
+        };
+        return new Promise(function(resolve, reject){
+            request(options, function(error, response, body) {
+                if (error) {
+                    request(error);
+                } else {
+                    body = JSON.parse(body);
+                    console.log(body);
+                    resolve(body);
+                }
+            });
+        });
+    }
+
+    function updateFileToUser(contactId, fileId, filePath, callback){
+        var format = filePath.split('.')[filePath.split('.').length - 1]
+        UserService.updateFile(contactId, fileId, format).then(function(userData){
+            delete userData['_id'];
+            return updateUser(userData);
+        }).then(function(userData){
+            fs.unlinkSync(filePath);
+            callback();
+        }).catch(function(err){
+            console.log("Error ", err)
+            callback()
+        });
+    }
+
+    function linkAdvisorToClient(clientId, advisorId, res) {
+        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result){
+
+            getById(clientId).then(function(clientObj){
+                
+                clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
+                updateUser(clientObj).then(function(results){
+                    
+                    UserService.update(clientObj).then(function(updatedUser){
+                        configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
+                    });
+                })
+            })
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
+    }
 
     //public methods are  return
     return {
@@ -547,7 +721,12 @@ module.exports.CalculatorService = (function() {
         saveAttachment: saveAttachment,
         getAssignedClientList: getAssignedClientList,
         getMasterClientList: getMasterClientList,
-        getMasterAdvisorList: getMasterAdvisorList
+        getMasterAdvisorList: getMasterAdvisorList,
+        saveAttachmentToInsightly: saveAttachmentToInsightly,
+        updateFileToUser: updateFileToUser,
+        getById:getById,
+        updateUser: updateUser,
+        linkAdvisorToClient: linkAdvisorToClient
     };
 
 })();
