@@ -1,6 +1,6 @@
 var FieldName = require('./../../../application-utilities/FieldName');
 module.exports.UserService = (function() {
-
+var request = require('request');
     function save(userObj) {
         return new Promise(function(resolve, reject) {
             var user = _modifyContactObj(userObj);
@@ -200,6 +200,86 @@ module.exports.UserService = (function() {
         return Object.values(map);
     }
 
+    function customFieldUpdate(contactId, customField, res){
+        _getById(contactId).then(function(result){
+            var userObject = _setCustomFieldValue(customField, result);
+            _updateUser(userObject).then(function(result){
+                update(userObject);
+                configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
+            })
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
+    }
+
+    function _setCustomFieldValue(customField, userObject){
+        
+        var fieldAlreadyHave = [];
+        for(var i=0; i< customField.length; i++){
+            for(var j=0; j<userObject.CUSTOMFIELDS.length; j++){
+                if(customField[i].CUSTOM_FIELD_ID === userObject.CUSTOMFIELDS[j].CUSTOM_FIELD_ID){
+                    fieldAlreadyHave.push(customField[i].CUSTOM_FIELD_ID);
+                    userObject.CUSTOMFIELDS[j].FIELD_VALUE = customField[i].FIELD_VALUE;
+                }
+            }
+        }
+
+        for(var i=0; i< customField.length; i++){
+            if(fieldAlreadyHave.indexOf(customField[i].CUSTOM_FIELD_ID) < 0){
+                userObject.CUSTOMFIELDS.push(customField[i]);
+            }
+        }
+        return userObject;
+    }
+
+    function _getById(contactId) {
+        var options = {
+            url: configurationHolder.config.insightly.url +'/'+contactId,
+            headers: {
+                'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
+            }
+        };
+
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = JSON.parse(body);
+                    if (body) {
+                        resolve(body);
+                    } else {
+                        reject({'message':'User not found'});
+                    }
+                }
+            });
+        })
+    }
+
+    function _updateUser(data) {
+
+        var options = {
+            url: configurationHolder.config.insightly.url,
+            headers: {
+                'Authorization': configurationHolder.config.insightly.auth,
+                'Content-Type': 'application/json'
+            },
+            json: true,
+            body: data,
+            method: "PUT"
+        };
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    //body = JSON.parse(body);
+                    resolve(body);
+                }
+            });
+        })
+    }
+
     return {
         save: save,
         update: update,
@@ -207,7 +287,8 @@ module.exports.UserService = (function() {
         list: list,
         listAdvisorClient: listAdvisorClient,
         clientsOfAnAdvisor: clientsOfAnAdvisor,
-        updateFile: updateFile
+        updateFile: updateFile,
+        customFieldUpdate: customFieldUpdate
     }
 
 })();
