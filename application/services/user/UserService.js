@@ -54,7 +54,7 @@ module.exports.UserService = (function() {
 
     function update(userObj){
         return new Promise(function(resolve, reject){
-            db.User.update({'CONTACT_ID': userObj.CONTACT_ID},userObj, function(err, result){
+            domain.User.update({'CONTACT_ID': userObj.CONTACT_ID},userObj, function(err, result){
                 if(!err && result.nModified > 0){
                     resolve(userObj);
                 } else {

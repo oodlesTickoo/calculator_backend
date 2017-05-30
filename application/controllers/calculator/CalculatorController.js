@@ -1,6 +1,6 @@
 var CalculatorService = require("../../services/calculator/CalculatorService").CalculatorService;
 var FileService = require("../../services/calculator/FileService").FileService;
-
+var ClientAdvisorService = require("../../services/user/ClientAdvisorService").ClientAdvisorService;
 
 module.exports.CalculatorController = (function() {
 
@@ -46,6 +46,9 @@ module.exports.CalculatorController = (function() {
     var upload = function(req, res) {
         FileService.upload(req.files.file, req.query.contact_id, res);
     };
+    var linkAdvisorToClient = function(req, res) {
+        CalculatorService.linkAdvisorToClient(Number(req.body.client_id), Number(req.body.advisor_id), res);
+    };
 
     //public methods are  return
     return {
@@ -59,7 +62,8 @@ module.exports.CalculatorController = (function() {
         getMasterClientList:getMasterClientList,
         getMasterAdvisorList:getMasterAdvisorList,
         getFile: getFile,
-        upload: upload
+        upload: upload,
+        linkAdvisorToClient: linkAdvisorToClient
     };
 
 })();

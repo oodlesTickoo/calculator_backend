@@ -296,6 +296,30 @@ module.exports.CalculatorService = (function() {
         })
     }
 
+    function getById(contactId) {
+        var options = {
+            url: configurationHolder.config.insightly.url +'/'+contactId,
+            headers: {
+                'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
+            }
+        };
+
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = JSON.parse(body);
+                    if (body) {
+                        resolve(body);
+                    } else {
+                        reject({'message':'User not found'});
+                    }
+                }
+            });
+        })
+    }
+
     function insightlyBody(data) {
         return {
             "FIRST_NAME": data.firstName,
@@ -669,6 +693,24 @@ module.exports.CalculatorService = (function() {
         });
     }
 
+    function linkAdvisorToClient(clientId, advisorId, res) {
+        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result){
+
+            getById(clientId).then(function(clientObj){
+                
+                clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
+                updateUser(clientObj).then(function(results){
+                    
+                    UserService.update(clientObj).then(function(updatedUser){
+                        configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
+                    });
+                })
+            })
+        }).catch(function(err){
+            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        })
+    }
+
     //public methods are  return
     return {
         webShot: webShot,
@@ -681,7 +723,10 @@ module.exports.CalculatorService = (function() {
         getMasterClientList: getMasterClientList,
         getMasterAdvisorList: getMasterAdvisorList,
         saveAttachmentToInsightly: saveAttachmentToInsightly,
-        updateFileToUser: updateFileToUser
+        updateFileToUser: updateFileToUser,
+        getById:getById,
+        updateUser: updateUser,
+        linkAdvisorToClient: linkAdvisorToClient
     };
 
 })();

@@ -1,5 +1,8 @@
 const FieldName = require('./../../../application-utilities/FieldName');
 const Constants = require('./../../../application-utilities/Constants');
+var CalculatorService = require('./../calculator/CalculatorService').CalculatorService;
+var UserService = require('./UserService').UserService;
+
 module.exports.ClientAdvisorService = (function() {
 
 	function clientAdvisor(clientId, advisorId){
@@ -133,11 +136,30 @@ module.exports.ClientAdvisorService = (function() {
 		})
 	}
 
+	function setAdvisorToClientObject(userObj, advisorId){
+		var flag = false;
+		for(var i=0; i < userObj.CUSTOMFIELDS.length; i++){
+			if(userObj.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.ADVISOR_ID){
+				flag = true;
+				userObj.CUSTOMFIELDS[i].FIELD_VALUE = advisorId;
+				break;
+			}
+		}
+		if(flag === false){
+			userObj.CUSTOMFIELDS.push({
+				CUSTOM_FIELD_ID: FieldName.ADVISOR_ID,
+				FIELD_VALUE: advisorId
+			});
+		}
+		return userObj;
+	}
+
 	return {
 		clientAdvisor: clientAdvisor,
 		createClientAdvisor: createClientAdvisor,
 		groupByAdvisor: groupByAdvisor,
-		list: list
+		list: list,
+		setAdvisorToClientObject: setAdvisorToClientObject
 	}
 
 })();
