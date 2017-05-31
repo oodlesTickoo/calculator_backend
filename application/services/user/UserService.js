@@ -1,4 +1,7 @@
 var FieldName = require('./../../../application-utilities/FieldName');
+var ClientAdvisorService = require('./ClientAdvisorService').ClientAdvisorService;
+const Constants = require('./../../../application-utilities/Constants');
+
 module.exports.UserService = (function() {
 var request = require('request');
     function save(userObj) {
@@ -280,6 +283,44 @@ var request = require('request');
         })
     }
 
+    function dataForHomePage(loggedUser, res){
+            var promises = [];
+            switch (loggedUser.ROLE) {
+                case Constants.USER_ROLE.ADVISOR:
+                    {
+                        promises.push(clientsOfAnAdvisor(loggedUser.CONTACT_ID));
+                        break;
+                    }
+                case Constants.USER_ROLE.ADMINISTRATOR:
+                    {
+                        promises.push(clientsOfAnAdvisor(loggedUser.CONTACT_ID));
+                        promises.push(listAdvisorClient());
+                        promises.push(ClientAdvisorService.list());
+                        break;
+                    }
+            }
+            Promise.all(promises).then(function(results) {
+                var returnOnject = {};
+                switch (loggedUser.ROLE) {
+                    case Constants.USER_ROLE.ADVISOR:
+                        {
+                            returnOnject.my_clients = results[0];
+                            break;
+                        }
+                    case Constants.USER_ROLE.ADMINISTRATOR:
+                        {
+                            returnOnject.my_clients = results[0];
+                            returnOnject.advisors = results[1];
+                            returnOnject.clientAdvisor = results[2]
+                            break;
+                        }
+                }
+                configurationHolder.ResponseUtil.responseHandler(res, returnOnject, "Successfully login", false, 200);
+            }).catch(function(err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+            });
+    }
+
     return {
         save: save,
         update: update,
@@ -288,7 +329,8 @@ var request = require('request');
         listAdvisorClient: listAdvisorClient,
         clientsOfAnAdvisor: clientsOfAnAdvisor,
         updateFile: updateFile,
-        customFieldUpdate: customFieldUpdate
+        customFieldUpdate: customFieldUpdate,
+        dataForHomePage: dataForHomePage
     }
 
 })();

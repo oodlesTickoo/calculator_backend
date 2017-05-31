@@ -16,7 +16,7 @@ module.exports.AuthorizationMiddleware = (function() {
             authorized = true
             req.loggedInUser = {
                 CONTACT_ID: results.authorizationTokenObject.contact_id,
-                ROLE: results.authorizationTokenObject.contact_id,
+                ROLE: results.authorizationTokenObject.role,
                 FIRST_NAME: results.authorizationTokenObject.first_name,
                 LAST_NAME: results.authorizationTokenObject.last_name
             }
