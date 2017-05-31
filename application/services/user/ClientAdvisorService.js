@@ -103,7 +103,41 @@ module.exports.ClientAdvisorService = (function() {
 	function list() {
 		return new Promise(function(resolve, reject){
 			domain.ClientAdvisor.find({}, function(err, data){
-				resolve(data);
+				var ids = data.map(function(e){
+					return e.client.CONTACT_ID;
+				})
+				var query = {
+					'$match': {
+						'CONTACT_ID': {
+							'$nin': ids
+						},
+						'CUSTOMFIELDS': {
+                    		'$elemMatch': {
+                        		'CUSTOM_FIELD_ID': FieldName.USER_TYPE,
+                        		'FIELD_VALUE': Constants.USER_ROLE.CLIENT
+                    		}
+                		}
+					}
+				}
+				var group = {
+					'$group' : {
+						'_id':null,
+						clients: {
+							'$push': {
+								client:{
+									CONTACT_ID: '$CONTACT_ID',
+									FIRST_NAME: '$FIRST_NAME',
+									LAST_NAME: '$LAST_NAME'
+								}
+							}
+						}
+					}
+				}
+
+				domain.User.aggregate([query, group], function(err, result){
+					var resultData = (result && result[0] && result[0].clients)? data.concat(result[0].clients):data;
+					resolve(resultData);
+				})
 			})
 		})
 	}
