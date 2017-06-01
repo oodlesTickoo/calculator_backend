@@ -18,7 +18,14 @@ module.exports.FileService = (function() {
             		},
             		method: "GET"
         		};
-        		request(options).pipe(res);
+        		if(format === 'pdf'){
+        			request(options).pipe(res);
+        		}else{
+        			var fileName = contactId+'_'+ new Date().getTime() + '_download.docx';
+        			request(options).pipe(fs.createWriteStream(_getPdfFilePath(fileName)));
+        			configurationHolder.ResponseUtil.responseHandler(res, {'file': fileName}, 'File url', false, 200);		
+        		}
+        		
 			} else {
                 configurationHolder.ResponseUtil.responseHandler(res, {}, 'File not found', true, 400);
 			}
@@ -39,6 +46,7 @@ module.exports.FileService = (function() {
     			'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.FILE_ID
     		};
     	} else {
+    		console.log('DOC FILE')
     		query = {
     			'CONTACT_ID': contactId,
     			'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.DOC_FILE
@@ -47,6 +55,7 @@ module.exports.FileService = (function() {
 
     	domain.User.findOne(query, project, function(err, doc){
     		fileId = (doc && doc.CUSTOMFIELDS.length > 0)? doc.CUSTOMFIELDS[0].FIELD_VALUE: '';
+    		console.log('File id')
     		callback(fileId);
     	});
     }
@@ -81,9 +90,22 @@ module.exports.FileService = (function() {
         });
     }
 
+    function isfileExists(contactId, format, res) {
+    	
+    	_getFileId(contactId, format, function(result){
+    		if(result === '' || !result){
+    			configurationHolder.ResponseUtil.responseHandler(res, {'status': false}, 'File not exists', true, 400);
+
+    		}else{
+    			configurationHolder.ResponseUtil.responseHandler(res, {'status': true}, 'File exists', false, 200);
+    		}
+    	})
+    }
+
     return {
     	get: get,
-    	upload: upload
+    	upload: upload,
+    	isfileExists: isfileExists
     }
 
 })();

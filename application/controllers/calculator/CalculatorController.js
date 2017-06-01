@@ -55,6 +55,10 @@ module.exports.CalculatorController = (function() {
         UserService.customFieldUpdate(req.loggedInUser.CONTACT_ID, req.body.custom_field, res);
     };
 
+    var isFileExists = function(req, res) {
+        FileService.isfileExists(req.loggedInUser.CONTACT_ID, req.query.format, res);
+    };
+
     //public methods are  return
     return {
         webShot: webShot,
@@ -69,7 +73,8 @@ module.exports.CalculatorController = (function() {
         getFile: getFile,
         upload: upload,
         linkAdvisorToClient: linkAdvisorToClient,
-        customFieldUpdate: customFieldUpdate
+        customFieldUpdate: customFieldUpdate,
+        isFileExists: isFileExists
     };
 
 })();
