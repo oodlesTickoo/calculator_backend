@@ -21,6 +21,10 @@ var configVariables = function() {
                     searchContact:'/Search?',
                     saveAttachment:'/FileAttachments',
                     auth: 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
+                },
+                hubspot:{
+                    url:'https://api.hubapi.com',
+                    hapikey: 'a359482e-a30d-42c1-bcf2-fcc727eb50fe'
                 }
 
             };

@@ -22,10 +22,11 @@ module.exports.FileService = (function() {
         			request(options).pipe(res);
         		}else{
         			var fileName = contactId+'_'+ new Date().getTime() + '_download.docx';
-        			request(options).pipe(fs.createWriteStream(_getPdfFilePath(fileName)));
-        			configurationHolder.ResponseUtil.responseHandler(res, {'file': fileName}, 'File url', false, 200);		
+        			var stream = request(options).pipe(fs.createWriteStream(_getPdfFilePath(fileName)));
+        			stream.on('finish', function () {
+        				configurationHolder.ResponseUtil.responseHandler(res, {'file': fileName}, 'File url', false, 200);
+        			});		
         		}
-        		
 			} else {
                 configurationHolder.ResponseUtil.responseHandler(res, {}, 'File not found', true, 400);
 			}

@@ -21,5 +21,10 @@ module.exports = {
 		'ADVISOR': 'ADVISOR',
 		'CLIENT_ADVISOR': 'CLIENT_ADVISOR'
 	},
-	AUTH_HEADER: 'Authorization'
+	AUTH_HEADER: 'Authorization',
+
+	HOBSPOT_URL: {
+		CONTACT: '/contacts/v1/contact/',
+		EMAIL_SEARCH: '/contacts/v1/contact/emails/batch/'
+	}
 }

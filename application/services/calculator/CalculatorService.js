@@ -1,5 +1,6 @@
 var UserService = require('./../user/UserService').UserService;
 var AuthService = require('./../user/AuthService').AuthService;
+var HubspotService = require('./HubspotService').HubspotService;
 const Constants = require('./../../../application-utilities/Constants');
 const FieldName = require('./../../../application-utilities/FieldName');
 const path = require('path');
@@ -495,10 +496,13 @@ module.exports.CalculatorService = (function() {
     }
 
     var login = function(data, res) {
+        /*HubspotService.save(data);
+        return;*/
         var phoneNumber = _getPhoneNumberFromUserObject(data);
         UserService.searchUser(phoneNumber).then(function(searchUser) {
             if (!searchUser || searchUser.length === 0) {
                 createUser(data).then(function(result) {
+                    //HubspotService.save(result);
                     return UserService.save(result)
                 }).then(function(result) {
                     _loginResponseData(result, res);
