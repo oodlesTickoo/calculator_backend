@@ -1,6 +1,7 @@
 var FieldName = require('./../../../application-utilities/FieldName');
 var ClientAdvisorService = require('./ClientAdvisorService').ClientAdvisorService;
 const Constants = require('./../../../application-utilities/Constants');
+const HubspotService = require('./../calculator/HubspotService').HubspotService;
 
 module.exports.UserService = (function() {
 var request = require('request');
@@ -205,8 +206,10 @@ var request = require('request');
 
     function customFieldUpdate(contactId, customField, res){
         _getById(contactId).then(function(result){
+            HubspotService.update(result, customField);
             var userObject = _setCustomFieldValue(customField, result);
             _updateUser(userObject).then(function(result){
+                HubspotService.
                 update(userObject);
                 configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
             })

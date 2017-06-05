@@ -18,7 +18,8 @@ module.exports.AuthorizationMiddleware = (function() {
                 CONTACT_ID: results.authorizationTokenObject.contact_id,
                 ROLE: results.authorizationTokenObject.role,
                 FIRST_NAME: results.authorizationTokenObject.first_name,
-                LAST_NAME: results.authorizationTokenObject.last_name
+                LAST_NAME: results.authorizationTokenObject.last_name,
+                EMAIL: results.authorizationTokenObject.email
             }
             next(results, authorized)
         } else{

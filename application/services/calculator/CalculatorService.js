@@ -224,6 +224,7 @@ module.exports.CalculatorService = (function() {
                         next(err, null);
                     } else {
                         saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
+                            HubspotService.uploadFile('ope@hubspot.com', _getPdfFilePath(loggedInUser.CONTACT_ID));
                             updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
                                 next(null, null);
                             });
@@ -496,13 +497,23 @@ module.exports.CalculatorService = (function() {
     }
 
     var login = function(data, res) {
-        /*HubspotService.save(data);
-        return;*/
         var phoneNumber = _getPhoneNumberFromUserObject(data);
+        /**
+        * Search user by phone number on local db
+        */
         UserService.searchUser(phoneNumber).then(function(searchUser) {
             if (!searchUser || searchUser.length === 0) {
+                /**
+                * Save user on insightly
+                */
                 createUser(data).then(function(result) {
-                    //HubspotService.save(result);
+                    /**
+                    * Save user on Hotspot
+                    */
+                    HubspotService.save(data);
+                    /**
+                    * Save user on local DB
+                    */
                     return UserService.save(result)
                 }).then(function(result) {
                     _loginResponseData(result, res);
@@ -689,7 +700,7 @@ module.exports.CalculatorService = (function() {
             delete userData['_id'];
             return updateUser(userData);
         }).then(function(userData){
-            fs.unlinkSync(filePath);
+            //fs.unlinkSync(filePath);
             callback();
         }).catch(function(err){
             console.log("Error ", err)
@@ -703,8 +714,17 @@ module.exports.CalculatorService = (function() {
             getById(clientId).then(function(clientObj){
                 
                 clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
+                /**
+                * Update advisor on insightly
+                */
                 updateUser(clientObj).then(function(results){
-                    
+                    /**
+                    * Update advisor on hubspot
+                    */
+                    HubspotService.updateAdvisor(clientObj, advisorId);
+                    /**
+                    * Update advisor on local DB
+                    */
                     UserService.update(clientObj).then(function(updatedUser){
                         configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
                     });

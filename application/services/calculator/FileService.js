@@ -1,5 +1,6 @@
 const FieldName = require('./../../../application-utilities/FieldName');
 const CalculatorService = require('./CalculatorService').CalculatorService;
+const HubspotService = require('./HubspotService').HubspotService;
 
 module.exports.FileService = (function() {
 
@@ -82,6 +83,7 @@ module.exports.FileService = (function() {
 
     function _updateFile(fileName, contactId, res){
     	CalculatorService.saveAttachmentToInsightly(_getPdfFilePath(fileName),contactId).then(function(fileData){
+            HubspotService.saveFile(_getPdfFilePath(fileName), contactId);
             CalculatorService.updateFileToUser(contactId, fileData.FILE_ID, _getPdfFilePath(fileName), function(){
                 configurationHolder.ResponseUtil.responseHandler(res, {}, 'Success', false, 200);
             });
