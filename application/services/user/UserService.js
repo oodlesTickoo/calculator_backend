@@ -201,7 +201,9 @@ var request = require('request');
                 }
             })
         })
-        return Object.values(map);
+        return Object.keys(map).map(function(key) {
+            return map[key];
+        });
     }
 
     function customFieldUpdate(contactId, customField, res){
