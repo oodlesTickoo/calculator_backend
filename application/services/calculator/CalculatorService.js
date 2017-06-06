@@ -65,6 +65,18 @@ module.exports.CalculatorService = (function() {
             case 'ttr':
                 fileName = 'indexTTR.ejs';
                 break;
+            case 'sso':
+                fileName = 'indexSSO.ejs';
+                break;
+            case 'psf':
+                fileName = 'indexPSF.ejs';
+                break;
+            case 'aa':
+                fileName = 'indexAsset.ejs';
+                break;
+            case 'it':
+                fileName = 'indexIT.ejs';
+                break;
         }
         return fileName;
     }

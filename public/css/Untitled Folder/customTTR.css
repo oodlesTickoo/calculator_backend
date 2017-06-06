@@ -1,75 +1,19 @@
 .otrp-calculator{
-	    display: block;
-	    max-width: 900px;
-	    /*border: 1px solid #e2e2e2;*/
-	    font-size: 12px;
-	    line-height: normal;
-		/*margin-top:20px;*/
-        -webkit-print-color-adjust: exact;
-        margin-left:0px;
+	display: block;
+    max-width: 614px;
+    /*border: 1px solid #e2e2e2;*/
+    font-size: 12px;
+    line-height: normal;
+    /*margin-top: 20px;*/
+    margin-left:0;
+    -webkit-print-color-adjust: exact;
 }
 .otrp-clear
 {
 	clear: both;
 }
-
-.option-l-btn:focus,.option-r-btn:focus {
-  color:#333 !important;
-}
-
-.option-r-btn{
-    height: 22px !important;
-    width: 51px;
-    padding: 0;
-    font-size: 12px;
-    border-radius: 0;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-     
-  font-weight: bold;
-  border: 1px solid #ccc;
-
-  background-color: white !important;
-  color:black; 
-  opacity: 1;
-}
-.option-l-btn[disabled], .option-r-btn[disabled]{
-     background-color: #6F7070 !important;
-  color:white; 
-  opacity: 1;
-}
-
-.option-btn-disabled{
-    background-color: white !important;
-  color:black; 
-  opacity: 1;
-}
-.option-l-btn{
-    height: 22px !important;
-    margin-left: 10px;
-    width: 51px;
-    padding: 0;
-    font-size: 12px;
-    border-radius: 0;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-          
-  font-weight: bold;
-  border: 1px solid #ccc;
-
-  background-color: white !important;
-  color:black; 
-  opacity: 1;
-}
-.option-l-btn:hover, .option-r-btn:hover{
-  border-color: #6F7070;
-  background-color: #6F7070 !important;
-  cursor: -webkit-grab;
-  color:white;
-}
-
 .title{
-    padding: 11px 0px;
+	padding: 11px 0px;
     position: relative;
     z-index: 1;
     background-color: white;
@@ -86,28 +30,37 @@
 }
 .info-icon{
     background:  url("../images/info-icon.png") no-repeat;
-    background-color: #91B6BE !important;
+        background-color: #91B6BE !important;
         width: 26px;
     height: 26px;
 }
-.email-icon{
+i.fa-floppy-o{
+      background-color: #fff;
+    color: #91b6be;
+    font-size:28px;
+}
+.save-button{
+  padding:0px !important;
+}
+/*.email-icon{
 	  margin-top:2px;
     background: url("../images/email-icon.png") no-repeat;
-    background-color: #91B6BE !important;
+       background-color: #91B6BE !important;
         width: 26px;
     height: 21px;
-}
+}*/
 .print-icon{
     background: url("../images/printer-icon.png") no-repeat;
-    background-color: #91B6BE !important;
+        background-color: #91B6BE !important;
         width: 25px;
     height: 29px;
 }
-.button{
+.buttons{
     border: none;
     cursor: pointer;
     margin-right: 5px;
     float: right;
+
 }
 /************ input div**************/
 .content{
@@ -130,7 +83,7 @@
 	margin-left: 10px;
 	color: #666666 !important;
     background-color: #efefef !important;
-    font-size: 17px;
+    font-size: 20px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
@@ -169,13 +122,11 @@
 }
 
 .input-div .row{
-    /*padding: 10px 5px 10px 5px;*/
     padding: 10px 5px 10px 0px;
 }
 .title-div{
     background: #efefef !important;
 		padding:5px !important;
-    border-bottom: 1px solid #CCCCCC;
 }
 .amount-header{
     font-size: 12px;
@@ -199,7 +150,7 @@
     margin: 0;
     color: #666666 !important;
     background-color: #efefef !important;
-    font-size: 17px;
+    font-size: 20px;
 }
 .result-div{
     background-color: #FFF;
@@ -274,24 +225,11 @@ hr{
 .submit-btn{
 	margin-bottom:10px;
 	display:block;
-	margin:auto;
+	margin:auto
 }
 
 form.ttr-form{
-}
-form.form-1,form.form-2,form.form-3,form.form-4,form.form-5,form.form-6{
-  -webkit-transition: max-height 0.9s ease-in;
-  -o-transition: max-height 0.9s ease-in;
-  -moz-transition: max-height 0.9s ease-in;    
-  transition: max-height 0.9s ease-in;
-  max-height: 1600px;
-  overflow: hidden;
-    
-}
-form.menuDrop{
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.9s ease-out;
+	//padding:10px;
 }
 
 span.required{
@@ -317,7 +255,7 @@ span.pension-note{
 }
 
 .ttr-note{
-	color: #88C2E8;
+	color: cornflowerblue;
 	padding: 0px !important;
 	padding-left: 15px !important;
 	font-size: 10px;
@@ -328,17 +266,18 @@ span.pension-note{
 }
 .form-control{
 	border-radius: 0px;
-      font-size: 12px;
+        font-size: 12px;
           height: 26px;
-             padding: 0px;
-             padding-left:3px;
+          padding: 6px 6px !important;
 }
 
 .err-border .input-group-addon{
-	border-color: #ff4d4d;
+	border-color: #66afe9;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
 }
 .err-border .form-control{
-	border-color: #ff4d4d;
+	border-color: #66afe9;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
 }
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
@@ -386,6 +325,7 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 .information-overlay{
+	  margin-top:20px;
     position: absolute;
     visibility: hidden;
     top: 1%;
@@ -397,17 +337,99 @@ input[type=number] {
     font-family: Helvetica, Verdana, Arial, Sans-serif;
     font-size: 13px;
     text-align: left;
-    margin-left: 0px;
+    margin-left: -10px;
     margin-right: 10px;
     max-width:600px;
-		margin-top:20px;
 }
 .closeInfo{
     background: url("../images/infoboxclose.png") no-repeat;
     width: 25px;
     height: 25px;
     border:0;
-		float : right;
+		float: right;
+}
+.info-title{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.info-title h2{
+    margin:0;
+}
+.info-content p{
+    margin-top: 15px;
+}
+.unattainable-thp-error{
+	margin-top:10px;
+	font-size:10px;
+	color:crimson;
+}
+.attainable-thp{
+	margin-top:10px;
+	font-size:10px;
+	color:cornflowerblue;
+}
+button:focus{
+	outline:0 !important;
+}
+
+@media only screen
+  /*and (min-device-width: 320px)*/
+  and (max-device-width: 321px){
+		ul.uib-datepicker-popup{
+			/*left:-140px !important;*/
+		}
+	}
+
+@media only screen
+	  and (min-device-width: 322px)
+		and (max-device-width: 360px)
+		{
+			ul.uib-datepicker-popup{
+				/*left:-120px !important;*/
+			}
+	}
+
+	@media only screen
+		  and (min-device-width: 361px)
+			and (max-device-width: 399px)
+			{
+				ul.uib-datepicker-popup{
+					/*left:-110px !important;*/
+				}
+		}
+
+		@media only screen
+				and (min-device-width: 400px)
+				and (max-device-width: 450px)
+				{
+					ul.uib-datepicker-popup{
+						/*left:-80px !important;*/
+					}
+			}
+
+.information-overlay{
+    position: absolute;
+    visibility: hidden;
+    top: 1%;
+    height: 98%;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 0;
+    box-shadow: 3px 3px 3px #7E7E7E;
+    font-family: Helvetica, Verdana, Arial, Sans-serif;
+    font-size: 13px;
+    text-align: left;
+    margin-left: -10px;
+    margin-right: 10px;
+    max-width:600px;
+        margin-top:20px;
+}
+.closeInfo{
+    background: url("../images/infoboxclose.png") no-repeat;
+    width: 25px;
+    height: 25px;
+    border:0;
+        float : right;
 }
 .info-title{
     margin-top: 15px;
@@ -425,15 +447,15 @@ input[type=number] {
     margin-bottom:10px;
   }
 
-	.unattainable-thp-error{
-	margin-top:10px;
-	font-size:10px;
-	color:crimson;
+    .unattainable-thp-error{
+    margin-top:10px;
+    font-size:10px;
+    color:crimson;
 }
 .attainable-thp{
-	margin-top:10px;
-	font-size:10px;
-	color:cornflowerblue;
+    margin-top:10px;
+    font-size:10px;
+    color:cornflowerblue;
 }
 
 .strategy{
@@ -463,69 +485,69 @@ input[type=number] {
         padding-right: 0;
 }
 .get-in-touch{
-    background-color: #91B6BE !important;;
+        background-color: #91B6BE !important;
     color: #fff !important;
     border-radius: 0;
     border:0px;
 }
 .comp-logo{
-  display:block;
-  margin:0 auto;
     /*float:right;*/
+    display:block;
+    margin:0 auto;
 }
 @media only screen
   /*and (min-device-width: 320px)*/
   and (max-device-width: 321px){
-		ul.uib-datepicker-popup{
-			left:-140px !important;
-		}
-	}
+        ul.uib-datepicker-popup{
+            /*left:-140px !important;*/
+        }
+    }
 
 @media only screen
-	  and (min-device-width: 322px)
-		and (max-device-width: 360px)
-		{
-			ul.uib-datepicker-popup{
-				left:-120px !important;
-			}
-	}
+      and (min-device-width: 322px)
+        and (max-device-width: 360px)
+        {
+            ul.uib-datepicker-popup{
+                /*left:-120px !important;*/
+            }
+    }
 
-	@media only screen
-		  and (min-device-width: 361px)
-			and (max-device-width: 399px)
-			{
-				ul.uib-datepicker-popup{
-					left:-110px !important;
-				}
-		}
+    @media only screen
+          and (min-device-width: 361px)
+            and (max-device-width: 399px)
+            {
+                ul.uib-datepicker-popup{
+                    /*left:-110px !important;*/
+                }
+        }
 
-		@media only screen
-				and (min-device-width: 400px)
-				and (max-device-width: 450px)
-				{
-					ul.uib-datepicker-popup{
-						left:-80px !important;
-					}
-			}
+        @media only screen
+                and (min-device-width: 400px)
+                and (max-device-width: 450px)
+                {
+                    ul.uib-datepicker-popup{
+                        /*left:-80px !important;*/
+                    }
+            }
 
 
 .res-1{
     background-color: #6F7070!important;
     color: white;
     /*margin: 10px;*/
-    margin:-6px 0px;
+    margin:4px 0px;
     padding: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 15px;
 }
 .res-2{
     background-color: #ddd;
-    margin: 10px 0px;
+    margin: 4px 0px;
     padding: 10px;
     color: #666;
+    font-size: 11px;
     font-weight: bold;
     margin-top: 15px;
 }
-
 
 .res-1  .row{
   font-size: 12px;
@@ -535,20 +557,18 @@ input[type=number] {
 }
 
 .res-2 > .col-xs-12 > .row > .col-xs-6{
-    padding: 5px 0px 5px 0;
+    padding: 5px 5px 5px 0;
 }
 .divider{
-    border-top: 1px solid #a3a3a3;
+    border-top: 1px solid #444;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 .res-value{
-    /*font-size: 16px;*/
-    font-size:14px;
+    font-size: 16px;
         /*text-align: right;*/
         padding-left: 0;
         padding-right: 5px;
-        text-align: right;
 }
 .res-diff{
     /*font-size: 36px;*/
@@ -556,18 +576,11 @@ input[type=number] {
     margin-top: 4px;
     margin-bottom: -8px;
 }
-.value2{
-  font-size:14px !important;
-  text-align:right;
-}
 .res-head{
     /*padding-top: 3px;*/
     /*padding-bottom: 3px;*/
     padding-left: 0;
-    padding-right: 0px;
-    font-size: 13px;
-    text-transform: capitalize;
-    font-weight: normal;
+    padding-right: 5px;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
@@ -577,23 +590,11 @@ input[type=number] {
     text-transform: capitalize;
 }
 .res-2 strong{
-    font-size: 18px;
+    font-size: 14px;
     text-transform: capitalize;
-    font-weight: normal;
-}
-.res-head-value{
-      font-size: 25px;
-        /*text-align: right;*/
-        padding-left: 0;
-        padding-right: 5px;
-}
-.res-des{
-  font-size: 13px;
-  text-transform: capitalize;
-  font-weight: normal;
 }
 #container .highcharts-container{
-    margin-top:0px;
+    margin-top:10px;
 }
 
 .button-wrapper{
@@ -837,7 +838,7 @@ p.thpError-text{
 }
 
 .chart-buttons-row button{
-  background-color:#91B6BE !important;
+      background-color: #91B6BE !important;
   color:#fff;
   border-radius:0 !important;
   outline:none;
@@ -846,7 +847,7 @@ p.thpError-text{
 
 .chart-buttons-row button:hover,.chart-buttons-row button:active,.chart-buttons-row button:focus,.chart-buttons-row button:visited{
   color:#fff; !important;
-  background-color: #91B6BE !important;
+      background-color: #91B6BE !important;
   border:1px solid #ddd !important;
   outline:none !important;
 }
@@ -854,7 +855,6 @@ p.thpError-text{
 .print-btn button{
 float:right;
 }
-
 
 ///////////////////////
 
@@ -896,14 +896,13 @@ float:right;
     background: -o-linear-gradient(#263C40, #91B6BE); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#263C40, #91B6BE); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#263C40, #91B6BE); /* Standard syntax */
-    /*background-color: #91B6BE !important;*/
 }
 
 .form-group .noUi-origin{
   border-radius:0px !important;
 }
 
-@media (max-width: 767px){
+@media(max-width: 767px){
   .print-dup{
     display : inline-block !important;
     float:right !important;
@@ -913,106 +912,76 @@ float:right;
   }
 }
 
-
-.second-row-mobile{
-    padding-top:0 !important;
-}
-.first-row-mobile{
-  padding-bottom:0 !important;
-  padding-top:25px !important;
-}
-
-.next-btn{
-      background-color: #91B6BE !important;
-          border-radius: 0;
-    border-color: #91B6BE;
-    width: 60px;
-    height: 25px;
-    float: right;
-    padding:0;
-    font-size: 12px;
-    font-weight: bold;
-}
-.next-btn:hover{
-  border-color: #91B6BE;
-}
-.next-btn:active{
-  border-color: #91B6BE;
-}
-
-.img-btn{
-  background:  url("../images/chevron-up.png") no-repeat;
-
-  width: 18px;
-  height: 11px;
-
-}
-
-.img-btn-div{
-  height: 22px;
-    display: inline-block;
-      float: right;
-
-}
-
 .form-heading{
   font-family: "Roboto", Helvetica, Verdana, Arial, Sans-serif;
-  font-weight : 300;
-  color : #444;
-  text-transform: capitalize;
+  font-weight : 300 !important;
+  color : #444 !important;
 }
 
 .input-group-addon{
   padding:4px 10px;
 }
+.kum{
+  background-color: #91B6BE;
+  position: relative;
+  display: inline-block;
+  width: 14px;
+    height: 14px;
+    text-align: center;
+    border-radius: 12px;
+
+}
+i{
+  background-color: #91B6BE;
+  color: #fff;
+
+}
+
+.tooltip-inner {
+    max-width: 320px;
+    /* If max-width does not work, try using width instead */
+    width: 400px; 
+    background-color: #f2f2f2;
+    color: #595959;
+    padding: 15px;
+    text-align: left;
+    left: 100px;
+
+}
+.form-heading label{
+  font-weight: normal;
+}
+.tooltip.top .tooltip-arrow {
+display: none;
+}
 
 @media print{
-  #container .highcharts-container {
-    margin-top: 10px;
-}
- #donutContainer .highcharts-container {
-    margin-top: 50px;
-    margin-left:10px;
-}
-.secondChart{
-  page-break-inside: avoid;
-}
+
+  #chartBox{
+    padding-top: 35px;
+    margin-left: 10px;
+  }
 }
 
+.tooltip.in{opacity:1!important;}
 
-
-.optionDrop{
-  /*max-height: 0 !important;
-  overflow: hidden !important;
-  transition: max-height 0.5s ease-out !important;
-  padding-top: 0 !important;
-    padding-bottom: 0 !important;*/
-    display: none;
+.largeWidth{
+  margin-top: 35px !important;
+}
+/*.highcharts-container{
+  padding-top: 10px !important;
+}
+*/
+svg{
+  padding-top: 10px !important;
 }
 
-i.fa-floppy-o{
-      background-color: #fff;
-    color: #91b6be;
-    font-size:28px;
+.form-control{
+  width:114% !important;
 }
-.save-button{
-  padding:0px !important;
+.dob-input{
+  width:100% !important;
 }
-
-.wpText{
-      text-align: center;
-    font-size: 16px;
-    color: #666;
-    background-color: #ddd;
-    line-height: 32px;
-    /*width: 500px;*/
-    margin: 0 auto;
-}
-
-.scenerio-info{
-  padding: 15px 15px 5px 15px;
-  display: block;
-  font-size: 11px;
-  font-weight: bold;
-  color:#4c4c4c;
+.slider-common{
+  padding-left: 25px
 }
