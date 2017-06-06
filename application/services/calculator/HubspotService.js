@@ -153,15 +153,17 @@ module.exports.HubspotService = (function() {
     }
 
     function updateAdvisor(userObj, advisorId){
-    	var pro = {
-    		'properties':[
-    			{
-    				'property': Fields.CONTACT_FIELD_151,
-    				'value': advisorId
-    			}
-    		]
-    	};
-    	_updateToHotspot(_getEmail(userObj), pro);
+    	_getHubspotContactByInsightlyContactId(advisorId).then(function(hubspotContactObject){
+    		var pro = {
+    			'properties':[
+	    			{
+    					'property': Fields.CONTACT_FIELD_151,
+    					'value': hubspotContactObject[Object.keys(hubspotContactObject)[0]].vid
+    				}
+    			]
+    		};
+    		_updateToHotspot(_getEmail(userObj), pro);
+    	})
     }
 
     function _updateToHotspot(email, data){
@@ -176,6 +178,25 @@ module.exports.HubspotService = (function() {
 				});
 			}
 		})
+    }
+
+    function _getHubspotContactByInsightlyContactId(insightlyContactId){
+    	return new Promise(function(resolve, reject){
+    		domain.User.findOne({CONTACT_ID: Number(insightlyContactId+'')}, function(err, localDbConatct){
+    			if(localDbConatct){
+    				var url = Constants.HOBSPOT_URL.EMAIL_SEARCH + '?email='+ _getEmail(localDbConatct) + '&' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
+					_callToHubspot(GET, url, null).then(function(hubspotContactObject){
+						if(hubspotContactObject && Object.keys(hubspotContactObject).length > 0){
+							resolve(hubspotContactObject);
+						} else{
+							reject({message: 'No contact found'});
+						}
+					})
+    			} else {
+    				reject({message: 'No contact found'});
+    			}
+    		})
+    	});
     }
 
     function update(userObj, data){
