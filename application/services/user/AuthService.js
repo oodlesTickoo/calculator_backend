@@ -8,7 +8,7 @@ module.exports.AuthService = (function() {
 				contact_id: userObj.CONTACT_ID,
 				first_name:userObj.FIRST_NAME,
 				last_name:userObj.LAST_NAME,
-				email: _getEmailUserObject,
+				email: _getEmailUserObject(userObj),
 				auth_token:uuid.v1()
 			};
 			var auth = new domain.AuthenticationToken(authObj);
