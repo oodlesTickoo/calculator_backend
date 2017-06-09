@@ -255,7 +255,7 @@ app.controller("RAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
 
         var count = 0;
 
-        while (balanceIndexed >= 0) {
+        while (balanceIndexed >= 0 && (leMember1>count || leMember2>count)) {
             cpi = Math.pow(1 + (inflation / 100), year);
             adjustedSalary = ageL < retirementAge ? annualSalary * Math.pow(1 + (wageIncrease / 100), year) : 0;
             if (year === 0) {
@@ -381,9 +381,15 @@ app.controller("RAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
         var temp, temp2, temp3, deemingRate;
 
         if ($scope.spouseOption) {
-            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40300 : 80600;
+            //deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40300 : 80600;
+            deemingRate = (($scope.age < $scope.pensionStart) && ($scope.ageSpouse < $scope.pensionStartSpouse)) ? 40800 : 81600;
         } else {
-            deemingRate = 48600;
+            //deemingRate = 48600;
+            deemingRate = 49200;
+        }
+
+        if(superFunds < 0){
+          superFunds = 0;
         }
 
 
@@ -425,7 +431,8 @@ app.controller("RAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
             }
         }
 
-        var maxAgedPensionAsset = temp3;
+        //var maxAgedPensionAsset = temp3;
+        var maxAgedPensionAsset = temp3 > 0 ? temp3 : 0;
 
 
         var entitledAgedPension = maxAgedPensionIncome > maxAgedPensionAsset ? maxAgedPensionAsset : maxAgedPensionIncome;
@@ -502,33 +509,46 @@ app.controller("RAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
             var assetCalculationObj = {};
 
             if ($scope.spouseOption && $scope.houseOption) {
-                assetCalculationObj.high = 1163000;
-                assetCalculationObj.low = 291500;
-                assetCalculationObj.default = 653.5;
+                // assetCalculationObj.high = 1163000;
+                assetCalculationObj.high = 816000;
+                // assetCalculationObj.low = 291500;
+                assetCalculationObj.low = 375000;
+                // assetCalculationObj.default = 653.5;
+                assetCalculationObj.default = 661.2;
+                // assetCalculationObj.itCheck = 288;
                 assetCalculationObj.itCheck = 288;
                 assetCalculationObj.percent = 0.25;
             }
-
+ 
             if ($scope.spouseOption && !$scope.houseOption) {
-                assetCalculationObj.high = 1312000;
-                assetCalculationObj.low = 440500;
-                assetCalculationObj.default = 653.5;
+                // assetCalculationObj.high = 1312000;
+                // assetCalculationObj.low = 440500;
+                // assetCalculationObj.default = 653.5;
+                assetCalculationObj.high = 1016000;
+                assetCalculationObj.low = 575000;
+                assetCalculationObj.default = 661.2;
                 assetCalculationObj.itCheck = 288;
                 assetCalculationObj.percent = 0.25;
             }
-
+ 
             if (!$scope.spouseOption && $scope.houseOption) {
-                assetCalculationObj.high = 783500;
-                assetCalculationObj.low = 205500;
-                assetCalculationObj.default = 867;
+                // assetCalculationObj.high = 783500;
+                // assetCalculationObj.low = 205500;
+                // assetCalculationObj.default = 867;
+                assetCalculationObj.high = 542500;
+                assetCalculationObj.low = 25000;
+                assetCalculationObj.default = 877.1;
                 assetCalculationObj.itCheck = 162;
                 assetCalculationObj.percent = 0.5;
             }
-
+ 
             if (!$scope.spouseOption && !$scope.houseOption) {
-                assetCalculationObj.high = 932500;
-                assetCalculationObj.low = 354500;
-                assetCalculationObj.default = 867;
+                // assetCalculationObj.high = 932500;
+                // assetCalculationObj.low = 354500;
+                // assetCalculationObj.default = 867;
+                assetCalculationObj.high = 742500;
+                assetCalculationObj.low = 375000;
+                assetCalculationObj.default = 877.1;
                 assetCalculationObj.itCheck = 162;
                 assetCalculationObj.percent = 0.5;
             }

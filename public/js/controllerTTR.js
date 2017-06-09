@@ -1,15 +1,19 @@
 app.controller("TTRController",['$scope','$timeout','AgeCalculator','TaxRateCalculator','SGCRate','WithoutSSCalculator','WithSSCalculator','ChartServiceHc',function($scope,$timeout,AgeCalculator,TaxRateCalculator,SGCRate,WithoutSSCalculator,WithSSCalculator,ChartServiceHc){
 
-  String.prototype.replaceAll = function(search, replacement) {
-        var target = this;
-        return target.split(search).join(replacement);
-    };
+
+         var age =  ttrObj.age ;
+         var cses =  ttrObj.cses ;
+         var thp =  ttrObj.thp ;
+         var fy =  ttrObj.fy  ;
+         var nra =  ttrObj.nra ;
+         var nrp =  ttrObj.nrp ;
+         var balance =  ttrObj.balance ;
+         var tfp =  ttrObj.tfp ;
+       
 
    var dt = new Date();
 
-  $scope.fy = dt.getMonth() > 5 ? dt.getFullYear() : dt.getFullYear()-1;
 
-  $scope.chartOneOpen = true;
 
     $scope.fy = fy;
 
@@ -39,7 +43,7 @@ app.controller("TTRController",['$scope','$timeout','AgeCalculator','TaxRateCalc
 
       if(isValid){
 
-        $scope.resultWithoutSS = WithoutSSCalculator.getFinalAmount($scope.age,$scope.fy,$scope.cses,$scope.beforeTTR,
+        $scope.resultWithoutSS = WithoutSSCalculator.getFinalAmountTTR($scope.age,$scope.fy,$scope.cses,$scope.beforeTTR,
           $scope.tfp,$scope.nra,$scope.nrp,$scope.thp);
         // console.log("max thp ss is",$scope.maxTakeHomeSS());
         $scope.resultWithSS = WithSSCalculator.getResults($scope.age,
