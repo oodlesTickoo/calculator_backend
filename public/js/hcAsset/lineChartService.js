@@ -4,6 +4,7 @@ app.service('LineChartService', function() {
             $('#container').highcharts({
                 chart: {
                     type: 'spline',
+             
                     height: 400,
                     events: {
                         beforePrint: function() {
@@ -104,6 +105,7 @@ app.service('LineChartService', function() {
             $('#containerA').highcharts({
                 chart: {
                     type: 'spline',
+                   
                     height: 400,
                     events: {
                         beforePrint: function() {

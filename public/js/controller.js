@@ -1,4 +1,52 @@
-app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartServiceHc', function($scope, $timeout, AgeCalculator, ChartServiceHc) {
+app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator','ChartServiceHc',function($scope, $timeout, AgeCalculator, ChartServiceHc) {
+    
+    
+    insObj = {
+ "age":50,
+ "grossAnnualIncome":120000,
+ "funeralCost":20000,
+ "familyLivingCostPerYear":90000,
+ "hasSpouse":true,
+ "hasChildren":true,
+ "sickLeaves" : 20,
+ "assets" : {
+  "homeValue" : 800000,
+  "cashAtBank" : 20000,
+  "otherInvestment" :20000,
+  "superBalance" : 100000
+ },
+ "existingCovers":{
+  "life" : 20000,
+  "TPD" : 0,
+  "IP" : 0,
+  "trauma" : 0
+ },
+ "assumptions":{
+  "inflation" : 2,
+  "rateOfReturn" : 5
+ },
+ "liabilities":{
+  "homeMortgage" : 20000,
+  "investmentPropertyMortgage" : 10000,
+  "creditCardDebt" : 3000,
+  "carLoan" : 20000,
+  "personalLoan" : 10000,
+  "otherLoan" : 0
+ },
+ "spouseDetails":{
+  "age":47,
+  "isWorking":true,
+  "salary":50000,
+  "moveToSmallerProperty":true,
+  "valueOfNewProperty" : 500000,
+  "moneyToBeBorrowed":400000
+ },
+ "childrenDetails":{
+  "numChildren":0,
+  "ages":[3,7],
+  "educationExpensePerYearPerChild":2000
+ }
+};
 
     $scope.grossAnnualIncome = insObj.grossAnnualIncome;
     $scope.homeMortgage = insObj.liabilities.homeMortgage;
@@ -25,6 +73,7 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
     $scope.valueOfNewProperty = insObj.spouseDetails.valueOfNewProperty;
     $scope.ageSpouse = insObj.spouseDetails.age;
     $scope.spouseSalary = insObj.spouseDetails.salary;
+    
 
     // $scope.genderOption = true;
     $scope.spouseOption = insObj.hasSpouse;
@@ -35,16 +84,27 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
 
     $scope.sickLeaves = insObj.sickLeaves;
 
-    $scope.calculateWaitingPeriod = function(leaves) {
-        if (leaves <= 30) {
-            return 30;
+    /*$scope.lifeOptions = [
+        { id: 0, name: 'personal' },
+        { id: 1, name: 'super' }
+    ];
+ 
+    $('.sp1').on('change', function() {
+        selected1 = $('.sp1 option:selected').val();
+        $scope.netReturn = $scope.investOptions[selected1];
+    });*/
+
+
+    $scope.calculateWaitingPeriod = function(leaves){
+        if(leaves <= 30){
+          return 30;
         }
-        if (leaves > 30 && leaves <= 60) {
-            return 60;
+        if(leaves >30 && leaves <= 60){
+          return 60;
         }
-        if (leaves > 60) {
-            return 90;
-        }
+        if(leaves > 60){
+          return 90;
+        }   
     }
 
     $scope.waitingPeriod = $scope.calculateWaitingPeriod($scope.sickLeaves);
@@ -59,7 +119,7 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
     $scope.age = insObj.age;
 
     function calculateFinal() {
-
+        
         $scope.ecL = $scope.ecLife;
         $scope.ecT = $scope.ecTPD;
         $scope.ecI = $scope.ecIP;
@@ -82,7 +142,7 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
         }
 
         var PVExpenseSpouse;
-        $scope.realRateOfReturn = (1 + ($scope.rateOfReturn / 100)) / (1 + ($scope.inflation / 100)) - 1;
+        $scope.realRateOfReturn = (1 + ($scope.rateOfReturn/ 100)) / (1 + ($scope.inflation/ 100)) - 1;
 
 
         if (!$scope.spouseOption) {
@@ -105,14 +165,14 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
 
             for (var i = 0; i < $scope.numChildren; i++) {
                 var temp = Math.abs(PV($scope.realRateOfReturn, 25 - ageChild[i], $scope.educationExpensePerYearPerChild, 0, 0));
-
+                
                 PVExpenseChildren = PVExpenseChildren + temp;
             }
         }
         // PVExpenseChildren=80156.1983032635+74793.54924005;
         // console.log("PVExpenseChildren", PVExpenseChildren);
 
-        $scope.D34 = Math.pow(1 + $scope.rateOfReturn / 100, Number((100 / 1200).toFixed(2))) - 1;
+        $scope.D34 = Math.pow(1 + $scope.rateOfReturn/100, Number((100 / 1200).toFixed(2))) - 1;
         $scope.saleProceeds = $scope.homeValue - $scope.homeMortgage;
 
 
@@ -125,7 +185,7 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
         var IP1 = Number((($scope.grossAnnualIncome * 0.75) / 12).toFixed(2));
         var IP2 = Math.abs(PV($scope.D34, (65 - $scope.age) * 12, IP1, 0, 0));
         var Trauma1 = 225000;
-        var Trauma2 = Math.abs(PV($scope.D34, 24, 0.25 * $scope.grossAnnualIncome / 12, 0, 0));
+        var Trauma2 = Math.abs(PV($scope.D34, 24, 0.25 * $scope.grossAnnualIncome/12, 0, 0));
 
         $scope.resultS1 = calculateResult(sAssets, sLiability, PVExpenseLife, PVExpenseTPD, IP1, IP2, Trauma1, Trauma2, $scope.ecLife, $scope.ecTPD, $scope.ecIP, $scope.ecTrauma);
 
@@ -165,7 +225,7 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
 
         $scope.needLife1 = $scope.resultS1.life >= $scope.ecLife ? true : false;
 
-        $scope.needLife2 = $scope.resultS2.life >= $scope.ecLife ? true : false;
+        $scope.needLife2 = $scope.resultS2.life >= $scope.ecLife ? true : false; 
 
         $scope.sfLife1 = Math.abs($scope.resultS1.life - $scope.ecLife);
 
@@ -173,75 +233,75 @@ app.controller("IAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartSer
 
         $scope.needTPD1 = $scope.resultS1.TPD >= $scope.ecTPD ? true : false;
 
-        $scope.needTPD2 = $scope.resultS2.TPD >= $scope.ecTPD ? true : false;
+        $scope.needTPD2 = $scope.resultS2.TPD >= $scope.ecTPD ? true : false; 
 
         $scope.sfTPD1 = Math.abs($scope.resultS1.TPD - $scope.ecTPD);
 
-        $scope.sfTPD2 = Math.abs($scope.resultS2.TPD - $scope.ecTPD);
+        $scope.sfTPD2 = Math.abs($scope.resultS2.TPD- $scope.ecTPD);
 
         $scope.needIP1 = $scope.resultS1.IP >= $scope.ecIP ? true : false;
 
-        $scope.needIP2 = $scope.resultS2.IP >= $scope.ecIP ? true : false;
+        $scope.needIP2 = $scope.resultS2.IP >= $scope.ecIP ? true : false; 
 
         $scope.sfIP1 = Math.abs($scope.resultS1.IP - $scope.ecIP);
 
-        $scope.sfIP2 = Math.abs($scope.resultS2.IP - $scope.ecIP);
+        $scope.sfIP2 = Math.abs($scope.resultS2.IP- $scope.ecIP);
 
         $scope.needTrauma1 = $scope.resultS1.trauma >= $scope.ecTrauma ? true : false;
 
-        $scope.needTrauma2 = $scope.resultS2.trauma >= $scope.ecTrauma ? true : false;
+        $scope.needTrauma2 = $scope.resultS2.trauma >= $scope.ecTrauma ? true : false; 
 
         $scope.sfTrauma1 = Math.abs($scope.resultS1.trauma - $scope.ecTrauma);
 
-        $scope.sfTrauma2 = Math.abs($scope.resultS2.trauma - $scope.ecTrauma);
+        $scope.sfTrauma2 = Math.abs($scope.resultS2.trauma- $scope.ecTrauma);
 
 
-        if ($scope.buyOption) {
-            document.getElementById("containerS").style.display = 'none';
-            document.getElementById("containerB").style.display = 'block';
-            ChartServiceHc.createChart('#containerB', 'Death Cover', $scope.ecLife, $scope.resultS1.life, $scope.resultS2.life, false, true);
-            // ChartServiceHc.createChart('#containerR', 'Death Cover', ecLife1, $scope.resultS1.life, $scope.resultS2.life , true,true);
-        } else {
-            document.getElementById("containerB").style.display = 'none';
+        if($scope.buyOption){
+        document.getElementById("containerS").style.display = 'none';  
+        document.getElementById("containerB").style.display = 'block'; 
+        ChartServiceHc.createChart('#containerB', 'Death Cover', $scope.ecLife, $scope.resultS1.life, $scope.resultS2.life , false,true);
+        // ChartServiceHc.createChart('#containerR', 'Death Cover', ecLife1, $scope.resultS1.life, $scope.resultS2.life , true,true);
+        }else{
+          document.getElementById("containerB").style.display = 'none'; 
             document.getElementById("containerS").style.display = 'block';
-            ChartServiceHc.createChart('#containerS', 'Death Cover', $scope.ecLife, $scope.resultS1.life, {}, false, false);
-            // ChartServiceHc.createChart('#containerR', 'Death Cover', ecLife1, $scope.resultS1.life,{}, true,false);
+        ChartServiceHc.createChart('#containerS', 'Death Cover', $scope.ecLife, $scope.resultS1.life, {}, false,false);
+        // ChartServiceHc.createChart('#containerR', 'Death Cover', ecLife1, $scope.resultS1.life,{}, true,false);
         }
 
-        if ($scope.buyOption) {
-            document.getElementById("containerS2").style.display = 'none';
-            document.getElementById("containerB2").style.display = 'block';
-            ChartServiceHc.createChart('#containerB2', 'TPD Cover', $scope.ecTPD, $scope.resultS1.TPD, $scope.resultS2.TPD, false, true);
-            // ChartServiceHc.createChart('#containerR2', 'TPD Cover', ecTPD1, $scope.resultS1.TPD, $scope.resultS2.TPD , true,true);
-        } else {
-            document.getElementById("containerB2").style.display = 'none';
+        if($scope.buyOption){
+          document.getElementById("containerS2").style.display = 'none';  
+        document.getElementById("containerB2").style.display = 'block';
+        ChartServiceHc.createChart('#containerB2', 'TPD Cover', $scope.ecTPD, $scope.resultS1.TPD, $scope.resultS2.TPD , false,true);
+        // ChartServiceHc.createChart('#containerR2', 'TPD Cover', ecTPD1, $scope.resultS1.TPD, $scope.resultS2.TPD , true,true);
+        }else{
+          document.getElementById("containerB2").style.display = 'none'; 
             document.getElementById("containerS2").style.display = 'block';
-            ChartServiceHc.createChart('#containerS2', 'TPD Cover', $scope.ecTPD, $scope.resultS1.TPD, {}, false, false);
-            // ChartServiceHc.createChart('#containerR2', 'TPD Cover', ecTPD1, $scope.resultS1.TPD,{}, true,false);
+        ChartServiceHc.createChart('#containerS2', 'TPD Cover', $scope.ecTPD, $scope.resultS1.TPD, {}, false,false);
+        // ChartServiceHc.createChart('#containerR2', 'TPD Cover', ecTPD1, $scope.resultS1.TPD,{}, true,false);
         }
 
-        if ($scope.buyOption) {
-            document.getElementById("containerS3").style.display = 'none';
-            document.getElementById("containerB3").style.display = 'block';
-            ChartServiceHc.createChart('#containerB3', 'Income Protection Cover', $scope.ecIP, $scope.resultS1.IP, $scope.resultS2.IP, false, true);
-            // ChartServiceHc.createChart('#containerR3', 'Income Protection Cover', ecIP1, $scope.resultS1.IP, $scope.resultS2.IP , true,true);
-        } else {
-            document.getElementById("containerB3").style.display = 'none';
+        if($scope.buyOption){
+           document.getElementById("containerS3").style.display = 'none';  
+        document.getElementById("containerB3").style.display = 'block';
+        ChartServiceHc.createChart('#containerB3', 'Income Protection Cover', $scope.ecIP, $scope.resultS1.IP, $scope.resultS2.IP , false,true);
+        // ChartServiceHc.createChart('#containerR3', 'Income Protection Cover', ecIP1, $scope.resultS1.IP, $scope.resultS2.IP , true,true);
+        }else{
+          document.getElementById("containerB3").style.display = 'none'; 
             document.getElementById("containerS3").style.display = 'block';
-            ChartServiceHc.createChart('#containerS3', 'Income Protection Cover', $scope.ecIP, $scope.resultS1.IP, {}, false, false);
-            // ChartServiceHc.createChart('#containerR3', 'Income Protection Cover', ecIP1, $scope.resultS1.IP,{}, true,false);
+        ChartServiceHc.createChart('#containerS3', 'Income Protection Cover', $scope.ecIP, $scope.resultS1.IP, {}, false,false);
+        // ChartServiceHc.createChart('#containerR3', 'Income Protection Cover', ecIP1, $scope.resultS1.IP,{}, true,false);
         }
 
-        if ($scope.buyOption) {
-            document.getElementById("containerS4").style.display = 'none';
-            document.getElementById("containerB4").style.display = 'block';
-            ChartServiceHc.createChart('#containerB4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, $scope.resultS2.trauma, false, true);
-            // ChartServiceHc.createChart('#containerR4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, $scope.resultS2.trauma , true,true);
-        } else {
-            document.getElementById("containerB4").style.display = 'none';
+        if($scope.buyOption){
+           document.getElementById("containerS4").style.display = 'none';  
+        document.getElementById("containerB4").style.display = 'block';
+        ChartServiceHc.createChart('#containerB4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, $scope.resultS2.trauma , false,true);
+        // ChartServiceHc.createChart('#containerR4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, $scope.resultS2.trauma , true,true);
+        }else{
+           document.getElementById("containerB4").style.display = 'none'; 
             document.getElementById("containerS4").style.display = 'block';
-            ChartServiceHc.createChart('#containerS4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, {}, false, false);
-            // ChartServiceHc.createChart('#containerR4', 'Trauma Cover', ecTrauma1, $scope.resultS1.trauma,{}, true,false);
+        ChartServiceHc.createChart('#containerS4', 'Trauma Cover', $scope.ecTrauma, $scope.resultS1.trauma, {}, false,false);
+        // ChartServiceHc.createChart('#containerR4', 'Trauma Cover', ecTrauma1, $scope.resultS1.trauma,{}, true,false);
         }
 
 

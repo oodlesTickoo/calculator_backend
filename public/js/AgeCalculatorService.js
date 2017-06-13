@@ -1,32 +1,25 @@
 var AgeCalculatorService = angular.module('AgeCalculatorService', [])
-.service('AgeCalculator', function (){
-    this.getAge = function (dateBirth,year) {
+    .service('AgeCalculator', function () {
+        this.getAge = function (dateBirth, year) {
+            thisYear = year;
+            thisMonth = 6;
+            thisDay = 1;
+            birthYear = dateBirth.getFullYear();
+            birthMonth = dateBirth.getMonth();
+            birthDay = dateBirth.getDate();
 
-    	// console.log("ac",dateBirth);
+            var age = thisYear - birthYear;
 
-// var today = new Date();
+            if (thisMonth < birthMonth) {
+                age--;
+            }
 
-thisYear = year;
-thisMonth = 6;
-thisDay = 1;
-birthYear = dateBirth.getFullYear();
-birthMonth = dateBirth.getMonth();
-birthDay = dateBirth.getDate();
+            if (birthMonth === thisMonth && thisDay < birthDay) {
+                age--;
+            }
 
-var age = thisYear - birthYear;
+            return age;
 
-if (thisMonth < birthMonth)
-{
-  age--;
-}
+        };
 
-if (birthMonth === thisMonth && thisDay < birthDay)
-{
-  age--;
-}
-
-return age;
-
-    };
-
-});
+    });

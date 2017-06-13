@@ -1,15 +1,16 @@
 .otrp-calculator{
-      display: block;
-      max-width: 614px;
-      border: 1px solid #e2e2e2;
-      font-size: 12px;
-      line-height: normal;
-    margin-top:20px;
+	    display: block;
+	    max-width: 720px;
+	    /*border: 1px solid #e2e2e2;*/
+	    font-size: 12px;
+	    line-height: normal;
+		/*margin-top:20px;*/
+    margin-left:0px;
         -webkit-print-color-adjust: exact;
 }
 .otrp-clear
 {
-  clear: both;
+	clear: both;
 }
 .title{
     padding: 11px 0px;
@@ -20,7 +21,7 @@
     box-shadow: none;
 }
 .title h1{
-  font-size: 24px;
+	font-size: 24px;
     font-weight: 300;
     margin: 0;
     padding: 0;
@@ -33,7 +34,13 @@
         width: 26px;
     height: 26px;
 }
-
+/*.email-icon{
+	  margin-top:2px;
+    background: url("../images/email-icon.png") no-repeat;
+    background-color: #91B6BE !important;
+        width: 26px;
+    height: 21px;
+}*/
 i.fa-floppy-o{
       background-color: #fff;
     color: #91b6be;
@@ -64,16 +71,16 @@ i.fa-floppy-o{
 }
 
 .number-wrapper{
-  background-color: #6f6f6f !important;
+	background-color: #6f6f6f !important;
     color: #FFF !important;
-    width:100%;
+		width:100%;
     margin: 0 !important;
-    padding:6px 8px;
-    font-size:20px;
+		padding:6px 8px;
+		font-size:20px;
 }
 .title-wrapper{
-  margin-left: 10px;
-  color: #666666 !important;
+	margin-left: 10px;
+	color: #666666 !important;
     background-color: #efefef !important;
     font-size: 20px;
     border-top-left-radius: 0px;
@@ -82,7 +89,7 @@ i.fa-floppy-o{
 
 
 .amount-header{
-  float: left;
+	float: left;
     width: 265px;
 }
 
@@ -95,30 +102,31 @@ i.fa-floppy-o{
     overflow: hidden;
 }
 .amount-input{
-      margin: 10px 15px 11px 0;
+	    margin: 10px 15px 11px 0;
     max-width: 303px;
     width: 100%;
         float: left;
 }
 .standard-label{
-  font-weight: 300;
-  float: left;
+	font-weight: 300;
+	float: left;
     margin: 5px 0px 0 0;
 }
 .standard-input{
-  background-color: #f6f8f9;
-  border: 1px solid #CCCCCC;
+	background-color: #f6f8f9;
+	border: 1px solid #CCCCCC;
     margin-right: 9px;
     padding: 3px 0 3px 7px;
     width: 100%;
 }
 
 .input-div .row{
+    /*padding: 10px 5px 10px 5px;*/
     padding: 10px 5px 10px 0px;
 }
 .title-div{
     background: #efefef !important;
-    padding:5px !important;
+		padding:5px !important;
 }
 .amount-header{
     font-size: 12px;
@@ -126,7 +134,7 @@ i.fa-floppy-o{
 }
 /************ result div**************/
 .result-head{
-  color: #242424 !important;
+	color: #242424 !important;
     font-size: 18px;
     font-weight: 300;
     border-bottom-left-radius: 0px;
@@ -134,16 +142,15 @@ i.fa-floppy-o{
     background: #efefef !important;
     border-bottom: 1px solid #CCCCCC;
         padding: 7px 9px 7px 18px;
-        margin-top:15px;
 }
 .results-title{
-  float: left;
+	float: left;
     height: 22px;
     line-height: 22px;
     margin: 0;
     color: #666666 !important;
-    background-color: #efefef !important;
     font-size: 20px;
+    background-color: #161b2e !iportant;
 }
 .result-div{
     background-color: #FFF;
@@ -197,16 +204,16 @@ i.fa-floppy-o{
 }
 
 ul.dropdown-menu{
-  padding: 5px 5px !important;
+	padding: 5px 5px !important;
 }
 
 ul.uib-datepicker-popup div.uib-datepicker :focus{
-  outline:none !important;
+	outline:none !important;
 }
 
 div.err-msg{
-  color:crimson;
-  margin-top:10px;
+	color:crimson;
+	margin-top:10px;
 }
 
 hr{
@@ -216,17 +223,17 @@ hr{
 }
 
 .submit-btn{
-  margin-bottom:10px;
-  display:block;
-  margin:auto;
+	margin-bottom:10px;
+	display:block;
+	margin:auto;
 }
 
 form.ttr-form{
-  //padding:10px;
+	//padding:10px;
 }
 
 span.required{
-  color:crimson;
+	color:crimson;
 }
 .option{
     padding-right: 0px;
@@ -238,69 +245,75 @@ span.required{
 }
 
 span.pension-note{
-  display:block;
+	display:block;
 }
 
 .ttr-label{
-  padding: 0px !important;
-  padding-left: 15px !important;
-  margin-top: -3px !important;
+	padding: 0px !important;
+	padding-left: 15px !important;
+	margin-top: -3px !important;
 }
 
 .ttr-note{
-  color: #88C2E8;
-  padding: 0px !important;
-  padding-left: 15px !important;
-  font-size: 10px;
-  margin-top: 5px !important;
+	color: #88C2E8;
+	padding: 0px !important;
+	padding-left: 15px !important;
+	font-size: 10px;
+	margin-top: 5px !important;
 }
 .input-group-addon{
-  border-radius:0px;
+	border-radius:0px;
 }
 .form-control{
-  border-radius: 0px;
+	border-radius: 0px;
       font-size: 12px;
           height: 26px;
              padding: 6px 6px !important;
 }
 
 .err-border .input-group-addon{
-  border-color: #ff4d4d;
+	border-color: #ff4d4d;
 }
 .err-border .form-control{
-  border-color: #ff4d4d;
+	border-color: #ff4d4d;
 }
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-  width:100% !important;
+	width:100% !important;
 }
 
 .percent-group{
-  padding-left:0px;
+	padding-left:0px;
 }
 .percent-group .btn{
-  border-radius:0px !important;
+	border-radius:0px !important;
       background-color: #f6f8f9;
 }
 .num-btn{
-  padding-right:0px;
+	padding-right:0px;
 
 }
 .num-btn .bootstrap-select>.dropdown-toggle {
-  padding-right:20px;
+	padding-right:20px;
 }
 .num-btn button{
-  padding-left : 5px !important;
-  padding-left : 5px !important;
-  border-radius:0px !important;
-  background-color: #f6f8f9;
+	padding-left : 5px !important;
+	padding-left : 5px !important;
+	border-radius:0px !important;
+	background-color: #f6f8f9;
 }
 .row-ss{
-  color: crimson;
+	color: crimson;
 font-size: 10px;
 margin-top: -10px;
 }
-
+/*
+.group-2 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+		width:120px !important;
+}
+.group-2{
+	padding-left:18px;
+}*/
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -324,14 +337,14 @@ input[type=number] {
     margin-left: -10px;
     margin-right: 10px;
     max-width:600px;
-    margin-top:20px;
+		margin-top:20px;
 }
 .closeInfo{
     background: url("../images/infoboxclose.png") no-repeat;
     width: 25px;
     height: 25px;
     border:0;
-    float : right;
+		float : right;
 }
 .info-title{
     margin-top: 15px;
@@ -349,18 +362,19 @@ input[type=number] {
     margin-bottom:10px;
   }
 
-  .unattainable-thp-error{
-  margin-top:10px;
-  font-size:10px;
-  color:crimson;
+	.unattainable-thp-error{
+	margin-top:10px;
+	font-size:10px;
+	color:crimson;
 }
 .attainable-thp{
-  margin-top:10px;
-  font-size:10px;
-  color:cornflowerblue;
+	margin-top:10px;
+	font-size:10px;
+	color:cornflowerblue;
 }
 
 .strategy{
+    /*background: #efefef !important;*/
     background-color: #ddd;
     color: #666;
     font-size: 14px; 
@@ -391,14 +405,13 @@ input[type=number] {
     border-radius: 0;
     border:0px;
 }
-.comp-logo{
-    float:right;
-}
+
 
 
 .res-1{
     background-color: #6F7070!important;
     color: white;
+    /*margin: 10px;*/
     margin:-6px 0px;
     padding: 10px;
     margin-bottom: 15px;
@@ -425,66 +438,38 @@ input[type=number] {
     padding: 5px 5px 5px 0;
 }
 .divider{
-    border-top: 1px solid #444;
+    border-top: 1px solid #ccc;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 .res-value{
-    font-size: 18px;
-        padding-left: 0;
-    padding-right: 5px;
-    padding-top: 5px;
-}
-.res-value2{
-  font-size: 14px;
+    font-size: 16px;
+        /*text-align: right;*/
         padding-left: 0;
         padding-right: 5px;
-        padding-top:5px;
-        text-transform: capitalize;
-        font-weight: normal;
-        word-wrap: break-word;
-}
-.final-head{
-  padding-top: 7px;
-    padding-bottom: 0px;
-}
-.dd{
-      font-size: 25px;
-}
-.dsb{
-  padding : 5px 0px;
 }
 .res-diff{
+    /*font-size: 36px;*/
         font-size: 28px;
     margin-top: 4px;
     margin-bottom: -8px;
 }
 .res-head{
-        padding-top: 7px;
-    padding-bottom: 0px;
+    /*padding-top: 3px;*/
+    /*padding-bottom: 3px;*/
     padding-left: 0;
     padding-right: 5px;
-        font-size: 14px;
-    text-transform: capitalize;
-    font-weight: normal;
-    word-wrap: break-word;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 .res-1 strong{
-    font-size: 18px;
+    font-size: 16px;
     text-transform: capitalize;
-    font-weight: normal;
 }
 .res-2 strong{
-    font-size: 18px;
+    font-size: 14px;
     text-transform: capitalize;
-    font-weight: normal;
-}
-
-.res-1 .divider{
-  border-top: 1px solid #a3a3a3!important;
 }
 #container .highcharts-container{
     margin-top:0px;
@@ -504,7 +489,11 @@ p.thpError-text{
     text-align: center !important;
 }
 
-
+/*@media print{
+    .highcharts-container{
+        max-width:100% !important;
+    }
+}*/
 @media print {
   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
     float: left;
@@ -726,8 +715,6 @@ p.thpError-text{
   margin-top:15px;
 }
 
-
-
 .chart-buttons-row button{
   background-color:#91B6BE !important;
   color:#fff;
@@ -788,6 +775,7 @@ float:right;
     background: -o-linear-gradient(#263C40, #91B6BE); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#263C40, #91B6BE); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#263C40, #91B6BE); /* Standard syntax */
+    /*background-color: #91B6BE !important;*/
 }
 
 .form-group .noUi-origin{
@@ -808,6 +796,7 @@ float:right;
 
 .form-heading{
   font-family: "Roboto", Helvetica, Verdana, Arial, Sans-serif;
+  font-weight : 300;
   color : #444;
 }
 
@@ -823,21 +812,12 @@ float:right;
     margin-top: 50px;
     margin-left:10px;
 }
-.secondChart{
-  page-break-inside: avoid;
-}
 }
 
 .largeWidth{
   margin-top: 25px !important;
 }
 
-.form-control{
-  /*width:114% !important;*/
-}
-.formC2{
-  width:100% !important;
-}
 .dob-input{
   width:100% !important;
 }
@@ -845,6 +825,9 @@ float:right;
   padding-left: 25px
 }
 
+.optionDrop{
+    display: none;
+}
 .option-l-btn:focus,.option-r-btn:focus {
   color:#333 !important;
 }
@@ -878,7 +861,7 @@ float:right;
 }
 .option-l-btn{
     height: 22px !important;
-    margin-left: 13px;
+    margin-left: 10px;
     width: 51px;
     padding: 0;
     font-size: 12px;
@@ -900,115 +883,78 @@ float:right;
   color:white;
 }
 
-
-
-    .scrollable-menu {
-      height: auto;
-      max-height: 200px;
-      overflow-x: hidden;
-    }
-
-#datebox button{
-      background: -webkit-gradient(linear,left top,left bottom,from(#fefefe),to(#e9e9e9));
+.dropdown-menu {
+    width: 100%;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+#datebox button {
+    background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#e9e9e9));
     width: 256px;
     height: 26px;
     border-radius: 2px;
     padding: 0 25px 0 10px;
     font-size: 13px;
 }
-
-
 .btn-group>.btn:first-child {
     margin-left: 0;
-    background: -webkit-gradient(linear,left top,left bottom,from(#fefefe),to(#e9e9e9));
+   margin-top: 10px!important;
+   color: black;
+    border-color: #ccc;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#e9e9e9));
     width: 256px;
     height: 26px;
     border-radius: 2px;
     padding: 0 25px 0 10px;
     font-size: 13px;
-        color: black;
-    border: 1px solid #ccc;
 }
-
 .bootstrap-select.btn-group .dropdown-menu li a {
-  white-space: normal;
-      color: black;
-  }   
-
-   .dropdown-menu ul{
-     width: 256px; 
-     padding: 0 !important; 
+    white-space: normal;
+    color: black;
 }
-.bootstrap-select.btn-group .dropdown-menu{
-  min-width: 0;
-      padding: 0;
-      max-height: 232px !important;
+.dropdown-menu {
+    width: 256px;
 }
-
-ttr-form li:hover {
+.bootstrap-select.btn-group .dropdown-menu {
+    min-width: 0;
+    padding: 0;
+    max-height: 232px !important;
+}
+ul.dropdown-menu {
+    padding: 0 !important;
+}
+.scrollable-menu {
+    width: 256px;
+    padding: 0!important;
+    margin: 0;
+}
+.dropdown-menu>li>a:hover {
     background-color: #4389c8!important;
     background: none;
     color: #fff!important;
     border-right: none;
     cursor: pointer;
-    
 }
-.bootstrap-select.btn-group .dropdown-menu li{
-  border-bottom: 1px solid #dbdbdb;
-      padding: 0;
-    font-size: 13px;
-    color: black;
+.dropdown-menu>li>a:focus {
+    background-color: white;
 }
-
-.scrollable-menu{
-width:256px;
-padding: 0!important;
-margin:0;
+a:focus {
+    outline: none;
+    background-color: white;
 }
- .dropdown-menu>li>a:hover{
-      background-color: #4389c8!important;
-    background: none;
-    color: #fff!important;
-    border-right: none;
-    cursor: pointer;
+.btn-group bootstrap-select{
+  margin-top: 10px!important;
 }
-.dropdown-menu>li>a:focus{
-      background-color: white;
-}
-a:focus{
-  outline: none;
-  background-color: white;
-}
-.open>.dropdown-toggle.btn-info:hover,.open>.dropdown-toggle.btn-info:focus{
+.open>.dropdown-toggle.btn-info:hover{
   color:black!important;
-  border: 1px solid #ccc;
-
 }
-
-option.done{
-  display:none !important;
+.spouse-head{
+      font-size: 16px;
+      padding-top: 0!important;
 }
-
-.Single{
-  margin-top:10px ;
-}
-
-.attend-margin{
-  margin-top:14px;
-}
-
-hr.children-hr{
-  margin-top:15px;
-  margin-left:-15px;
-  margin-right:-15px;
-  border-top:1px solid #ccc;
-}
-
-
-.optionDrop{
-    display: none;
-}
-
 .form-group label{
   font-weight:normal;
 }
@@ -1016,9 +962,9 @@ p.err-msg{
   margin:5px 0 0;
   color:darkolivegreen;
 }
-.btn-primary,.btn-primary:hover,.btn-primary:focus{
+.calculate-btn,.calculate-btn:hover,.calculate-btn:focus{
   background-color: #91B6BE !important;
-  border:1px solid #ddd;
+  border:none !important;
   outline: none !important;
   border-radius:0px; 
 }
@@ -1043,26 +989,17 @@ font-size:15px;
 .modal-content .modal-footer{
   padding:18px 25px;
 }
-/*input {
-    background: white;
-}
-input:-webkit-autofill {
-    -webkit-box-shadow: inset 0 0 0px 9999px white;
-}*/
+
 input:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0px 9999px #f6f8f9 !important;
 }
+
 .form-control{
       background-color: #f6f8f9;
 }
 
 @media print {
-/*    html, body {
-        padding:0px;
-        margin:0px;
-        width: 210mm;
-        height: 297mm;
-    }*/
+s
     #container {
         float:left;
         padding: 0px;
@@ -1075,15 +1012,4 @@ input:-webkit-autofill {
         margin: 0px;
         width: 100%;
     }
-}
-
-
-.error-row{
-  color: red;
-}
-
-.alter-row,
-.initial-row{
-  font-size: 15px;
-    font-weight: bold!important;
 }

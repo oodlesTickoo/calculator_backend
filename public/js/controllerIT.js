@@ -1,4 +1,10 @@
 app.controller("TTRController", ['$scope', '$timeout', 'TaxRateCalculator', 'ChartServiceHc', 'DonutChartServiceHc', function($scope, $timeout, TaxRateCalculator, ChartServiceHc, DonutChartServiceHc) {
+    
+    
+ incomeTaxObj = {
+        "annualSalary": 60000,
+        "paymentFrequency": 1
+    };
 
     $scope.result = {};
 
@@ -49,6 +55,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'TaxRateCalculator', 'Cha
         $timeout(0);
     });*/
 
+    
     $scope.annualSalary = incomeTaxObj.annualSalary;
     /*var annualSalarySlider = document.getElementById('annualSalarySlider');
     noUiSlider.create(annualSalarySlider, {

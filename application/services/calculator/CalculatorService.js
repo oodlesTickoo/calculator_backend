@@ -6,7 +6,7 @@ const FieldName = require('./../../../application-utilities/FieldName');
 const path = require('path');
 var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
 
-module.exports.CalculatorService = (function() {
+module.exports.CalculatorService = (function () {
     var pdf = require('html-pdf');
     var fs = require('fs');
     var webshot = require('webshot');
@@ -20,7 +20,7 @@ module.exports.CalculatorService = (function() {
     function renderFile(next, fileName, data) {
         ejs.renderFile(configurationHolder.config.publicFolder + fileName, {
             data: data,
-        }, function(err, htmlStr) {
+        }, function (err, htmlStr) {
             if (err) {
                 next(err, null);
             } else {
@@ -29,8 +29,8 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function _getPdfFilePath(contactId){
-        return path.join(__dirname, '..', '..', '..', 'uploads',contactId+'.pdf');
+    function _getPdfFilePath(contactId) {
+        return path.join(__dirname, '..', '..', '..', 'uploads', contactId + '.pdf');
     }
 
     function generateImage(next, html, imageFileName) {
@@ -40,7 +40,7 @@ module.exports.CalculatorService = (function() {
                 width: "all",
                 height: "all"
             }
-        }, function(err, res) {
+        }, function (err, res) {
             console.log(err, res);
             if (err) {
                 next(err, null);
@@ -54,16 +54,16 @@ module.exports.CalculatorService = (function() {
         var fileName;
         switch (type) {
             case 'ia':
-                fileName = 'indexIA.ejs';
+                fileName = 'index_pdf.ejs';
                 break;
             case 'sfc':
-                fileName = 'indexSFC.ejs';
+                fileName = 'indexSFC_pdf.ejs';
                 break;
             case 'ra':
-                fileName = 'indexRA.ejs';
+                fileName = 'indexRA_pdf.ejs';
                 break;
             case 'ttr':
-                fileName = 'indexTTR.ejs';
+                fileName = 'indexTTR_pdf.ejs';
                 break;
             case 'sso':
                 fileName = 'indexSSO.ejs';
@@ -75,29 +75,25 @@ module.exports.CalculatorService = (function() {
                 fileName = 'indexAsset.ejs';
                 break;
             case 'it':
-                fileName = 'indexIT.ejs';
+                fileName = 'indexIT_pdf.ejs';
                 break;
         }
         return fileName;
     }
 
     function generateWebShot(next, type, data) {
-        var fileName;
-
-        fileName = getEjsFile(type);
-
+        var fileName = getEjsFile(type);
         async.auto({
-            html: function(next, results) {
+            html: function (next, results) {
                 renderFile(next, fileName, data);
             },
-            image: ['html', function(next, results) {
+            image: ['html', function (next, results) {
                 var imageFileName = (new Date()).getTime() + ".png";
                 generateImage(next, results.html, imageFileName);
             }]
-        }, function(err, results) {
-        
+        }, function (err, results) {
+
             if (err) {
-                console.log("xxxxx");
                 next(err, null);
             } else {
                 next(null, results.image);
@@ -105,24 +101,16 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    var webShot = function(type, data, res) {
-        var fileName;
-        fileName = getEjsFile(type);
-       /* data = {
-                  "age": 19,
-                  "cses": 80000,
-                  "thp": 45000,
-                  "fy": 2016
-              };*/
-
+    var webShot = function (type, data, res) {
         async.auto({
-            image: function(next, results) {
+            image: function (next, results) {
                 generateWebShot(next, type, data);
             }
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
+
                 var img = fs.readFileSync(results.image);
                 fs.unlink(results.image);
                 res.writeHead(200, {
@@ -133,11 +121,12 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var requestPdf = function(data, loggedInUser, res) {
+ /*   var requestPdf = function (data, loggedInUser, res) {*/
+    var requestPdf = function (data, res) {
         async.auto({
-             webshotIa: function(next, results) {
-                var data = {
-                    "age": 50,
+            webshotIa: function (next, results) {
+              var data = {
+                    /*"age": 50,
                     "grossAnnualIncome": 120000,
                     "funeralCost": 20000,
                     "familyLivingCostPerYear": 90000,
@@ -180,14 +169,14 @@ module.exports.CalculatorService = (function() {
                         "numChildren": 0,
                         "ages": [3, 7],
                         "educationExpensePerYearPerChild": 2000
-                    }
+                    }*/
                 };
                 generateWebShot(next, 'ia', data);
             },
-            
-             webshotSFC: function(next, results) {
-                var data = {
-                    "age": 47,
+
+            webshotSFC: function (next, results) {
+           var data = {
+                    /*"age": 47,
                     "retirementAge": 67,
                     "annualSalary": 60000,
                     "superBalance": 100000,
@@ -209,182 +198,158 @@ module.exports.CalculatorService = (function() {
                     "specifiedIndirectCostA": 1.5,
                     "specifiedIndirectCostB": 1.5,
                     "specifiedFundB": true,
-                    "specifiedNameB": "kartik"
+                    "specifiedNameB": "kartik"*/
                 };
 
                 generateWebShot(next, 'sfc', data);
             },
-            
-             webshotIT: function(next, results) {
+
+            webshotIT: function (next, results) {
                 var data = {
-                   /* "age": 47,
-                    "retirementAge": 67,
-                    "annualSalary": 60000,
-                    "superBalance": 100000,
-                    "cc": 10000,
-                    "ncc": 10000,
-                    "ecLevel": 9.5,
-                    "inflation": 2.5,
-                    "wageIncrease": 3.5,
-                    "insurancePremiumPerYear": 200,
-                    "netReturnRate": 1.50,
-                    "fundIndexA": 0,
-                    "fundIndexB": 1,
-                    "specifiedFundA": true,
-                    "specifiedNameA": "tickoo",
-                    "specifiedAnnualPercFeeA": 1.5,
-                    "specifiedAnnualPercFeeB": 1.5,
-                    "specifiedAdminFeeA": 100,
-                    "specifiedAdminFeeB": 100,
-                    "specifiedIndirectCostA": 1.5,
-                    "specifiedIndirectCostB": 1.5,
-                    "specifiedFundB": true,
-                    "specifiedNameB": "kartik"*/
+                    /* "age": 47,
+                     "retirementAge": 67,
+                     "annualSalary": 60000,
+                     "superBalance": 100000,
+                     "cc": 10000,
+                     "ncc": 10000,
+                     "ecLevel": 9.5,
+                     "inflation": 2.5,
+                     "wageIncrease": 3.5,
+                     "insurancePremiumPerYear": 200,
+                     "netReturnRate": 1.50,
+                     "fundIndexA": 0,
+                     "fundIndexB": 1,
+                     "specifiedFundA": true,
+                     "specifiedNameA": "tickoo",
+                     "specifiedAnnualPercFeeA": 1.5,
+                     "specifiedAnnualPercFeeB": 1.5,
+                     "specifiedAdminFeeA": 100,
+                     "specifiedAdminFeeB": 100,
+                     "specifiedIndirectCostA": 1.5,
+                     "specifiedIndirectCostB": 1.5,
+                     "specifiedFundB": true,
+                     "specifiedNameB": "kartik"*/
                 };
 
                 generateWebShot(next, 'it', data);
             },
-            
-             webshotPSF: function(next, results) {
+
+            webshotPSF: function (next, results) {
                 var data = {
-                   /* "age": 47,
-                    "retirementAge": 67,
-                    "annualSalary": 60000,
-                    "superBalance": 100000,
-                    "cc": 10000,
-                    "ncc": 10000,
-                    "ecLevel": 9.5,
-                    "inflation": 2.5,
-                    "wageIncrease": 3.5,
-                    "insurancePremiumPerYear": 200,
-                    "netReturnRate": 1.50,
-                    "fundIndexA": 0,
-                    "fundIndexB": 1,
-                    "specifiedFundA": true,
-                    "specifiedNameA": "tickoo",
-                    "specifiedAnnualPercFeeA": 1.5,
-                    "specifiedAnnualPercFeeB": 1.5,
-                    "specifiedAdminFeeA": 100,
-                    "specifiedAdminFeeB": 100,
-                    "specifiedIndirectCostA": 1.5,
-                    "specifiedIndirectCostB": 1.5,
-                    "specifiedFundB": true,
-                    "specifiedNameB": "kartik"*/
+                    /* "age": 47,
+                     "retirementAge": 67,
+                     "annualSalary": 60000,
+                     "superBalance": 100000,
+                     "cc": 10000,
+                     "ncc": 10000,
+                     "ecLevel": 9.5,
+                     "inflation": 2.5,
+                     "wageIncrease": 3.5,
+                     "insurancePremiumPerYear": 200,
+                     "netReturnRate": 1.50,
+                     "fundIndexA": 0,
+                     "fundIndexB": 1,
+                     "specifiedFundA": true,
+                     "specifiedNameA": "tickoo",
+                     "specifiedAnnualPercFeeA": 1.5,
+                     "specifiedAnnualPercFeeB": 1.5,
+                     "specifiedAdminFeeA": 100,
+                     "specifiedAdminFeeB": 100,
+                     "specifiedIndirectCostA": 1.5,
+                     "specifiedIndirectCostB": 1.5,
+                     "specifiedFundB": true,
+                     "specifiedNameB": "kartik"*/
                 };
 
                 generateWebShot(next, 'psf', data);
             },
-            
-             webshotRA: function(next, results) {
+
+            webshotRA: function (next, results) {
                 var data = {
-                   /* "age": 47,
-                    "retirementAge": 67,
-                    "annualSalary": 60000,
-                    "superBalance": 100000,
-                    "cc": 10000,
-                    "ncc": 10000,
-                    "ecLevel": 9.5,
-                    "inflation": 2.5,
-                    "wageIncrease": 3.5,
-                    "insurancePremiumPerYear": 200,
-                    "netReturnRate": 1.50,
-                    "fundIndexA": 0,
-                    "fundIndexB": 1,
-                    "specifiedFundA": true,
-                    "specifiedNameA": "tickoo",
-                    "specifiedAnnualPercFeeA": 1.5,
-                    "specifiedAnnualPercFeeB": 1.5,
-                    "specifiedAdminFeeA": 100,
-                    "specifiedAdminFeeB": 100,
-                    "specifiedIndirectCostA": 1.5,
-                    "specifiedIndirectCostB": 1.5,
-                    "specifiedFundB": true,
-                    "specifiedNameB": "kartik"*/
+                    /* "age": 47,
+                     "retirementAge": 67,
+                     "annualSalary": 60000,
+                     "superBalance": 100000,
+                     "cc": 10000,
+                     "ncc": 10000,
+                     "ecLevel": 9.5,
+                     "inflation": 2.5,
+                     "wageIncrease": 3.5,
+                     "insurancePremiumPerYear": 200,
+                     "netReturnRate": 1.50,
+                     "fundIndexA": 0,
+                     "fundIndexB": 1,
+                     "specifiedFundA": true,
+                     "specifiedNameA": "tickoo",
+                     "specifiedAnnualPercFeeA": 1.5,
+                     "specifiedAnnualPercFeeB": 1.5,
+                     "specifiedAdminFeeA": 100,
+                     "specifiedAdminFeeB": 100,
+                     "specifiedIndirectCostA": 1.5,
+                     "specifiedIndirectCostB": 1.5,
+                     "specifiedFundB": true,
+                     "specifiedNameB": "kartik"*/
                 };
 
                 generateWebShot(next, 'ra', data);
             },
-            
-             webshotSSO: function(next, results) {
+
+            webshotSSO: function (next, results) {
                 var data = {
-      "age": 19,
-      "cses": 80000,
-      "thp": 45000,
-      "fy": 2016
-  };
+                    "age": 19,
+                    "cses": 80000,
+                    "thp": 45000,
+                    "fy": 2016
+                };
 
                 generateWebShot(next, 'sso', data);
             },
-            
-             webshotTTR: function(next, results) {
+
+            webshotTTR: function (next, results) {
                 var data = {
-                   /* "age": 47,
-                    "retirementAge": 67,
-                    "annualSalary": 60000,
-                    "superBalance": 100000,
-                    "cc": 10000,
-                    "ncc": 10000,
-                    "ecLevel": 9.5,
-                    "inflation": 2.5,
-                    "wageIncrease": 3.5,
-                    "insurancePremiumPerYear": 200,
-                    "netReturnRate": 1.50,
-                    "fundIndexA": 0,
-                    "fundIndexB": 1,
-                    "specifiedFundA": true,
-                    "specifiedNameA": "tickoo",
-                    "specifiedAnnualPercFeeA": 1.5,
-                    "specifiedAnnualPercFeeB": 1.5,
-                    "specifiedAdminFeeA": 100,
-                    "specifiedAdminFeeB": 100,
-                    "specifiedIndirectCostA": 1.5,
-                    "specifiedIndirectCostB": 1.5,
-                    "specifiedFundB": true,
-                    "specifiedNameB": "kartik"*/
+                    /* "age": 47,
+                     "retirementAge": 67,
+                     "annualSalary": 60000,
+                     "superBalance": 100000,
+                     "cc": 10000,
+                     "ncc": 10000,
+                     "ecLevel": 9.5,
+                     "inflation": 2.5,
+                     "wageIncrease": 3.5,
+                     "insurancePremiumPerYear": 200,
+                     "netReturnRate": 1.50,
+                     "fundIndexA": 0,
+                     "fundIndexB": 1,
+                     "specifiedFundA": true,
+                     "specifiedNameA": "tickoo",
+                     "specifiedAnnualPercFeeA": 1.5,
+                     "specifiedAnnualPercFeeB": 1.5,
+                     "specifiedAdminFeeA": 100,
+                     "specifiedAdminFeeB": 100,
+                     "specifiedIndirectCostA": 1.5,
+                     "specifiedIndirectCostB": 1.5,
+                     "specifiedFundB": true,
+                     "specifiedNameB": "kartik"*/
                 };
 
                 generateWebShot(next, 'ttr', data);
             },
-            
-             webshotAsset: function(next, results) {
-                var data = {
-                   /* "age": 47,
-                    "retirementAge": 67,
-                    "annualSalary": 60000,
-                    "superBalance": 100000,
-                    "cc": 10000,
-                    "ncc": 10000,
-                    "ecLevel": 9.5,
-                    "inflation": 2.5,
-                    "wageIncrease": 3.5,
-                    "insurancePremiumPerYear": 200,
-                    "netReturnRate": 1.50,
-                    "fundIndexA": 0,
-                    "fundIndexB": 1,
-                    "specifiedFundA": true,
-                    "specifiedNameA": "tickoo",
-                    "specifiedAnnualPercFeeA": 1.5,
-                    "specifiedAnnualPercFeeB": 1.5,
-                    "specifiedAdminFeeA": 100,
-                    "specifiedAdminFeeB": 100,
-                    "specifiedIndirectCostA": 1.5,
-                    "specifiedIndirectCostB": 1.5,
-                    "specifiedFundB": true,
-                    "specifiedNameB": "kartik"*/
-                };
+
+            webshotAsset: function (next, results) {
+                var data = { };
 
                 generateWebShot(next, 'aa', data);
             },
-            
-            pdf: ['webshotIa', 'webshotSFC','webshotIT','webshotPSF','webshotRA','webshotSSO','webshotTTR','webshotAsset', function(next, results) {
-                var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
 
-                console.log("55555555555555555", results.webshotIa, results.webshotSFC,results.webshotIT,results.webshotPSF,results.webshotRA,results.webshotSSO,results.webshotTTR,
-                results.webshotAsset);
-                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC,results.webshotIT,results.webshotPSF,results.webshotRA,results.webshotSSO,results.webshotTTR,
-                results.webshotAsset, loggedInUser);
+            pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function (next, results) {
+                var pdfFileName = /*loggedInUser.CONTACT_ID + */"x.pdf";
+
+           /*     console.log("55555555555555555", results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
+                    results.webshotAsset);*/
+                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
+                    results.webshotAsset);
             }]
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -393,27 +358,62 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2, loggedInUser) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
-            image1: image1,
-            image2: image2
+    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8) {
+        ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', { 
+            
+            image1: image1, 
+            image2: image2,
+            image3: image3,
+            image4: image4,
+            image5: image5,
+            image6: image6,
+            image7: image7,
+            image8: image8
         }, {}, function(err, html) {
             if (html) {
-                var options = {
-                    format: 'Letter',
-                    base: 'file://' + __dirname + '/../../../'
-                };
+                var options = { format: 'Letter', base: 'file://' + __dirname + '/../../../' };
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {
                         next(err, null);
                     } else {
-                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID),loggedInUser.CONTACT_ID).then(function(fileData){
+                        next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                    }
+                });
+            } else {
+                next(err, null);
+            }
+        });
+    }
+
+    
+    /*function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8, loggedInUser) {
+        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
+            image1: image1,
+            image2: image2,
+            image3: image3,
+            image4: image4,
+            image5: image5,
+            image6: image6,
+            image7: image7,
+            image8: image8
+        }, {}, function (err, html) {
+            if (html) {
+                var options = {
+                    height: '827px', width: '1169px',
+                    base: 'file://' + __dirname + '/../../../'
+                };
+
+                pdf.create(html, options).toFile('uploads/' + pdfFileName, function (err, result) {
+                    if (err) {
+                        next(err, null);
+                    } else {
+                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
                             HubspotService.uploadFile('ope@hubspot.com', _getPdfFilePath(loggedInUser.CONTACT_ID));
-                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(){
+                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                 next(null, null);
                             });
-                        }).catch(function(err){
+                        }).catch(function (err) {
                             console.log(err)
                             next(err, null);
                         });
@@ -423,7 +423,7 @@ module.exports.CalculatorService = (function() {
                 next(err, null);
             }
         });
-    }
+    }*/
 
     function createUser(data) {
         /*var body = {
@@ -447,8 +447,8 @@ module.exports.CalculatorService = (function() {
             body: data,
             method: "POST"
         };
-        return new Promise(function(resolve, reject) {
-            request(options, function(error, response, body) {
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response, body) {
                 // console.log('REQUEST RESULTS:', error, response.statusCode, body);
                 if (error) {
                     reject(error);
@@ -467,8 +467,8 @@ module.exports.CalculatorService = (function() {
             }
         };
 
-        return new Promise(function(resolve, reject) {
-            request(options, function(error, response, body) {
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -485,14 +485,14 @@ module.exports.CalculatorService = (function() {
 
     function getById(contactId) {
         var options = {
-            url: configurationHolder.config.insightly.url +'/'+contactId,
+            url: configurationHolder.config.insightly.url + '/' + contactId,
             headers: {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
 
-        return new Promise(function(resolve, reject) {
-            request(options, function(error, response, body) {
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -500,7 +500,9 @@ module.exports.CalculatorService = (function() {
                     if (body) {
                         resolve(body);
                     } else {
-                        reject({'message':'User not found'});
+                        reject({
+                            'message': 'User not found'
+                        });
                     }
                 }
             });
@@ -533,8 +535,8 @@ module.exports.CalculatorService = (function() {
             body: data,
             method: "PUT"
         };
-        return new Promise(function(resolve, reject) {
-            request(options, function(error, response, body) {
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -561,7 +563,7 @@ module.exports.CalculatorService = (function() {
             }
         };
 
-        request(options, function(error, response, body) {
+        request(options, function (error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -582,7 +584,7 @@ module.exports.CalculatorService = (function() {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function(error, response, body) {
+        request(options, function (error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -618,7 +620,7 @@ module.exports.CalculatorService = (function() {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function(error, response, body) {
+        request(options, function (error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -655,7 +657,7 @@ module.exports.CalculatorService = (function() {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function(error, response, body) {
+        request(options, function (error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -681,28 +683,28 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    var login = function(data, res) {
+    var login = function (data, res) {
         var phoneNumber = _getPhoneNumberFromUserObject(data);
         /**
-        * Search user by phone number on local db
-        */
-        UserService.searchUser(phoneNumber).then(function(searchUser) {
+         * Search user by phone number on local db
+         */
+        UserService.searchUser(phoneNumber).then(function (searchUser) {
             if (!searchUser || searchUser.length === 0) {
                 /**
-                * Save user on insightly
-                */
-                createUser(data).then(function(result) {
+                 * Save user on insightly
+                 */
+                createUser(data).then(function (result) {
                     /**
-                    * Save user on Hotspot
-                    */
+                     * Save user on Hotspot
+                     */
                     HubspotService.save(data);
                     /**
-                    * Save user on local DB
-                    */
+                     * Save user on local DB
+                     */
                     return UserService.save(result)
-                }).then(function(result) {
+                }).then(function (result) {
                     _loginResponseData(result, res);
-                }).catch(function(err) {
+                }).catch(function (err) {
                     configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
                 })
             } else {
@@ -712,7 +714,7 @@ module.exports.CalculatorService = (function() {
     };
 
     function _loginResponseData(userObj, res) {
-        ClientAdvisorService.createClientAdvisor(userObj, function() {
+        ClientAdvisorService.createClientAdvisor(userObj, function () {
             var role = _getUserRoleFromUserObject(userObj);
             var promises = [];
             promises.push(AuthService.generateAuthToken(userObj));
@@ -730,7 +732,7 @@ module.exports.CalculatorService = (function() {
                         break;
                     }
             }
-            Promise.all(promises).then(function(results) {
+            Promise.all(promises).then(function (results) {
                 var returnOnject = {};
                 returnOnject.me = userObj;
                 returnOnject.token = results[0].auth_token;
@@ -750,18 +752,18 @@ module.exports.CalculatorService = (function() {
                         }
                 }
                 configurationHolder.ResponseUtil.responseHandler(res, returnOnject, "Successfully login", false, 200);
-            }).catch(function(err) {
+            }).catch(function (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
             });
         })
     }
 
-    var getData = function(data, res) {
+    var getData = function (data, res) {
         async.auto({
-            userInfo: function(next) {
+            userInfo: function (next) {
                 getUser(next, data);
             }
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -770,22 +772,22 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var saveData = function(data, res) {
-        updateUser(data).then(function(result) {
+    var saveData = function (data, res) {
+        updateUser(data).then(function (result) {
             return UserService.update(data);
-        }).then(function(result) {
+        }).then(function (result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
-        }).catch(function(err) {
+        }).catch(function (err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
         })
     };
 
-    var saveAttachment = function(data, res) {
+    var saveAttachment = function (data, res) {
         async.auto({
-            sendAttachment: function(next) {
+            sendAttachment: function (next) {
                 addAttachment(next, data);
             }
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -794,12 +796,12 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var getAssignedClientList = function(data, res) {
+    var getAssignedClientList = function (data, res) {
         async.auto({
-            assignedClientList: function(next) {
+            assignedClientList: function (next) {
                 requestAssignedClientList(next, data);
             }
-        }, function(err, results) {
+        }, function (err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -808,20 +810,20 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var getMasterClientList = function(res) {
+    var getMasterClientList = function (res) {
 
-        UserService.list('CLIENT').then(function(result) {
+        UserService.list('CLIENT').then(function (result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "Master Client list successfully captured", false, 200);
-        }).catch(function(err) {
+        }).catch(function (err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
     };
 
-    var getMasterAdvisorList = function(res) {
+    var getMasterAdvisorList = function (res) {
 
-        UserService.listAdvisorClient().then(function(result) {
+        UserService.listAdvisorClient().then(function (result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User Data successfully captured", false, 200);
-        }).catch(function(err) {
+        }).catch(function (err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
 
@@ -830,7 +832,7 @@ module.exports.CalculatorService = (function() {
     function _getPhoneNumberFromUserObject(userObj) {
         var phoneNumber = null;
         if (userObj && userObj.CONTACTINFOS) {
-            userObj.CONTACTINFOS.forEach(function(contactInfo) {
+            userObj.CONTACTINFOS.forEach(function (contactInfo) {
                 if (contactInfo.TYPE === 'PHONE') {
                     phoneNumber = contactInfo.DETAIL;
                 }
@@ -866,8 +868,8 @@ module.exports.CalculatorService = (function() {
                 ]
             }
         };
-        return new Promise(function(resolve, reject){
-            request(options, function(error, response, body) {
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response, body) {
                 if (error) {
                     request(error);
                 } else {
@@ -879,43 +881,43 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function updateFileToUser(contactId, fileId, filePath, callback){
+    function updateFileToUser(contactId, fileId, filePath, callback) {
         var format = filePath.split('.')[filePath.split('.').length - 1]
-        UserService.updateFile(contactId, fileId, format).then(function(userData){
+        UserService.updateFile(contactId, fileId, format).then(function (userData) {
             delete userData['_id'];
             return updateUser(userData);
-        }).then(function(userData){
+        }).then(function (userData) {
             //fs.unlinkSync(filePath);
             callback();
-        }).catch(function(err){
+        }).catch(function (err) {
             console.log("Error ", err)
             callback()
         });
     }
 
     function linkAdvisorToClient(clientId, advisorId, res) {
-        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result){
+        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function (result) {
 
-            getById(clientId).then(function(clientObj){
-                
+            getById(clientId).then(function (clientObj) {
+
                 clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
                 /**
-                * Update advisor on insightly
-                */
-                updateUser(clientObj).then(function(results){
+                 * Update advisor on insightly
+                 */
+                updateUser(clientObj).then(function (results) {
                     /**
-                    * Update advisor on hubspot
-                    */
+                     * Update advisor on hubspot
+                     */
                     HubspotService.updateAdvisor(clientObj, advisorId);
                     /**
-                    * Update advisor on local DB
-                    */
-                    UserService.update(clientObj).then(function(updatedUser){
+                     * Update advisor on local DB
+                     */
+                    UserService.update(clientObj).then(function (updatedUser) {
                         configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
                     });
                 })
             })
-        }).catch(function(err){
+        }).catch(function (err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
     }
@@ -933,7 +935,7 @@ module.exports.CalculatorService = (function() {
         getMasterAdvisorList: getMasterAdvisorList,
         saveAttachmentToInsightly: saveAttachmentToInsightly,
         updateFileToUser: updateFileToUser,
-        getById:getById,
+        getById: getById,
         updateUser: updateUser,
         linkAdvisorToClient: linkAdvisorToClient
     };
