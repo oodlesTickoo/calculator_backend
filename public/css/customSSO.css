@@ -1,9 +1,130 @@
+/****css for pdf*****/
+@font-face {
+           font-family: 'Helvetica';
+           src: url("../fonts/HELVETICA.OTF");
+           font-weight: normal;
+           font-style: normal;
+       }
+
+body{
+    font-family: 'Helvetica' !important;
+}
+.paddingZero{
+  padding: 0 !important;
+}
+.margintop17{
+  margin-top: 17px;
+}
+.margintop19{
+  margin-top: 19px;
+}
+.leftHead{
+  color: #161b2e;
+    text-transform: uppercase;
+    font-size: 17px;
+    padding: 8px;
+    font-family: 'Helvetica' !important;
+}
+.skyBlue{
+  background: #21b0e4;
+  margin-top: 0;
+  margin-bottom: 3px;
+}
+.orange{
+  background: #ed7d31;
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+.pannel_left p.price{
+font-size: 19px;
+padding: 7px 0;
+}
+  .pannel_left p{
+    color: #fff;
+font-size: 14px;
+padding: 9px 0;
+margin: 0;
+font-family: 'Helvetica' !important;
+padding-left: 11px;
+  }
+.whiteBg{
+  background: #fff;
+    padding: 11px 0px;
+}
+.whiteBg span{
+  display: inline-block;
+}
+.whiteBg span.finalAmount{
+  color: #3c3c3c;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px 0 0 4px;
+    position: relative;
+    top: 7px;
+}
+.whiteBg span.rupeesImage{
+  padding: 0px 0 0 4px;
+    position: relative;
+    top: -6px;
+}
+.three{
+  border: 1px solid #fff;
+}
+.paneel_right h4{
+  font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 12px;
+    padding-top: 4px;
+    padding-left: 24px;
+}
+.paneel_right h4.blu{
+  color: #21b0e4;
+}
+.paneel_right h4.org{
+  color: #ed7d31;
+}
+  .paneel_right h2{
+    background: #090e1e;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 22px 12px;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 0;
+  }
+    .paneel_right p{
+      font-size: 16px;
+    color: #fff;
+    padding-left: 24px;
+    }
+  .pannel_left{
+    padding-right: 0px;
+  }
+  .paneel_right .right_inner{
+    background: #0e1328;
+padding-bottom: 9px;
+  }
+
+.result-div{
+      background-color: #161b2e;
+      position: relative;
+      overflow:hidden;
+      width: 741px;
+      color:black;
+      padding-bottom: 20px;
+  }
+
+/***********end here****************/
+
+
 .container-fluid{
   margin-left:0px !important;
 }
 .otrp-calculator{
 	    display: block;
-	    max-width: 614px;
+	    /*max-width: 614px;*/
 	    /*border: 1px solid #e2e2e2;*/
 	    font-size: 12px;
 	    line-height: normal;
@@ -154,14 +275,7 @@ i.fa-floppy-o{
     background-color: #efefef !important;
     font-size: 20px;
 }
-.result-div{
-    background-color: #FFF;
-    position: relative;
-    overflow:hidden;
-    //padding-right: 0;
-    //padding-left: 0;
-    color:black;
-}
+
 
 .content-result{
     //padding: 10px 15px 10px 0 !important;
@@ -379,7 +493,7 @@ input[type=number] {
     /*background: #efefef !important;*/
     background-color: #ddd;
     color: #666;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: bold;
     text-align: center;
     padding: 10px;
@@ -447,15 +561,17 @@ input[type=number] {
 
 
 .res-1{
-    background-color: #6F7070!important;
+
     color: white;
     /*margin: 10px;*/
     margin:-6px 0px;
     padding: 10px;
     margin-bottom: 15px;
+    /*border: 0.5px solid rgba(159, 231, 247, 0.46);*/
 }
+
 .res-2{
-    background-color: #ddd;
+
     margin: 10px 0px;
     padding: 10px;
     color: #666;
@@ -480,12 +596,7 @@ input[type=number] {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-.res-value{
-    font-size: 16px;
-        /*text-align: right;*/
-        padding-left: 0;
-        padding-right: 5px;
-}
+
 .res-diff{
     /*font-size: 36px;*/
         font-size: 28px;
@@ -729,18 +840,18 @@ p.thpError-text{
 @media print {
 .res-2,.strategy,.res-1{
     background-color: #efefef !important;
-    -webkit-print-color-adjust: exact; 
+    -webkit-print-color-adjust: exact;
 }
 .result-div{
     border-bottom:1px solid #e2e2e2;
 }
 .form-group .noUi-connect{
    background: #3FB8AF !important;
-  -webkit-print-color-adjust: exact; 
+  -webkit-print-color-adjust: exact;
 }
 .form-group .noUi-background{
     background: #FAFAFA !important;
-    -webkit-print-color-adjust: exact; 
+    -webkit-print-color-adjust: exact;
 }
 
 .form-group .noUi-handle{
@@ -784,7 +895,7 @@ float:right;
     border: 0 !important;
      border-radius: 0 !important;
     cursor: default;
-     box-shadow: none !important; 
+     box-shadow: none !important;
 }
 
 .form-group .noUi-horizontal .noUi-handle {
@@ -794,7 +905,7 @@ float:right;
     height: 28px !important;
     border: 0 !important;
      border-radius: 0 !important;
-     box-shadow: none !important; 
+     box-shadow: none !important;
 
 }
 

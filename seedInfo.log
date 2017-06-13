@@ -216,3 +216,42 @@
 {"level":"info","message":"executed in accesslevel ","timestamp":"2017-05-11T08:14:14.309Z"}
 {"level":"info","message":"executed in accesslevel ","timestamp":"2017-05-11T08:16:16.293Z"}
 {"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-05T05:12:57.443Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","level":"error","timestamp":"2017-06-12T11:57:47.817Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","level":"error","timestamp":"2017-06-12T12:07:11.565Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","ok":0,"code":18,"errmsg":"Authentication failed.","level":"error","timestamp":"2017-06-12T12:13:22.136Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","ok":0,"code":18,"errmsg":"Authentication failed.","level":"error","timestamp":"2017-06-12T12:14:34.013Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","ok":0,"code":18,"errmsg":"Authentication failed.","level":"error","timestamp":"2017-06-12T12:15:43.770Z"}
+{"name":"MongoError","message":"Could not connect to mongo server!","ok":0,"code":18,"errmsg":"Authentication failed.","level":"error","timestamp":"2017-06-12T12:17:07.235Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:19:35.307Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:20:25.882Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:20:51.137Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:27:26.040Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:27:48.065Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:29:34.586Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:29:42.809Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:29:45.025Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:37:07.192Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:37:10.756Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:41:26.200Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:41:29.406Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:42:53.479Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:42:55.531Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:44:17.468Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:44:19.635Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:44:37.842Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:44:47.459Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:45:30.811Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T12:59:11.912Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T12:59:15.942Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T13:03:03.708Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T13:03:06.548Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-12T13:04:28.927Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T13:04:36.713Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-12T13:06:05.591Z"}
+{"level":"info","message":"Connected to mongo server.","timestamp":"2017-06-13T04:53:25.980Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T04:53:36.082Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T04:57:51.481Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T04:57:59.809Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T05:00:18.188Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T05:00:52.793Z"}
+{"level":"info","message":"executed in accesslevel ","timestamp":"2017-06-13T05:01:13.187Z"}

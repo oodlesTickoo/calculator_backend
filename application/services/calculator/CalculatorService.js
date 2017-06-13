@@ -95,7 +95,9 @@ module.exports.CalculatorService = (function() {
                 generateImage(next, results.html, imageFileName);
             }]
         }, function(err, results) {
+        
             if (err) {
+                console.log("xxxxx");
                 next(err, null);
             } else {
                 next(null, results.image);
@@ -106,6 +108,12 @@ module.exports.CalculatorService = (function() {
     var webShot = function(type, data, res) {
         var fileName;
         fileName = getEjsFile(type);
+       /* data = {
+                  "age": 19,
+                  "cses": 80000,
+                  "thp": 45000,
+                  "fy": 2016
+              };*/
 
         async.auto({
             image: function(next, results) {
@@ -127,7 +135,7 @@ module.exports.CalculatorService = (function() {
 
     var requestPdf = function(data, loggedInUser, res) {
         async.auto({
-            webshotIa: function(next, results) {
+             webshotIa: function(next, results) {
                 var data = {
                     "age": 50,
                     "grossAnnualIncome": 120000,
@@ -176,7 +184,8 @@ module.exports.CalculatorService = (function() {
                 };
                 generateWebShot(next, 'ia', data);
             },
-            webshotSFC: function(next, results) {
+            
+             webshotSFC: function(next, results) {
                 var data = {
                     "age": 47,
                     "retirementAge": 67,
@@ -205,11 +214,175 @@ module.exports.CalculatorService = (function() {
 
                 generateWebShot(next, 'sfc', data);
             },
-            pdf: ['webshotIa', 'webshotSFC', function(next, results) {
+            
+             webshotIT: function(next, results) {
+                var data = {
+                   /* "age": 47,
+                    "retirementAge": 67,
+                    "annualSalary": 60000,
+                    "superBalance": 100000,
+                    "cc": 10000,
+                    "ncc": 10000,
+                    "ecLevel": 9.5,
+                    "inflation": 2.5,
+                    "wageIncrease": 3.5,
+                    "insurancePremiumPerYear": 200,
+                    "netReturnRate": 1.50,
+                    "fundIndexA": 0,
+                    "fundIndexB": 1,
+                    "specifiedFundA": true,
+                    "specifiedNameA": "tickoo",
+                    "specifiedAnnualPercFeeA": 1.5,
+                    "specifiedAnnualPercFeeB": 1.5,
+                    "specifiedAdminFeeA": 100,
+                    "specifiedAdminFeeB": 100,
+                    "specifiedIndirectCostA": 1.5,
+                    "specifiedIndirectCostB": 1.5,
+                    "specifiedFundB": true,
+                    "specifiedNameB": "kartik"*/
+                };
+
+                generateWebShot(next, 'it', data);
+            },
+            
+             webshotPSF: function(next, results) {
+                var data = {
+                   /* "age": 47,
+                    "retirementAge": 67,
+                    "annualSalary": 60000,
+                    "superBalance": 100000,
+                    "cc": 10000,
+                    "ncc": 10000,
+                    "ecLevel": 9.5,
+                    "inflation": 2.5,
+                    "wageIncrease": 3.5,
+                    "insurancePremiumPerYear": 200,
+                    "netReturnRate": 1.50,
+                    "fundIndexA": 0,
+                    "fundIndexB": 1,
+                    "specifiedFundA": true,
+                    "specifiedNameA": "tickoo",
+                    "specifiedAnnualPercFeeA": 1.5,
+                    "specifiedAnnualPercFeeB": 1.5,
+                    "specifiedAdminFeeA": 100,
+                    "specifiedAdminFeeB": 100,
+                    "specifiedIndirectCostA": 1.5,
+                    "specifiedIndirectCostB": 1.5,
+                    "specifiedFundB": true,
+                    "specifiedNameB": "kartik"*/
+                };
+
+                generateWebShot(next, 'psf', data);
+            },
+            
+             webshotRA: function(next, results) {
+                var data = {
+                   /* "age": 47,
+                    "retirementAge": 67,
+                    "annualSalary": 60000,
+                    "superBalance": 100000,
+                    "cc": 10000,
+                    "ncc": 10000,
+                    "ecLevel": 9.5,
+                    "inflation": 2.5,
+                    "wageIncrease": 3.5,
+                    "insurancePremiumPerYear": 200,
+                    "netReturnRate": 1.50,
+                    "fundIndexA": 0,
+                    "fundIndexB": 1,
+                    "specifiedFundA": true,
+                    "specifiedNameA": "tickoo",
+                    "specifiedAnnualPercFeeA": 1.5,
+                    "specifiedAnnualPercFeeB": 1.5,
+                    "specifiedAdminFeeA": 100,
+                    "specifiedAdminFeeB": 100,
+                    "specifiedIndirectCostA": 1.5,
+                    "specifiedIndirectCostB": 1.5,
+                    "specifiedFundB": true,
+                    "specifiedNameB": "kartik"*/
+                };
+
+                generateWebShot(next, 'ra', data);
+            },
+            
+             webshotSSO: function(next, results) {
+                var data = {
+      "age": 19,
+      "cses": 80000,
+      "thp": 45000,
+      "fy": 2016
+  };
+
+                generateWebShot(next, 'sso', data);
+            },
+            
+             webshotTTR: function(next, results) {
+                var data = {
+                   /* "age": 47,
+                    "retirementAge": 67,
+                    "annualSalary": 60000,
+                    "superBalance": 100000,
+                    "cc": 10000,
+                    "ncc": 10000,
+                    "ecLevel": 9.5,
+                    "inflation": 2.5,
+                    "wageIncrease": 3.5,
+                    "insurancePremiumPerYear": 200,
+                    "netReturnRate": 1.50,
+                    "fundIndexA": 0,
+                    "fundIndexB": 1,
+                    "specifiedFundA": true,
+                    "specifiedNameA": "tickoo",
+                    "specifiedAnnualPercFeeA": 1.5,
+                    "specifiedAnnualPercFeeB": 1.5,
+                    "specifiedAdminFeeA": 100,
+                    "specifiedAdminFeeB": 100,
+                    "specifiedIndirectCostA": 1.5,
+                    "specifiedIndirectCostB": 1.5,
+                    "specifiedFundB": true,
+                    "specifiedNameB": "kartik"*/
+                };
+
+                generateWebShot(next, 'ttr', data);
+            },
+            
+             webshotAsset: function(next, results) {
+                var data = {
+                   /* "age": 47,
+                    "retirementAge": 67,
+                    "annualSalary": 60000,
+                    "superBalance": 100000,
+                    "cc": 10000,
+                    "ncc": 10000,
+                    "ecLevel": 9.5,
+                    "inflation": 2.5,
+                    "wageIncrease": 3.5,
+                    "insurancePremiumPerYear": 200,
+                    "netReturnRate": 1.50,
+                    "fundIndexA": 0,
+                    "fundIndexB": 1,
+                    "specifiedFundA": true,
+                    "specifiedNameA": "tickoo",
+                    "specifiedAnnualPercFeeA": 1.5,
+                    "specifiedAnnualPercFeeB": 1.5,
+                    "specifiedAdminFeeA": 100,
+                    "specifiedAdminFeeB": 100,
+                    "specifiedIndirectCostA": 1.5,
+                    "specifiedIndirectCostB": 1.5,
+                    "specifiedFundB": true,
+                    "specifiedNameB": "kartik"*/
+                };
+
+                generateWebShot(next, 'aa', data);
+            },
+            
+            pdf: ['webshotIa', 'webshotSFC','webshotIT','webshotPSF','webshotRA','webshotSSO','webshotTTR','webshotAsset', function(next, results) {
                 var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
 
-                console.log("55555555555555555", results.webshotIa, results.webshotSFC);
-                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, loggedInUser);
+                console.log("55555555555555555", results.webshotIa, results.webshotSFC,results.webshotIT,results.webshotPSF,results.webshotRA,results.webshotSSO,results.webshotTTR,
+                results.webshotAsset);
+                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC,results.webshotIT,results.webshotPSF,results.webshotRA,results.webshotSSO,results.webshotTTR,
+                results.webshotAsset, loggedInUser);
             }]
         }, function(err, results) {
             if (err) {

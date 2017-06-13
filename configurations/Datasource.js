@@ -10,13 +10,13 @@ var getDbConnection = function() {
             dbName = 'ttr', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
             break;
         case 'staging':
-            dbName = 'mongoseed', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
+            dbName = 'ttr', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
             break;
         case 'production':
-            dbName = 'mongoseed', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
+            dbName = 'ttr', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
             break;
         case 'test':
-            dbName = 'mongoseed', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
+            dbName = 'ttr', dbUser = 'admin', dbPassword = 'oodles', dbHost = 'localhost', dbPort = '27017';
             break;
     }
 
