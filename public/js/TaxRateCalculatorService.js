@@ -23,4 +23,13 @@ var TaxRateCalculatorService = angular.module('TaxRateCalculatorService', [])
             }
         }       
     }
+    this.getPeriods = function (input) {
+        var temp;
+        switch(input){
+            case 0:temp=52;break;
+            case 1:temp=26;break;
+            case 2:temp=12;break;
+        }
+        return temp;
+    };
 });

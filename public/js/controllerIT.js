@@ -1,4 +1,4 @@
-app.controller("TTRController", ['$scope', '$timeout', 'TaxRateCalculator', 'ChartServiceHc', 'DonutChartServiceHc', function($scope, $timeout, TaxRateCalculator, ChartServiceHc, DonutChartServiceHc) {
+app.controller("ITController", ['$scope', '$timeout', 'TaxRateCalculator', 'ChartServiceHc', function($scope, $timeout, TaxRateCalculator, ChartServiceHc) {
     
     
  incomeTaxObj = {
@@ -10,31 +10,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'TaxRateCalculator', 'Cha
 
     $scope.forms = {};
 
-    $scope.personalDetails = {};
-    $scope.personalDetails = {
-        firstName: "Amit",
-        lastName: "Kumar",
-        email: "iamitkrs@gmail.com",
-        mobile: 412121212,
-        postalCode: 1234
-    };
-
-    $scope.chartOneOpen = true;
-    //$scope.tempp;
-    String.prototype.replaceAll = function(search, replacement) {
-        var target = this;
-        return target.split(search).join(replacement);
-    };
-    $scope.infoShow = function(value) {
-        if (value) {
-            document.getElementsByClassName("information-overlay")[0].style.visibility = "visible";
-            document.getElementsByClassName("information-overlay")[0].style.zIndex = "9999";
-            document.getElementsByClassName("information-overlay")[0].style.position = "inline-block";
-            document.getElementsByClassName("information-overlay")[0].style.height = "" + (document.getElementsByClassName("otrp-calculator")[0].clientHeight - 10) + "px";
-        } else {
-            document.getElementsByClassName("information-overlay")[0].style.visibility = "hidden";
-        }
-    };
+    
     $scope.listOb = [{ id: 0, name: "Week" },
         { id: 1, name: "Fortnight" },
         { id: 2, name: "Month" }
@@ -118,14 +94,12 @@ app.controller("TTRController", ['$scope', '$timeout', 'TaxRateCalculator', 'Cha
                     break;
 
             }
+            $timeout(0);
 
-            // console.log("1.",taxOnIncome);
-            // console.log("2.",netAnnualIncomeAfterTax);
-            // console.log("3.",netPaymentPerPeriod);
+            
 
             ChartServiceHc.createChart(Number(taxOnIncome.toFixed(2)), Number(netAnnualIncomeAfterTax.toFixed(2)), false);
-            DonutChartServiceHc.createChart(Number(taxOnIncome.toFixed(2)), Number(netAnnualIncomeAfterTax.toFixed(2)));
-            //PdfMaker.createChart($scope.personalDetails,Number($scope.annualSalary.replaceAll('$', '').replaceAll(',', '')),$scope.result);
+            
 
 
         } else {

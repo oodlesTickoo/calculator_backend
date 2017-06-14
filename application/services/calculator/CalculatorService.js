@@ -18,6 +18,7 @@ module.exports.CalculatorService = (function () {
     // require('request-debug')(request);
 
     function renderFile(next, fileName, data) {
+        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",fileName);
         ejs.renderFile(configurationHolder.config.publicFolder + fileName, {
             data: data,
         }, function (err, htmlStr) {
