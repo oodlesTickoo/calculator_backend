@@ -1,5 +1,13 @@
 app.controller("SSOController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc) {
 
+   ssoObj = {
+      "age": 19,
+      "cses": 80000,
+      "thp": 45000,
+      "fy": 2016
+  };
+    
+    
      var ageq = ssoObj.age;
     var csesq = ssoObj.cses;
     var thpq = ssoObj.thp;

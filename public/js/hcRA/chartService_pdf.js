@@ -34,13 +34,7 @@ app.service('ChartServiceHc', function() {
         $('#container').highcharts({
             chart: {
                 type: 'column',
-                  options3d: {
-                        enabled: true,
-                        alpha: 7,
-                        beta: 18,
-                        depth: 47,
-                        viewDistance: 25 
-                       },
+              
                 height: 400,
                 events: {
                     beforePrint: function() {

@@ -81,6 +81,7 @@ app.service('ChartServiceHcSFC',function(){
                 plotOptions: {
                     series: {
                         borderWidth: 0,
+                        animation:false
                         // dataLabels: {
                         //     enabled: true,
                         //     format: '{point.y:.1f}%'
@@ -173,6 +174,7 @@ app.service('ChartServiceHcSFC',function(){
                 plotOptions: {
                     series: {
                         borderWidth: 0,
+                        animation:false,
                         marker: {
                             enabled: false
                         }
