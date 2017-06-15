@@ -372,7 +372,7 @@ module.exports.CalculatorService = (function () {
             image8: image8
         }, {}, function(err, html) {
             if (html) {
-                var options = { format: 'Letter', base: 'file://' + __dirname + '/../../../' };
+                var options = { width:'1169px',height:'827px', base: 'file://' + __dirname + '/../../../' };
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {

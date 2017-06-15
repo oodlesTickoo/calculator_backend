@@ -10,7 +10,8 @@ module.exports.CalculatorController = (function() {
     };
 
     var requestPdf = function(req, res) {
-        CalculatorService.requestPdf(req.body, req.loggedInUser, res);
+        // CalculatorService.requestPdf(req.body, req.loggedInUser, res);
+        CalculatorService.requestPdf(req.body, res);
     };
 
     var login = function(req, res) {
