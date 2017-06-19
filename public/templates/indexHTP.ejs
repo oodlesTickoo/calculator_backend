@@ -8,73 +8,74 @@
     <title></title>
     <link rel="stylesheet" type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/font-awesome.css">
+   <!-- <base href="file:///home/sachin/projects/INS-ADE-API/" />-->
     <style>
         @font-face {
             font-family: 'Avgardd';
-            src: url("fonts/AVGARDD.TTF");
+            src: url("public/fonts/AVGARDD.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Avgarddo';
-            src: url("fonts/AVGARDDO.TTF");
+            src: url("public/fonts/AVGARDDO.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Aavgardm';
-            src: url("fonts/AAVGARDM.TTF");
+            src: url("public/fonts/AAVGARDM.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Avgardmi';
-            src: url("fonts/AVGARDMI.TTF");
+            src: url("public/fonts/AVGARDMI.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Avgardn';
-            src: url("fonts/AVGARDN.TTF");
+            src: url("public/fonts/AVGARDN.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Avgardni';
-            src: url("fonts/AVGARDNI.TTF");
+            src: url("public/fonts/AVGARDNI.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Neon';
-            src: url("fonts/NEON.TTF");
+            src: url("public/fonts/NEON.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Neon_';
-            src: url("fonts/NEON_.TTF");
+            src: url("public/fonts/NEON_.TTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Neon-club';
-            src: url("fonts/NEON CLUB MUSIC.OTF");
+            src: url("public/fonts/NEON CLUB MUSIC.OTF");
             font-weight: normal;
             font-style: normal;
         }
         
         @font-face {
             font-family: 'Helvetica';
-            src: url("fonts/HELVETICA.OTF");
+            src: url("public/fonts/HELVETICA.OTF");
             font-weight: normal;
             font-style: normal;
         }
@@ -98,7 +99,7 @@
         }
         
         .layout1 {
-            background-image: url('public/images/page1-back.png')!important;
+            background-image: url(public/images/page1-back.jpg) !important;
             background-size: 100% 100% !important;
             height: 100%;
             background-repeat: no-repeat;
@@ -279,16 +280,14 @@
         
         .table tbody tr td {
             border: none;
-            background:rgba(0, 0, 0, 0) !important;
-            background-color:rgba(0, 0, 0, 0) !important;
-            
+            background: rgba(0, 0, 0, 0) !important;
+            background-color: rgba(0, 0, 0, 0) !important;
         }
         
         .table thead tr th {
             border: none;
-            background:#515664 !important   ;
-            background-color:#515664  !important;
-             
+            background: #515664 !important;
+            background-color: #515664 !important;
         }
         
         .table-label {
@@ -300,7 +299,7 @@
             font-family: Helvetica;
             padding-top: 12px !important;
             padding-left: 15px !important;
-            background:none !important;
+            background: none !important;
         }
         
         .table-input {
@@ -690,7 +689,7 @@
             border: 1px solid #33f3d6 !important;
             text-align: left;
             box-shadow: 1px 1px 20px white !important;
-            margin-top: 100px;
+            margin-top: 40px;
         }
         
         .page12-text {
@@ -836,6 +835,11 @@
             height: 100%;
         }
         
+        .gradient-95 {
+            background-color: rgba(22, 27, 46, 1) !important;
+            height: 100%;
+        }
+        
         .background9-4 {
             background-image: url('public/images/page94-back.jpg') !important;
             background-repeat: no-repeat !important;
@@ -860,6 +864,20 @@
             background-repeat: no-repeat !important;
         }
         
+        .layout-ttr {
+            background-image: url('public/images/ttr-back.jpg') !important;
+            background-size: 100% 100% !important;
+            height: 100%;
+            background-repeat: no-repeat !important;
+        }
+        
+        .layout-sfc {
+            background-image: url('public/images/graph-pageback.jpg') !important;
+            background-size: 100% 100% !important;
+            height: 100%;
+            background-repeat: no-repeat !important;
+        }
+        
         .background9-8 {
             background-image: url('public/images/page98-back.jpg') !important;
             background-repeat: no-repeat !important;
@@ -867,6 +885,11 @@
         
         .background9-9 {
             background-image: url('public/images/page99-back.jpg') !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        .back-privateschool {
+            background-image: url('public/images/private-school.jpg') !important;
             background-repeat: no-repeat !important;
         }
         
@@ -922,58 +945,75 @@
         
         .table {
             background: none !important;
-             background-color:transparent !important;
+            background-color: transparent !important;
         }
         
         @media print {
-             .table {
-            background: none !important;
-                  background-color:transparent !important;
-        }
-        }
-        
-        .height4
-        {
-            height:90%
+            .table {
+                background: none !important;
+                background-color: transparent !important;
+            }
         }
         
-        .text-layout4
-        {
-            padding:35px 50px;
+        .height4 {
+            height: 90%
         }
         
-        
-        tbody
-        {
-            background:rgba(0, 0, 0, 0) !important;
-            background-color:rgba(0, 0, 0, 0) !important;
+        .text-layout4 {
+            padding: 35px 50px;
         }
         
-        thead
-        {
-            background:rgba(0, 0, 0, 0)!important;
-            background-color:rgba(0, 0, 0, 0) !important;
+        tbody {
+            background: rgba(0, 0, 0, 0) !important;
+            background-color: rgba(0, 0, 0, 0) !important;
         }
         
-        tr
-        {
-            background:rgba(0, 0, 0, 0) !important;
-            background-color:rgba(0, 0, 0, 0)!important;
+        thead {
+            background: rgba(0, 0, 0, 0)!important;
+            background-color: rgba(0, 0, 0, 0) !important;
         }
         
-        td
-        {
-            background:rgba(0, 0, 0, 0) !important;
-            background-color:rgba(0, 0, 0, 0) !important;
+        tr {
+            background: rgba(0, 0, 0, 0) !important;
+            background-color: rgba(0, 0, 0, 0)!important;
         }
         
-        .page9-content
-        {
-            padding:20px 61px;
+        td {
+            background: rgba(0, 0, 0, 0) !important;
+            background-color: rgba(0, 0, 0, 0) !important;
         }
         
-        /*-----------------*/
+        .page9-content {
+            padding: 20px 61px;
+        }
         
+        .pagettr-content {
+            padding: 25px 61px;
+        }
+        
+        .text-layout-IA {
+            padding: 46px 35px;
+        }
+        
+        .it-graph {
+            margin-top: 25px;
+        }
+        
+        .text-layout-sso {
+            padding: 30px 61px;
+        }
+        
+        .page-private-heading {
+            font-size: 42px;
+            color: #33f3d6 !important;
+            font-family: Neon;
+            text-align: right;
+            text-shadow: 1px 1px 30px !important;
+            margin-top: 304px;
+            margin-right: 25px;
+            letter-spacing: 2px;
+        }
+        /*
         .p1-c7 {
             width: 58%;
             height: 826.99px;
@@ -998,15 +1038,26 @@
             height: 84%;
             padding: 0px 61px 0px 61px;
         }
-        /*-----------------*/
+    
+*/
+        
+        .child-display {
+            display: none;
+        }
+        
+        .child-table-display {
+            display: none;
+        }
 
     </style>
 
 
-
 </head>
 
+
 <body>
+
+
     <!--coverpage-start-->
     <div class="container  page padding-zero">
         <div class="col-xs-12 layout1 padding-zero">
@@ -1055,11 +1106,8 @@
 
             </div>
 
-
-
         </div>
         <div class="col-xs-5 padding-zero layout2 background2-2"></div>
-
 
     </div>
     <!--page1-ends-->
@@ -1073,7 +1121,6 @@
                 <p class="page3-head">My <br/>Contact<br/> Details</p>
                 <p></p>
                 <p></p>
-
 
             </div>
             <div class="col-xs-7 padding-zero text-layout">
@@ -1189,13 +1236,9 @@
 
             </div>
 
-
-
         </div>
     </div>
     <!--page3-ends-->
-
-
 
     <!--page4-starts-->
     <div class="container page padding-zero">
@@ -1257,10 +1300,7 @@
 
                         </div>
 
-
                     </div>
-
-
 
                 </div>
 
@@ -1272,11 +1312,6 @@
 
                 </div>
             </div>
-
-
-
-
-
 
         </div>
     </div>
@@ -1345,9 +1380,6 @@
 
                     <p class="page5-subhead-text">Fees and commissions.</p>
                     <p class="page5-text">We are a fee based practise and we charge both an advice fee and an asset management fee that is calculated and disclosed at end of this document.</p>
-
-
-
                 </div>
 
                 <div class="page3-footer">
@@ -1358,17 +1390,12 @@
 
                 </div>
 
-
             </div>
 
         </div>
     </div>
 
-
     <!--page5-ends-->
-
-
-
 
     <!--page6-starts-->
     <div class="container page padding-zero">
@@ -1436,8 +1463,6 @@
                                     <p class="page3-text">What is your attitude to investment risk and how long do you want to invest for?</p>
                                 </div>
                             </div>
-
-
                         </div>
 
                         <div class="col-xs-3 padding-zero page6-img-block"> <img class="section2-text-img" src="public/images/section2-text.png"></div>
@@ -1450,9 +1475,6 @@
                     <p class="page5-subhead-text">Protect right.</p>
                     <p class="page5-text">You are now earning a living and you understand the importance of the monthly pay check and might consider to yourself what would happen if I lost my job. You have minimum sick leave of a couple of weeks a year but what would you do if you had an accident that meant that you were on crutches or in hospital for a long time recovering. Would your employer keep your job open if you were away for 3 months or longer? Income protection and total disability cover is imperative for you. Our calculators will show you how much cover you should have and who has the best cover based on your current income and occupation. If you have loved ones or a big mortgage then we can help you plan so that you don’t leave a massive burden behind if you die.</p>
 
-
-
-
                 </div>
 
                 <div class="page3-footer">
@@ -1464,29 +1486,15 @@
                 </div>
             </div>
 
-
-
-
-
-
         </div>
     </div>
     <!--page6-ends-->
-
-
-
-
-
-
-
 
     <!--page7-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 mainlayout6 padding-zero">
             <div class="col-xs-12 padding-zero gradient6">
                 <div class="col-xs-12 height text-layout">
-
-
 
                     <div class="col-xs-12 padding-zero page7-text-block">
                         <div class="col-xs-9 padding-zero">
@@ -1565,14 +1573,6 @@
                     <p class="page5-subhead-text">Giving my kids the best possible start in life.</p>
                     <p class="page5-text">For many parents the idea of giving their kids a good start in life often comes down to a value for money education. You can either send them to the best private school and pay for extra-curricular activities or send them to a high achieving public school and invest the difference in an investment fund and gift that to them to buy their first home when they finish university. Our calculators have the current fees of all the leading private schools and we can calculate what the opportunity cost will be and how much you will be able to transfer to your children when the time is right to purchase their first property. Other areas that you can get advice on from us but we have not included in this document.</p>
 
-                    <p class="page7-subhead-text2">Invest in property. </p>
-                    <p class="page5-text">For some individuals property is the single best investment they can make. That can be inside or outside your superannuation fund. We will help you get a valuation on any property in Australia and give you an anticipated rental return.</p>
-                    <p class="page5-text">Our calculators will even estimate your positive or negative Cashflow that will impact on the tax you pay. We can set up a superannuation fund for the single purpose of investing your superannuation dollars and leveraging that to achieve your ultimate goal. </p>
-
-
-
-
-
                 </div>
 
                 <div class="page3-footer">
@@ -1584,58 +1584,17 @@
                 </div>
             </div>
 
-
-
-
-
-
         </div>
     </div>
     <!--page7-ends-->
 
-
-
-
-    <!--page8-starts-->
+    <!--page-PSF-starts-->
     <div class="container page padding-zero">
-        <div class="col-xs-12 mainlayout6 padding-zero">
+        <div class="col-xs-12 layout12 padding-zero">
             <div class="col-xs-12 padding-zero gradient6">
                 <div class="col-xs-12 height text-layout">
 
-
-
-                    <div class="col-xs-12 padding-zero ">
-                        <div class="col-xs-9 padding-zero layout8">
-
-                            <p class="page5-text">That will be your choice. We will provide you the cost comparison of doing so. Manage my month to month cash flow better.</p>
-
-
-                            <p class="page5-text">It is very liberating to know that all your bills are paid on time and you always have spare cash to meet all your financial commitments and be able to splurge every so often.</p>
-
-                            <p class="page5-text">Our aggregation of all you transactions over the last 12 months will help you set the building blocks for better budgeting. This is done by using our sophisticated software and bank data feeds.</p>
-
-
-                            <p class="page5-text">Finally, save for something big to reward yourself.</p>
-
-                            <p class="page5-text">You may want to save for a deposit and stop renting. You may want to update the car or put money away for that special wedding and holiday. The only way you can make it all happen is with clear goals that have a price tag attached to them and then start saving and investing. We can allocate some of your spare cash into an investment that has a time line of 3 years and more. </p>
-                        </div>
-
-
-                        <div class="col-xs-3 padding-zero page6-img-block"> <img class="section2-text-img" src="public/images/investment.png"></div>
-
-                    </div>
-
-                    <p class="page5-text"> Our investment models are ideally suited to get you better returns than simply putting money in the bank. Pursue your passion or start a business.</p>
-
-                    <p class="page5-text">Either way you will need to have some money accumulated to do what you want. The most effective way to do this is by paying yourself first. What that means is setting up a periodic payment plan into a special bank account that you do not have day to day access to. We can assist you from protecting the money against its worst enemy YOU</p>
-
-
-
-
-
-
-
-
+                    <p>asset graph</p>
 
                 </div>
 
@@ -1648,18 +1607,57 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!--page-PSF-ends-->
 
+    <!--page8-starts-->
+    <div class="container page padding-zero">
+        <div class="col-xs-12 mainlayout6 padding-zero">
+            <div class="col-xs-12 padding-zero gradient6">
+                <div class="col-xs-12 height text-layout">
 
+                    <div class="col-xs-12 padding-zero ">
+                        <div class="col-xs-9 padding-zero layout8">
 
+                            <p class="page6-subhead-text">Invest in property. </p>
+                            <p class="page5-text">For some individuals property is the single best investment they can make. That can be inside or outside your superannuation fund. We will help you get a valuation on any property in Australia and give you an anticipated rental return.</p>
+                            <p class="page5-text">Our calculators will even estimate your positive or negative Cashflow that will impact on the tax you pay. We can set up a superannuation fund for the single purpose of investing your superannuation dollars and leveraging that to achieve your ultimate goal. </p>
 
+                            <p class="page5-text">That will be your choice. We will provide you the cost comparison of doing so. Manage my month to month cash flow better.</p>
+
+                            <p class="page5-text">It is very liberating to know that all your bills are paid on time and you always have spare cash to meet all your financial commitments and be able to splurge every so often.</p>
+
+                        </div>
+
+                        <div class="col-xs-3 padding-zero page6-img-block"> <img class="section2-text-img" src="public/images/investment.png"></div>
+
+                    </div>
+
+                    <p class="page5-text">Our aggregation of all you transactions over the last 12 months will help you set the building blocks for better budgeting. This is done by using our sophisticated software and bank data feeds.</p>
+
+                    <p class="page5-text">Finally, save for something big to reward yourself.</p>
+
+                    <p class="page5-text">You may want to save for a deposit and stop renting. You may want to update the car or put money away for that special wedding and holiday. The only way you can make it all happen is with clear goals that have a price tag attached to them and then start saving and investing. We can allocate some of your spare cash into an investment that has a time line of 3 years and more. </p>
+
+                    <p class="page5-text"> Our investment models are ideally suited to get you better returns than simply putting money in the bank. Pursue your passion or start a business.</p>
+
+                    <p class="page5-text">Either way you will need to have some money accumulated to do what you want. The most effective way to do this is by paying yourself first. What that means is setting up a periodic payment plan into a special bank account that you do not have day to day access to. We can assist you from protecting the money against its worst enemy YOU</p>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 09
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
 
         </div>
     </div>
     <!--page8-ends-->
-
-
-
-
 
     <!--page9-starts-->
     <div class="container page padding-zero">
@@ -1734,89 +1732,76 @@
                                 <tbody>
                                     <tr>
                                         <td class="table-label">Do You Have A Spouse</td>
-                                        <td class="table-input">Yes</td>
+                                        <td class="table-input spouse">htpObj.CONTACT_FIELD_2</td>
 
                                     </tr>
 
                                     <tr>
                                         <td class="table-label">Your health</td>
-                                        <td class="table-input"> Excellent</td>
+                                        <td class="table-input"> htpObj.CONTACT_FIELD_1</td>
 
                                     </tr>
 
 
                                     <tr>
                                         <td class="table-label">Any family history of disease </td>
-                                        <td class="table-input">Yes</td>
+                                        <td class="table-input">htpObj.CONTACT_FIELD_3</td>
 
                                     </tr>
 
 
                                     <tr>
                                         <td class="table-label">What hospital cover do you have? (Private) </td>
-                                        <td class="table-input">Full Cover</td>
+                                        <td class="table-input">htpObj.CONTACT_FIELD_4</td>
 
                                     </tr>
 
                                     <tr>
                                         <td class="table-label">Do you have a will?</td>
-                                        <td class="table-input">Yes</td>
+                                        <td class="table-input">htpObj.CONTACT_FIELD_5</td>
 
                                     </tr>
 
 
                                 </tbody>
                             </table>
-
-
-
                         </div>
                     </div>
-                    <div class="col-xs-12 padding-zero page9-tables">
+                    <div class="col-xs-12 padding-zero page9-tables hidediv">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th colspan="2" class="table-heading">YOUR DETAILS</th>
+                                    <th colspan="2" class="table-heading ">YOUR SPOUSE DETAILS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td class="table-label">First Name</td>
-                                    <td class="table-input">Dexter</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_6</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Last Name</td>
-                                    <td class="table-input">Payne</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_7</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Gender</td>
-                                    <td class="table-input"> Male</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_8</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Date Of Birth</td>
-                                    <td class="table-input">01/01/1988</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_9</td>
 
                                 </tr>
 
-                                <tr>
-                                    <td class="table-label">Email Address</td>
-                                    <td class="table-input">dexter@gmail.com</td>
-
-                                </tr>
 
                                 <tr>
                                     <td class="table-label">Mobile Number</td>
-                                    <td class="table-input">412121212</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_10</td>
 
                                 </tr>
-
-
-
-
-
 
                             </tbody>
                         </table>
@@ -1824,18 +1809,15 @@
                     </div>
                 </div>
 
-
             </div>
-
 
             <div class="page9-footer">
 
-                <p class="footer-align">PAGE 09
+                <p class="footer-align">PAGE 10
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
             </div>
-
 
         </div>
         <div class="col-xs-3 padding-zero layout2 background3-1">
@@ -1843,11 +1825,8 @@
 
         </div>
 
-
     </div>
     <!--page9-ends-->
-
-
 
     <!--page91-starts-->
     <div class="container page padding-zero">
@@ -1870,53 +1849,53 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Financial Year/Tax Year</td>
-                                    <td class="table-input">2016</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_11</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Annual Salary </td>
-                                    <td class="table-input">$260,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_12</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Gross Income </td>
-                                    <td class="table-input"> $120,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_13</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Super Balance</td>
-                                    <td class="table-input">$100,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_14</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Cash at bank </td>
-                                    <td class="table-input">$20,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_15</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Salary Sacrifice </td>
-                                    <td class="table-input">$10,384</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_16</td>
 
                                 </tr>
 
 
                                 <tr>
                                     <td class="table-label">Non Concessional Contribution </td>
-                                    <td class="table-input">$10,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_17</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Super Tax Rate</td>
-                                    <td class="table-input">15.00%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_18</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Desired Minimum Take Home Salary Per Annum</td>
-                                    <td class="table-input">$45,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_19</td>
 
                                 </tr>
 
@@ -1925,8 +1904,6 @@
                         </table>
 
                     </div>
-
-
 
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
@@ -1938,28 +1915,28 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Retirement Age</td>
-                                    <td class="table-input">65</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_28</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Pension Start Age</td>
-                                    <td class="table-input">57</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_29</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Pension Drawdown Value</td>
-                                    <td class="table-input">Select Your Own value</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_30</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Pension Drawdown Base</td>
-                                    <td class="table-input">$40,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_31</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Target Income</td>
-                                    <td class="table-input">$40,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_32</td>
 
                                 </tr>
 
@@ -1968,33 +1945,21 @@
 
                     </div>
 
-
-
-
                 </div>
-
 
             </div>
 
-
             <div class="page9-footer">
 
-                <p class="footer-align">PAGE 10
+                <p class="footer-align">PAGE 11
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
             </div>
 
-
         </div>
-
-
-
     </div>
     <!--page91-ends-->
-
-
-
 
     <!--page92-starts-->
 
@@ -2002,7 +1967,6 @@
         <div class="col-xs-12 layout9-2 padding-zero">
             <div class="col-xs-12 padding-zero gradient92">
                 <div class="col-xs-12 height text-layout">
-
 
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
@@ -2014,47 +1978,47 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Insurance Premium per year</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_20</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Investment Return </td>
-                                    <td class="table-input">5.30%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_21</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Variable Fee</td>
-                                    <td class="table-input">1.11%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_22</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Fixed Fee</td>
-                                    <td class="table-input">$300</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_23</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Employer Contribution Level</td>
-                                    <td class="table-input">9.50%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_24</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Inflation</td>
-                                    <td class="table-input">2%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_25</td>
 
                                 </tr>
 
 
                                 <tr>
                                     <td class="table-label">Wage Increase</td>
-                                    <td class="table-input">4.00%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_26</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Rate of Return</td>
-                                    <td class="table-input">5%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_27</td>
 
                                 </tr>
 
@@ -2064,143 +2028,35 @@
 
                     </div>
 
-
-
-                    <div class="col-xs-12 padding-zero page9-tables">
+                    <div class="col-xs-12 padding-zero page9-tables hidediv">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th colspan="2" class="table-heading">COMPARING SUPERANNUATION FUNDS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="table-label">FUND A(YOUR CURRENT FUND)</td>
-                                    <td class="table-input">Asgard Infinity Ewrap Super</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">FUND B(ALTERNATIVE FUND)</td>
-                                    <td class="table-input">ING Direct Living Super</td>
-
-                                </tr>
-                                <tr>
-                                    <td class="table-label">Your investment Profile</td>
-                                    <td class="table-input">Choose An Option</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">Do you want to specify a fund that is not listed?</td>
-                                    <td class="table-input">Yes</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the name of the fund?</td>
-                                    <td class="table-input">Fund A</td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td class="table-label">What is the contribution fee as a %?</td>
-                                    <td class="table-input">1.50%</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the administration fee of the fund as a % ?</td>
-                                    <td class="table-input">$100</td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-
-
-
-                </div>
-
-                <div class="page3-footer">
-
-                    <p class="footer-align">PAGE 11
-                        <img class="footer-logo" src="public/images/footer_Logo.png">
-                    </p>
-
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-
-    <!--page92-ends-->
-
-
-
-
-
-    <!--page93-starts-->
-
-    <div class="container page padding-zero">
-        <div class="col-xs-12 layout9-3 padding-zero">
-            <div class="col-xs-12 padding-zero gradient92">
-                <div class="col-xs-12 height text-layout">
-
-
-                    <div class="col-xs-12 padding-zero page9-tables">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" class="table-heading">COMPARING SUPERANNUATION FUNDS</th>
+                                    <th colspan="2" class="table-heading">SPOUSE'S ACCOUNT DETAILS</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <tr>
-                                    <td class="table-label">What is the indirect cost ratio of the fund as a % ?</td>
-                                    <td class="table-input">1.50%</td>
-
+                                    <td class="table-label">Annual Salary</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_33</td>
                                 </tr>
 
                                 <tr>
-                                    <td class="table-label">Do you want to specify another fund that is not listed?</td>
-                                    <td class="table-input">Yes</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">What is the name of the fund?</td>
-                                    <td class="table-input"> Fund B</td>
-
-                                </tr>
-                                <tr>
-                                    <td class="table-label">What is the contribution fee of the fund as a %</td>
-                                    <td class="table-input">1.50%</td>
-
+                                    <td class="table-label">Super Balance</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_34</td>
                                 </tr>
 
                                 <tr>
-                                    <td class="table-label">What is the administration fee of the fund as a % </td>
-                                    <td class="table-input">$100</td>
-
+                                    <td class="table-label">Salary Sacrifice</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_35</td>
                                 </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the indirect cost ratio of the fund as a % ?</td>
-                                    <td class="table-input">1.50%</td>
-
-                                </tr>
-
-
-
 
                             </tbody>
                         </table>
 
                     </div>
+
                 </div>
 
                 <div class="page3-footer">
@@ -2212,20 +2068,240 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!--page92-ends-->
+
+    <!--page92-starts-->
+
+    <div class="container page padding-zero hidediv">
+        <div class="col-xs-12 layout9-2 padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">ASSUMPTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Insurance Premium per year</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_36</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-label">Investment Return </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_37</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">Variable Fee</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_38</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Fixed Fee</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_39</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Employer Contribution Level</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_40</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Inflation</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_41</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">Wage Increase</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_42</td>
+
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">PENSION RELATED DETAILS </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td class="table-label">Retirement Age</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_43</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Pension Start</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_44</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Pension Drawdown Value</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_45</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">Pension Drawdown Base</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_46</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 12
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
 
         </div>
     </div>
 
+    <!--page92-ends-->
+
+    <!--page93-starts-->
+
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout9-3 padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">COMPARING SUPERANNUATION FUNDS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td class="table-label">Fund A Type</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_47</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-label">Fund A List</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_49</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">What is the name of the fund?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_52</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What is the contribution fee as a %?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_53</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What is the administration fee of the fund as a % ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_54</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What is the indirect cost ratio of the fund as a % ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_55</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Fund B Type</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_48</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Fund B List</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_50</td>
+
+                                </tr>
+                                
+                                 <tr>
+                                    <td class="table-label">What is the name of the fund?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_56</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What is the contribution fee as a %?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_57</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What is the administration fee of the fund as a % ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_58</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What is the indirect cost ratio of the fund as a % ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_59</td>
+
+                                </tr>
+
+                              
+
+                                <tr>
+                                    <td class="table-label">Investment option</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_51</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 13
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--page93-ends-->
 
-
-
-
     <!--page94-starts-->
     <div class="container page padding-zero">
-
-
         <div class="col-xs-9 padding-zero layout2 back3">
             <div class="col-xs-12 padding-zero height">
                 <div class="page1-content">
@@ -2240,22 +2316,22 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">What is the value of your home $? (look up the value by using the attached link to “My Money”) </td>
-                                    <td class="table-input">$800,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_80</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">What is the fire sale value of your home contents?</td>
-                                    <td class="table-input">$50,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_81</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">What is the total value of your motor vehicles?</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_82</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">What is the total value of all investment property?</td>
-                                    <td class="table-input">$2,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_83</td>
 
                                 </tr>
 
@@ -2274,28 +2350,28 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Bank deposits $ </td>
-                                    <td class="table-input">$20,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_84</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Listed shares or investments $</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_85</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Net value of Margin loans $ </td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_86</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Allocated or Account based pensions $</td>
-                                    <td class="table-input"> $60,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_87</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Other Investments (works of Art, Life Insurance, Education funds Etc) </td>
-                                    <td class="table-input"> $20,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_88</td>
 
                                 </tr>
 
@@ -2303,8 +2379,6 @@
                         </table>
 
                     </div>
-
-
 
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
@@ -2316,42 +2390,34 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Net rental income received after interest and outgoings $</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_89</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Other income including your net after tax income $ </td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_90</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Your pension income including Centrelink $</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_91</td>
 
                                 </tr>
-
 
                             </tbody>
                         </table>
 
                     </div>
 
-
-
-
                 </div>
-
-
             </div>
-
 
             <div class="page9-footer">
 
-                <p class="footer-align">PAGE 13
+                <p class="footer-align">PAGE 14
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
             </div>
-
 
         </div>
 
@@ -2363,16 +2429,12 @@
     </div>
     <!--page94-ends-->
 
-
-
-
     <!--page95-starts-->
 
     <div class="container page padding-zero">
         <div class="col-xs-12 layout9-5 padding-zero">
-            <div class="col-xs-12 padding-zero gradient92">
+            <div class="col-xs-12 padding-zero gradient-95">
                 <div class="col-xs-12 height text-layout">
-
 
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
@@ -2385,66 +2447,61 @@
 
                                 <tr>
                                     <td class="table-label">Home Mortgage</td>
-                                    <td class="table-input">$500,000</td>
+                                    <td class="table-input">CONTACT_FIELD_60</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Investment property mortgage (total of all properties)</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_61</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">Total credit card debt</td>
-                                    <td class="table-input">$2,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_62</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">Car Loan or lease</td>
-                                    <td class="table-input">$20,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_63</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Personal loans</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_64</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Any other loans or commitments (HECS etc)</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_65</td>
 
                                 </tr>
-
-
-
 
                             </tbody>
                         </table>
 
                     </div>
+                    <div class="col-xs-12 text-center it-graph">
+                        <!--<img src="public/images/it.png">-->
+                        <img src=<%=image3%>>
+                    </div>
+
                 </div>
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 14
+                    <p class="footer-align">PAGE 15
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
 
-
         </div>
     </div>
 
-
     <!--page95-ends-->
-
-
-
-
-
 
     <!--page96-starts-->
     <div class="container page padding-zero">
@@ -2467,108 +2524,112 @@
                             <tbody>
                                 <tr>
                                     <td class="table-label">Number of financially dependent children</td>
-                                    <td class="table-input">2</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_66</td>
                                 </tr>
-                                <tr>
+                                <tr class="child-display childAge">
                                     <td class="table-label">Age of First child</td>
-                                    <td class="table-input">3</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_67</td>
 
                                 </tr>
-                                <tr>
+                                <tr class="child-display childAge">
                                     <td class="table-label">Age of Second Child</td>
-                                    <td class="table-input">5</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_68</td>
+
+                                </tr>
+
+                                <tr class="child-display childAge">
+                                    <td class="table-label">Age of Third Child</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_69</td>
+
+                                </tr>
+
+                                <tr class="child-display childAge">
+                                    <td class="table-label">Age of Fourth Child</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_70</td>
+
+                                </tr>
+
+                                <tr class="child-display childAge">
+                                    <td class="table-label">Age of Fifth Child</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_71</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Anticipated Funeral costs $</td>
-                                    <td class="table-input">$20,000</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">Education expenses per year per child $ </td>
-                                    <td class="table-input">$5,000</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">Family living costs per year$ (Mortgage or rent and food and utilities) $</td>
-                                    <td class="table-input">$90,000</td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td class="table-label">Age of your spouse or partner</td>
-                                    <td class="table-input">47</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the income per year of your spouse or partner $ ?</td>
-                                    <td class="table-input">$50,000</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the value of that property that you would consider buying? $</td>
-                                    <td class="table-input">$500,000</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">Does your spouse or partner currently work and earn a living</td>
-                                    <td class="table-input">Yes</td>
-
-                                </tr>
-
-
-                                <tr>
-                                    <td class="table-label">What is the anticipated income of your spouse or partner after your death?$</td>
-                                    <td class="table-input">$400,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_72</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">In the event of your death would your spouse or partner consider selling the family home and moving to a smaller property to reduce or eliminate debt?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_170</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Outstanding mortgage after sale of the primary residence </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_81</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Estimated value of the small property?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_80</td>
+
+                                </tr>
+
+                         <!--       <tr>
+                                    <td class="table-label">Does your spouse or partner currently work and earn a living</td>
                                     <td class="table-input">Yes</td>
+
+                                </tr>-->
+
+                             <!--   <tr>
+                                    <td class="table-label">What is the income per year of your spouse or partner $ ?</td>
+                                    <td class="table-input">$50,000</td>
+
+                                </tr>-->
+
+                                <tr>
+                                    <td class="table-label">Education expenses per year per child $ </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_73</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Family living costs per year$ (Mortgage or rent and food and utilities) $</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_74</td>
 
                                 </tr>
 
 
+                                <tr>
+                                    <td class="table-label">Which type of school is your child going to?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_168</td>
+
+                                </tr>
 
                             </tbody>
                         </table>
 
                     </div>
-
-
                 </div>
-
 
             </div>
 
-
             <div class="page9-footer">
 
-                <p class="footer-align">PAGE 15
+                <p class="footer-align">PAGE 16
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
             </div>
 
-
         </div>
-
-
 
     </div>
     <!--page96-ends-->
-
-
-
-
 
     <!--page97-starts-->
 
@@ -2577,6 +2638,30 @@
             <div class="col-xs-12 padding-zero gradient92">
                 <div class="col-xs-12 height text-layout">
 
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+
+                            <tbody>
+
+                         
+                                <tr>
+                                    <td class="table-label">Which state are you living in?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_167</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">Which school is your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_169</td>
+
+                                </tr>
+
+                           
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
 
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
@@ -2589,35 +2674,37 @@
 
                                 <tr>
                                     <td class="table-label">What is the amount of life insurance you have from all sources $ ?</td>
-                                    <td class="table-input">$250,000</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_75</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">What is the amount of TPD that you have from all sources $ ?</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_76</td>
                                 </tr>
+
+                            
                                 <tr>
                                     <td class="table-label">What amount of income protection insurance do you have from all sources $ ?</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_77</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">How much Trauma or Crisis insurance do you have $?</td>
-                                    <td class="table-input">$0</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_78</td>
 
                                 </tr>
 
-                                <tr>
+                                 <tr>
                                     <td class="table-label">How many days of accrued sick leave do you have?</td>
-                                    <td class="table-input">10</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_79</td>
 
                                 </tr>
+                                <tr>
+                                    <td class="table-label">Who own's the life cover?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_173</td>
 
-
-
-
-
+                                </tr>
 
                             </tbody>
                         </table>
@@ -2627,64 +2714,26 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 16
+                    <p class="footer-align">PAGE 17
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
-
-
         </div>
     </div>
 
-
     <!--page97-ends-->
-
-
-
-
 
     <!--page98-starts-->
     <div class="container page padding-zero">
-
-
         <div class="col-xs-9 padding-zero layout2 back3">
-            <div class="col-xs-12 padding-zero height">
-                <div class="page1-content">
+            <div class="col-xs-12 padding-zero height text-center">
+                <div class="pagettr-content">
 
                     <div class="col-xs-12 padding-zero page9-tables">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" class="table-heading">TRANSITION TO RETRIEMENT ANALYSIS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="table-label">What is the net return of your Super in accumulation phase% ?</td>
-                                    <td class="table-input">6%</td>
-                                </tr>
-                                <tr>
-                                    <td class="table-label">What Percentage of your current Superannuation balance is tax free%?</td>
-                                    <td class="table-input">2%</td>
-
-                                </tr>
-                                <tr>
-                                    <td class="table-label">What is the net return of your pension% ?</td>
-                                    <td class="table-input">7%</td>
-
-                                </tr>
-
-                                <tr>
-                                    <td class="table-label">What is the Superannuation balance at the start of the Transition to Retirement phase $? </td>
-                                    <td class="table-input">$50,000</td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-
+                        <!--<img src="public/images/ttr.png">-->
+                        <img src=<%=image7%>>
                     </div>
 
 
@@ -2693,10 +2742,9 @@
 
             </div>
 
-
             <div class="page9-footer">
 
-                <p class="footer-align">PAGE 17
+                <p class="footer-align">PAGE 18
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
@@ -2713,7 +2761,59 @@
     </div>
     <!--page98-ends-->
 
+    <!--pagettr-starts-->
 
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout-ttr padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">TRANSITION TO RETRIEMENT ANALYSIS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">What is the net return of your Super in accumulation phase% ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_92</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-label">What Percentage of your current Superannuation balance is tax free%?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_93</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">What is the net return of your pension% ?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_94</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What is the Superannuation balance at the start of the Transition to Retirement phase $? </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_95</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 19
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--pagettr-ends-->
 
     <!--page99-starts-->
     <div class="container page padding-zero">
@@ -2723,98 +2823,308 @@
 
         </div>
 
-
-
         <div class="col-xs-9 padding-zero layout2 back3">
             <div class="col-xs-12 padding-zero height">
                 <div class="page1-content">
-
                     <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th colspan="2" class="table-heading">ASSET ALLOCATION</th>
+                                    <th colspan="2" class="table-heading">YOU INITIAL ASSET ALLOCATION</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="table-label">What is your chosen asset allocation to consider the long term performance </td>
-                                    <td class="table-input">$50,000</td>
+                                    <td class="table-label">Initial Invest Amount </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_96</td>
                                 </tr>
                                 <tr>
                                     <td class="table-label">invest in Australian shares</td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_97</td>
 
                                 </tr>
                                 <tr>
                                     <td class="table-label">International shares </td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_98</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">International Shares (hedged to A$)</td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_99</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">U.S. Shares</td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_100</td>
 
                                 </tr>
 
 
                                 <tr>
                                     <td class="table-label">Australian Bonds </td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_101</td>
 
                                 </tr>
+                                
+                                 <tr>
+                                    <td class="table-label">Cash</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_103</td>
 
+                                </tr>
+                                
                                 <tr>
                                     <td class="table-label">International Listed Property (unhedged) </td>
-                                    <td class="table-input">20%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_105</td>
 
                                 </tr>
 
 
                                 <tr>
                                     <td class="table-label">International Bonds (hedged to A$) </td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_102</td>
 
                                 </tr>
-
-                                <tr>
-                                    <td class="table-label">Do you want to alter you asset allocation during your selected investment time frame? </td>
-                                    <td class="table-input">No</td>
-
-                                </tr>
-
 
                                 <tr>
                                     <td class="table-label">Australian Listed Property</td>
-                                    <td class="table-input">10%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_104</td>
 
                                 </tr>
 
                                 <tr>
                                     <td class="table-label">Total Percentage Selected</td>
-                                    <td class="table-input">100%</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_106</td>
 
                                 </tr>
 
+                                <tr>
+                                    <td class="table-label ">Do you want to alter you asset allocation during your selected investment time frame? </td>
+                                    <td class="table-input initial">htpObj.CONTACT_FIELD_107</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">What year do you want to change your asset allocation and investment strategy? </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_108</td>
+
+                                </tr>
 
                             </tbody>
                         </table>
 
                     </div>
 
+                </div>
+            </div>
+
+            <div class="page9-footer">
+
+                <p class="footer-align">PAGE 20
+                    <img class="footer-logo" src="public/images/footer_Logo.png">
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <!--page99-ends-->
+
+    <!--pagealtered-starts-->
+
+    <div class="container page padding-zero altered">
+        <div class="col-xs-12 layout-ttr padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">YOUR ALTERED ASSET ALLOCATION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Initial Invest Amount</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_96</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-label">invest in Australian shares</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_109</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">International shares </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_110</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">International Shares (hedged to A$)</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_111</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">U.S. Shares</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_112</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">Australian Bonds </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_113</td>
+
+                                </tr>
+
+                                 <tr>
+                                    <td class="table-label">Cash </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_115</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">International Listed Property (unhedged) </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_117</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">International Bonds (hedged to A$) </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_114</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Australian Listed Property</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_116</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Total Percentage Selected</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_118</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 19
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--pagealtered-ends-->
+    
+    <!--pagePrivate-starts-->
+    <div class="container page padding-zero">
+        <div class="col-xs-9 padding-zero layout2 back3">
+            <div class="col-xs-12 padding-zero height ">
+                <div class="page1-content">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">PRIVATE SCHOOL FEE DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Beginning of the year of analysis </td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_119</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-label">Which portfolio best suits your needs?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_121</td>
+
+                                </tr>
+                                <tr>
+                                    <td class="table-label">What year will you start contributing to the investment portfolio?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_120</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Define your own investment return if you choose your own model?</td>
+                                    <td class="table-input">$5,000</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which state are you living in?</td>
+                                    <td class="table-input">NSW</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-xs-12 padding-zero page9-tables childtable child-table-display">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">FIRST CHILD DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">First Child Name</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_122</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Is your child currently enrolled in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_123</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which year will you enrol your child in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_124</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">How many years will your child attend school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_125</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which school will your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_174</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What major would your child like to choose at University?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_126</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
 
                 </div>
 
-
             </div>
-
 
             <div class="page9-footer">
 
@@ -2824,31 +3134,274 @@
 
             </div>
 
+        </div>
+
+        <div class="col-xs-3 padding-zero layout2  back-privateschool">
+            <p class="page-private-heading">PRIVATE SCHOOL FEE</p>
 
         </div>
 
-
-
     </div>
-    <!--page99-ends-->
+    <!--pageprivate-ends-->
+
+    <!--pageprivate2-starts-->
+
+    <div class="container page padding-zero childtable child-table-display">
+        <div class="col-xs-12 layout-ttr padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
 
 
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">SECOND CHILD DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Second Child Name</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_127</td>
 
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Is your child currently enrolled in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_128</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which year will you enrol your child in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_129</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">How many years will your child attend school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_130</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which school will your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_131</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What major would your child like to choose at University?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_175</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-xs-12 padding-zero page9-tables childtable child-table-display">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">THIRD CHILD DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Third Child Name</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_132</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Is your child currently enrolled in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_133</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which year will you enrol your child in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_134</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">How many years will your child attend school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_135</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which school will your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_136</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What major would your child like to choose at University?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_137</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 19
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--pagepageprivate2-ends-->
+
+    <!--pagepageprivate3-starts-->
+
+    <div class="container page padding-zero childtable child-table-display">
+        <div class="col-xs-12 layout-ttr padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">FOURTH CHILD DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Fourth Child Name</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_138</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Is your child currently enrolled in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_139</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which year will you enrol your child in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_140</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">How many years will your child attend school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_141</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which school will your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_142</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What major would your child like to choose at University?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_143</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-xs-12 padding-zero page9-tables childtable child-table-display">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="table-heading">FIFTH CHILD DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="table-label">Fifth Child Name</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_144</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Is your child currently enrolled in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_145</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which year will you enrol your child in school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_146</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">How many years will your child attend school?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_147</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td class="table-label">Which school will your child be enrolled at?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_148</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td class="table-label">What major would your child like to choose at University?</td>
+                                    <td class="table-input">htpObj.CONTACT_FIELD_149</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 19
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--pagepageprivate3-ends-->
 
     <!--page10-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout10 padding-zero">
-
 
             <div class="col-xs-4 padding-zero height">
                 <p class="page3-head">Your<br/>Risk<br/>Profile</p>
                 <p></p>
                 <p></p>
 
-
             </div>
             <div class="col-xs-8 padding-zero text-layout">
-
 
                 <p class="page10-subhead">Based on your current superannuation report you are a Balanced Growth investment profile.</p>
 
@@ -2863,7 +3416,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-xs-12 padding-zero page3-listdiv">
                     <div class="col-xs-1 padding-zero">
                         <img src="public/images/circle-bullet.png">
@@ -2873,13 +3425,9 @@
                     </div>
                 </div>
 
-
                 <p class="page5-text">With the above information in mind, once your superannuation has been consolidated into your account, I am recommending you invest 30% of your existing superannuation monies into defensive assets (cash, term deposits and bonds) and the remainder of your super balance into growth investments such as Australian and international shares and listed property.</p>
 
-
                 <p class="page5-text">Please note that if you are not happy with the asset mix that I have recommended we can certainly make changes before the advice is implemented. Some long term expected returns are below</p>
-
-
 
                 <div class="col-xs-12 padding-zero ">
                     <table class="table table-risk">
@@ -2932,54 +3480,73 @@
 
                             </tr>
 
-
-
-
                         </tbody>
                     </table>
-
                 </div>
-
-
-
-
-
-
-
 
             </div>
 
-
-
-
             <div class="page3-footer">
 
-                <p class="footer-align">PAGE 19
+                <p class="footer-align">PAGE 21
                     <img class="footer-logo" src="public/images/footer_Logo.png">
                 </p>
 
             </div>
 
-
-
         </div>
     </div>
     <!--page10-ends-->
-
-
 
     <!--page11-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout2 padding-zero">
 
+            <div class="col-xs-3 layout2 backgound11 text-center padding-zero ">
+                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section3.png"></p>
+                <div class="page5-border"></div>
+                <p class="page11-subhead"> MY RECOMMENDATIONS</p>
+                <!--        <p class="page5-subhead2">ADVICE</p>-->
+                <p class="page5-subhead3">TO YOU</p>
+
+            </div>
+
             <div class="col-xs-9 layout2 padding-zero back3 ">
-                <div class="col-xs-12 padding-zero text-layout height">
+                <div class="col-xs-12 padding-zero text-layout-sso height">
 
                     <p class="page10-subhead">Strategy 1. Selecting the best superannuation fund to invest in.</p>
 
-
-
                     <div class="col-xs-12 padding-zero ">
+                       <!-- <img src="public/images/sfc.png">-->
+                        <img src=<%=image2%>>
+                    </div>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 22
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--page11-ends-->
+    
+    <!--pagesfc-starts-->
+
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout-sfc padding-zero">
+            <div class="col-xs-12 padding-zero gradient92">
+                <div class="col-xs-12 height text-layout">
+
+                    <div class="col-xs-12 padding-zero page9-tables">
                         <table class="table table-risk">
                             <thead>
                                 <tr>
@@ -3007,51 +3574,24 @@
 
                                 </tr>
 
-
-
-
-
                             </tbody>
                         </table>
-
                     </div>
-
-
-
-
-
                 </div>
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 20
+                    <p class="footer-align">PAGE 23
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
-
-
             </div>
-
-            <div class="col-xs-3 layout2 backgound11 text-center padding-zero ">
-                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section3.png"></p>
-                <div class="page5-border"></div>
-                <p class="page11-subhead"> MY RECOMMENDATIONS</p>
-                <!--        <p class="page5-subhead2">ADVICE</p>-->
-                <p class="page5-subhead3">TO YOU</p>
-
-            </div>
-
 
         </div>
     </div>
 
-
-    <!--page11-ends-->
-
-
-
-
+    <!--pagesfc-ends-->
 
     <!--page12-starts-->
     <div class="container page padding-zero">
@@ -3061,12 +3601,10 @@
 
                     <p class="page10-subhead">Strategy 2. Planning for the correct level of retirement income.</p>
 
-
                     <div class="col-xs-12 padding-zero">
-                        <img src="public/images/graph12.png">
+                        <!--<img src="public/images/ra.png">-->
+                        <img src=<%=image5%>>
                     </div>
-
-
 
                     <div class="col-xs-12 page12-text-block">
 
@@ -3077,23 +3615,16 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 21
+                    <p class="footer-align">PAGE 24
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
 
-
-
-
-
-
         </div>
     </div>
     <!--page12-ends-->
-
-
 
     <!--page13-starts-->
     <div class="container page padding-zero">
@@ -3102,7 +3633,6 @@
                 <div class="col-xs-12 height text-layout">
 
                     <p class="page10-subhead">Are you on track with your future plans?</p>
-
 
                     <p class="page5-text">We have calculated from our financial advice tools that you are underfunded to achieve a comfortable retirement that has been set by the Australian Superannuation Funds Association.(ASFA)</p>
 
@@ -3158,30 +3688,71 @@
 
                     </div>
 
-
                     <p class="page5-text">Based on these figures you will achieve your desired long term objective through better planning and investment advice.</p>
-
 
                 </div>
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 22
+                    <p class="footer-align">PAGE 25
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!--page13-ends-->
+
+    <!--pagesso-starts-->
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout12 padding-zero">
+            <div class="col-xs-12 padding-zero gradient6">
+                <div class="col-xs-12 height text-layout-sso text-center">
+
+                    <!--<img src="public/images/sso.png">-->
+                    <img src=<%=image6%>>
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 26
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!--pagesso-ends-->
 
+    <!--pageIA-starts-->
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout12 padding-zero">
+            <div class="col-xs-12 padding-zero gradient6">
+                <div class="col-xs-12 height text-layout-IA">
 
+                    <p class="page10-subhead">Strategy 3. Planning for the correct level of insurance</p>
 
+                    <!--<img src="public/images/response.png">-->
+                    <img src=<%=image1%>>
 
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 27
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
 
         </div>
     </div>
-    <!--page13-ends-->
-
+    <!--pageIA-ends-->
 
 
     <!--page14-starts-->
@@ -3190,40 +3761,28 @@
             <div class="col-xs-12 padding-zero gradient6">
                 <div class="col-xs-12 height text-layout">
 
-                    <p class="page10-subhead">Strategy 3. Choosing the right investment mix of growth versus</p>
-
+                    <p class="page10-subhead">Strategy 4. Choosing the right investment mix of growth versus</p>
 
                     <p class="page10-subhead">Growth</p>
-
 
                     <p class="page5-text">You are prepared to accept higher volatility in the short to medium term to accumulate growth assets over the long-term. Your Investment Mix will spread across all asset sectors but will mainly consist of more aggressive investments.</p>
 
                     <p class="page10-subhead">Balanced Growth</p>
 
-
                     <p class="page5-text">You are willing to consider assets with higher volatility in the short-term (such as equities and property) to achieve capital growth over the medium to longer term. Your investment mix will comprise a greater share of growth assets.</p>
-
-
 
                     <p class="page10-subhead">Balanced</p>
 
 
                     <p class="page5-text">You are willing to chase medium to long-term goals while accepting the risk of short to medium-term negative returns. Your Investment mix is likely to include an equal mix of assets such as equities and property.</p>
 
-
-
                     <p class="page10-subhead">Moderate</p>
-
 
                     <p class="page5-text">You seek a combination of income and growth, but must continue to be low to moderate. Generally you are willing to chase improved short-term returns while accepting some limited short-term volatility. mix is likely to include an equal mix of assets such as equities and property.</p>
 
-
                     <p class="page10-subhead">Conservative</p>
 
-
                     <p class="page5-text">Protection of capital is your main objective. You are prepared to accept very limited short-term volatility for slightly improved short-medium term returns.</p>
-
-
 
                     <div class="col-xs-12 page14-text-block">
 
@@ -3236,29 +3795,43 @@
 
                     </div>
 
-
-
-
                 </div>
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 23
+                    <p class="footer-align">PAGE 28
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
 
-
-
-
-
-
         </div>
     </div>
     <!--page14-ends-->
 
+    <!--page-Asset-starts-->
+    <div class="container page padding-zero">
+        <div class="col-xs-12 layout12 padding-zero">
+            <div class="col-xs-12 padding-zero gradient6">
+                <div class="col-xs-12 height text-layout">
+
+                    <p>asset graph</p>
+
+                </div>
+
+                <div class="page3-footer">
+
+                    <p class="footer-align">PAGE 29
+                        <img class="footer-logo" src="public/images/footer_Logo.png">
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--page-Asset-ends-->
 
     <!--page15-starts-->
     <div class="container page padding-zero">
@@ -3266,10 +3839,7 @@
             <div class="col-xs-12 padding-zero gradient6">
                 <div class="col-xs-12 height text-layout">
 
-
-
                     <p class="page10-subhead">Superannuation selection.</p>
-
 
                     <p class="page5-text">You need to select the best possible superannuation fund that is currently available to you so that you can plan the long term with some surety and predictability. You also need to be continually reviewing the selection with your adviser to make changes if necessary or if a lower cost administration platform becomes available. Our service and advice continually researches and review the marketplace of public offer superannuation funds as well as the option of a self-managed superannuation fund.</p>
 
@@ -3280,47 +3850,32 @@
 
                     <p class="page10-subhead">Insurance selection and amount of cover</p>
 
-
                     <p class="page5-text">A valuable part of your retirement planning and a mandatory area is personal insurance. Most superannuation funds provide a default level of insurance that is based on your age and income. The level of cover and policy structure is in most cases not in your best interests because it hasn’t been designed with your personal objectives and financial situation in mind. Our calculators have designed the optimum level of cover for you and our product comparison software has compared the wording and definitions so that you have the best available and most up to date cover.</p>
-
-
 
                     <p class="page10-subhead">Investment selection and risk profile</p>
 
-
                     <p class="page5-text">Your current “My Super” arrangements are designed to match your asset allocation with your current stage in life. This is inappropriate and does not suit your purpose of working beyond your expected retirement date. This process does not take into account other investments you may have and does not allow for a more global asset selection that is tailored to your preferences. With the assistance of our adviser and the global asset consultants we are able to achieve above benchmark performance by actively managing these portfolios for you. With advice that is in your best interest you will be able to reach your goal much quicker that is available to you in a public offer fund.</p>
-
-
-
 
                 </div>
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 24
+                    <p class="footer-align">PAGE 30
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
                 </div>
             </div>
 
-
-
-
-
-
         </div>
     </div>
     <!--page15-ends-->
-
-
 
     <!--page16-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout12 padding-zero">
             <div class="col-xs-12 padding-zero gradient6">
                 <div class="col-xs-12 height text-layout">
-
 
 
                     <p class="page10-subhead">Does my advice have any disadvantages?</p>
@@ -3361,7 +3916,7 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 25
+                    <p class="footer-align">PAGE 31
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
@@ -3374,19 +3929,10 @@
     </div>
     <!--page16-ends-->
 
-
-
     <!--page17-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout2 padding-zero">
-            <div class="col-xs-3 layout2 backgound17 text-center padding-zero ">
-                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section4.png"></p>
-                <div class="page5-border"></div>
-                <p class="page17-subhead">WHAT ELSE</p>
-                <p class="page17-subhead2">YOU NEED</p>
-                <p class="page17-subhead3">TO KNOW</p>
 
-            </div>
             <div class="col-xs-9 layout2 padding-zero back3">
                 <div class="col-xs-12 padding-zero text-layout height">
 
@@ -3424,7 +3970,7 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 26
+                    <p class="footer-align">PAGE 32
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
@@ -3433,6 +3979,16 @@
 
             </div>
 
+            <div class="col-xs-3 layout2 backgound17 text-center padding-zero ">
+                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section4.png"></p>
+                <div class="page5-border"></div>
+                <p class="page17-subhead">WHAT ELSE</p>
+                <p class="page17-subhead2">YOU NEED</p>
+                <p class="page17-subhead3">TO KNOW</p>
+
+            </div>
+
+
         </div>
     </div>
 
@@ -3440,15 +3996,11 @@
     <!--page17-ends-->
 
 
-
-
     <!--page18-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout18 padding-zero">
             <div class="col-xs-12 padding-zero gradient18">
                 <div class="col-xs-12 height text-layout">
-
-
 
 
                     <div class="col-xs-12 padding-zero ">
@@ -3479,7 +4031,7 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 27
+                    <p class="footer-align">PAGE 33
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
@@ -3491,13 +4043,19 @@
     </div>
     <!--page18-ends-->
 
-
-
-
-
     <!--page19-starts-->
     <div class="container page padding-zero">
         <div class="col-xs-12 layout2 padding-zero">
+
+
+            <div class="col-xs-3 layout2 backgound19 text-center padding-zero ">
+                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section5.png"></p>
+                <div class="page5-border"></div>
+                <p class="page19-subhead">THE STEPS TO</p>
+                <p class="page19-subhead2">IMPLEMENT</p>
+                <p class="page19-subhead3">THIS ADVICE</p>
+
+            </div>
 
             <div class="col-xs-9 layout2 padding-zero back3">
                 <div class="col-xs-12 padding-zero text-layout height">
@@ -3587,12 +4145,7 @@
                     </div>
 
 
-
-
-
-
                     <p class="page5-text">By signing this appointment you agree to appoint AFSL 413567 as your financial adviser and that all superannuation products and investment and insurance products are serviced by you and transferred under this authority to you as my financial adviser.</p>
-
 
 
                     <p class="page5-text">Please implement these recommendations without any changes.</p>
@@ -3607,7 +4160,7 @@
 
                 <div class="page3-footer">
 
-                    <p class="footer-align">PAGE 28
+                    <p class="footer-align">PAGE 34
                         <img class="footer-logo" src="public/images/footer_Logo.png">
                     </p>
 
@@ -3616,45 +4169,88 @@
 
             </div>
 
-
-            <div class="col-xs-3 layout2 backgound19 text-center padding-zero ">
-                <p class="page5-head">SECTION <img class="section1-img" src="public/images/section5.png"></p>
-                <div class="page5-border"></div>
-                <p class="page19-subhead">THE STEPS TO</p>
-                <p class="page19-subhead2">IMPLEMENT</p>
-                <p class="page19-subhead3">THIS ADVICE</p>
-
-            </div>
-
-
-
         </div>
     </div>
 
 
     <!--page19-ends-->
 
-    <div class="container page padding-zero">
-        <div class="col-xs-12 layout2 padding-zero">
-
-           <img src=<%=image1%>>
-
-
-           
-
-
-
-        </div>
-    </div>
-
-
-
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--
+   <script>
+        $(document).ready(function() {
+
+            var assetOption = document.getElementsByClassName("initial")[0].innerHTML;
+            console.log(document.getElementsByClassName("initial")[0].innerHTML)
+
+
+            if (assetOption === "No") {
+                document.getElementsByClassName("altered")[0].style.display = "none";
+            };
+
+
+
+            var spouseOption = document.getElementsByClassName("spouse")[0].innerHTML;
+
+
+            var totalLength = document.getElementsByClassName("hidediv").length;
+            if (spouseOption == "No") {
+
+                for (i = 0; i < totalLength; i++) {
+                    document.getElementsByClassName("hidediv")[i].style.display = "none";
+
+                }
+
+                console.log(document.getElementsByClassName("hidediv").length)
+            };
+
+        });
+
+        var userInput = 3;
+        var totalChild = document.getElementsByClassName('childAge');
+        console.log(totalChild)
+        for (i = 0; i < userInput; i++) {
+            document.getElementsByClassName('childAge')[i].classList.remove("child-display");
+
+        }
+
+
+        var userInput = 1;
+        var totalChild = document.getElementsByClassName('childtable');
+        console.log(totalChild)
+        for (i = 0; i < userInput; i++) {
+            document.getElementsByClassName('childtable')[i].classList.remove("child-table-display");
+
+        }
+
+    </script>-->
+    
+    <script>
+    
+       var userInput = 3;
+        var totalChild = document.getElementsByClassName('childAge');
+        console.log(totalChild)
+        for (i = 0; i < userInput; i++) {
+            document.getElementsByClassName('childAge')[i].classList.remove("child-display");
+
+        }
+        
+        
+         var userInput = 5;
+        var totalChild = document.getElementsByClassName('childtable');
+        console.log(totalChild)
+        for (i = 0; i < userInput; i++) {
+            document.getElementsByClassName('childtable')[i].classList.remove("child-table-display");
+
+        }
+
+        
+    </script>
+    
 
 </body>
 
