@@ -161,8 +161,9 @@ module.exports.CalculatorService = (function () {
         });
     };
 
- /*   var requestPdf = function (data, loggedInUser, res) {*/
-    var requestPdf = function (data, res) {
+    var requestPdf = function (data, loggedInUser, res) {
+        console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT',loggedInUser);
+
         async.auto({
             webshotIa: function (next, results) {
               var data={
@@ -236,12 +237,12 @@ module.exports.CalculatorService = (function () {
             },
 
             pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function (next, results) {
-                var pdfFileName = /*loggedInUser.CONTACT_ID + */"x.pdf";
+                var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
+                console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT11111111111111111111');
 
-           /*     console.log("55555555555555555", results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
-                    results.webshotAsset);*/
+           
                 generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
-                    results.webshotAsset);
+                    results.webshotAsset,loggedInUser);
             }]
         }, function (err, results) {
             if (err) {
@@ -252,7 +253,7 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8) {
+    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8,loggedInUser) {
         ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', { 
             
             image1: image1, 
@@ -271,7 +272,18 @@ module.exports.CalculatorService = (function () {
                     if (err) {
                         next(err, null);
                     } else {
-                        next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                        // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                        console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
+
+                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
+                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
+                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
+                                next(null, null);
+                            });
+                        }).catch(function (err) {
+                            console.log(err);
+                            next(err, null);
+                        });
                     }
                 });
             } else {
@@ -303,7 +315,7 @@ module.exports.CalculatorService = (function () {
                         next(err, null);
                     } else {
                         saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
-                            HubspotService.uploadFile('ope@hubspot.com', _getPdfFilePath(loggedInUser.CONTACT_ID));
+                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
                             updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                 next(null, null);
                             });

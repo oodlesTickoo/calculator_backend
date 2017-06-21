@@ -199,8 +199,8 @@ var request = require('request');
                     }
                     map[customField.FIELD_VALUE+''].clients.push({CONTACT_ID: user.CONTACT_ID, FIRST_NAME: user.FIRST_NAME, LAST_NAME: user.LAST_NAME});
                 }
-            })
-        })
+            });
+        });
         return Object.keys(map).map(function(key) {
             return map[key];
         });
@@ -209,15 +209,18 @@ var request = require('request');
     function customFieldUpdate(contactId, customField, res){
         _getById(contactId).then(function(result){
             HubspotService.update(result, customField);
+       
+
             var userObject = _setCustomFieldValue(customField, result);
             _updateUser(userObject).then(function(result){
-                HubspotService.
-                update(userObject);
+
+            update(userObject);
+
                 configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
-            })
+            });
         }).catch(function(err){
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-        })
+        });
     }
 
     function _setCustomFieldValue(customField, userObject){

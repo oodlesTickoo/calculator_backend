@@ -172,7 +172,7 @@ module.exports.HubspotService = (function() {
 			if(contactObject && Object.keys(contactObject).length > 0){
 				var contactUrl = Constants.HOBSPOT_URL.CONTACT + 'vid/' + contactObject[Object.keys(contactObject)[0]].vid + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
 				_callToHubspot(POST, contactUrl, data).then(function(updatedObj){
-					console.log('Data successfully updated on Hubspot');
+					console.log('Data successfully updated on Hubspot',updatedObj);
 				}).catch(function(error){
 					console.log(error);
 				});
