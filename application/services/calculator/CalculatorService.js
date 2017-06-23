@@ -162,87 +162,71 @@ module.exports.CalculatorService = (function () {
     };
 
     var requestPdf = function (data, loggedInUser, res) {
-        console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT',loggedInUser);
+        // console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT',data);
 
         async.auto({
             webshotIa: function (next, results) {
-              var data={
-                "width":"1100",
-                "height":"600"
-              };
-                generateWebShot(next, 'ia', data);
+              console.log('ia data:',data.iaObj);
+                generateWebShot(next, 'ia', data.iaObj );
             },
 
             webshotSFC: function (next, results) {
-           var data={
-                "width":"741",
-                "height":"690"
-              };
+              console.log('ia data:',data.sfcObj);
+           
 
-                generateWebShot(next, 'sfc', data);
+                generateWebShot(next, 'sfc', data.sfcObj);
             },
 
             webshotIT: function (next, results) {
-                var data={
-                "width":"660",
-                "height":"360"
-              };
+              console.log('ia data:',data.itObj);
+                
 
-                generateWebShot(next, 'it', data);
+                generateWebShot(next, 'it', data.itObj);
             },
 
             webshotPSF: function (next, results) {
-                var data={
-                "width":"110",
-                "height":"110"
-              };
+              console.log('ia data:',data.psfObj);
+                
 
-                generateWebShot(next, 'psf', data);
+                generateWebShot(next, 'psf', data.psfObj);
             },
 
             webshotRA: function (next, results) {
-                var data={
-                "width":"1039",
-                "height":"441"
-              };
+              console.log('ia data:',data.raObj);
+                
 
-                generateWebShot(next, 'ra', data);
+                generateWebShot(next, 'ra', data.raObj);
             },
 
             webshotSSO: function (next, results) {
-                var data={
-                "width":"741",
-                "height":"744"
-              };
+              console.log('ia data:',data.ssoObj);
+                
 
-                generateWebShot(next, 'sso', data);
+                generateWebShot(next, 'sso', data.ssoObj);
             },
 
             webshotTTR: function (next, results) {
-                var data={
-                "width":"700",
-                "height":"741"
-              };
+              console.log('ia data:',data.ttrObj);
+                
 
-                generateWebShot(next, 'ttr', data);
+                generateWebShot(next, 'ttr', data.ttrObj);
             },
 
             webshotAsset: function (next, results) {
-                var data={
-                "width":"110",
-                "height":"110"
-              };
+              console.log('ia data:',data.aaObj);
+            
 
-                generateWebShot(next, 'aa', data);
+                generateWebShot(next, 'aa', data.aaObj);
             },
 
             pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function (next, results) {
                 var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
+                // var pdfFileName = "x.pdf";
                 console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT11111111111111111111');
 
            
                 generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
-                    results.webshotAsset,loggedInUser);
+                    results.webshotAsset,data.customFieldMap,loggedInUser);
             }]
         }, function (err, results) {
             if (err) {
@@ -253,7 +237,7 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8,loggedInUser) {
+    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8,customFieldMap,loggedInUser) {
         ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', { 
             
             image1: image1, 
@@ -263,10 +247,12 @@ module.exports.CalculatorService = (function () {
             image5: image5,
             image6: image6,
             image7: image7,
-            image8: image8
+            image8: image8,
+            data:customFieldMap
         }, {}, function(err, html) {
             if (html) {
                 var options = { width:'1169px',height:'827px', base: 'file://' + __dirname + '/../../../' };
+                console.log("file name:",pdfFileName)
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {
@@ -276,9 +262,12 @@ module.exports.CalculatorService = (function () {
                         console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
 
                         saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
+                            console.log('file id saved111111111');
                             HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
                             updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
-                                next(null, null);
+                                console.log('file id saved');
+                                // next(null, null);
+                                next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                             });
                         }).catch(function (err) {
                             console.log(err);
@@ -774,11 +763,16 @@ module.exports.CalculatorService = (function () {
                 ]
             }
         };
+        console.log('promise aaaaaaaaaaaaaaaaaaaaaaaaaa');
         return new Promise(function (resolve, reject) {
+            console.log('promise bbbbbbbbbbbbbbbbbbbbbbbbb');
             request(options, function (error, response, body) {
+                console.log('promise ccccccccccccccccccccccccc');
                 if (error) {
-                    request(error);
+                    console.log('promise error',error);
+                    reject(error);
                 } else {
+                    console.log('promise success');
                     body = JSON.parse(body);
                     console.log(body);
                     resolve(body);

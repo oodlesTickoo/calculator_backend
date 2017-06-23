@@ -11,6 +11,7 @@ module.exports.CalculatorController = (function() {
 
     var requestPdf = function(req, res) {
          CalculatorService.requestPdf(req.body, req.loggedInUser, res);
+         // console.log('initiallllllllll',req.body);
 
         //CalculatorService.requestPdf(req.body, res);
     };
@@ -54,7 +55,6 @@ module.exports.CalculatorController = (function() {
     };
 
     var customFieldUpdate = function(req, res) {
-        console.log("zdeeeeeeeeedxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx:",req.loggedInUser);
         UserService.customFieldUpdate(req.loggedInUser.CONTACT_ID, req.body.custom_field, res);
 
     };
