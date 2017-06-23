@@ -7,7 +7,7 @@ var configVariables = function() {
                 port: 3000,
                 host: 'http://localhost:3000/',
                 verificationUrl: 'http://localhost:3000/verify/',
-                downloadUrl: 'http://localhost:3000/download/',
+                downloadUrl: 'http://180.151.85.194:3000/download/',
                 publicFolder: 'public/templates/',
                 uploadFolder: 'uploads',
                 awsAccessKeyId: '',
