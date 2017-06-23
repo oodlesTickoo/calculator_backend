@@ -69,7 +69,7 @@ module.exports.CalculatorService = (function () {
                 fileName = 'indexTTR_pdf.ejs';
                 break;
             case 'sso':
-                fileName = 'indexSSO.ejs';
+                fileName = 'indexSSO_pdf.ejs';
                 break;
             case 'psf':
                 fileName = 'indexPSF.ejs';
@@ -84,6 +84,38 @@ module.exports.CalculatorService = (function () {
         return fileName;
     }
 
+     /*function getEjsFile(type) {
+        var fileName;
+        switch (type) {
+            case 'ia':
+                fileName = 'index_portrait.ejs';
+                break;
+            case 'sfc':
+                fileName = 'indexSFC_portrait.ejs';
+                break;
+            case 'ra':
+                fileName = 'indexRA_portrait.ejs';
+                break;
+            case 'ttr':
+                fileName = 'indexTTR_portrait.ejs';
+                break;
+            case 'sso':
+                fileName = 'indexSSO_portrait.ejs';
+                break;
+            case 'psf':
+                fileName = 'indexPSF.ejs';
+                break;
+            case 'aa':
+                fileName = 'indexAsset.ejs';
+                break;
+            case 'it':
+                fileName = 'indexIT_portrait.ejs';
+                break;
+        }
+        return fileName;
+    }
+*/
+    
     function generateWebShot(next, type, data) {
         var fileName = getEjsFile(type);
         console.log("data1:",data);
@@ -169,7 +201,7 @@ module.exports.CalculatorService = (function () {
 
             webshotRA: function (next, results) {
                 var data={
-                "width":"1045",
+                "width":"1039",
                 "height":"441"
               };
 
