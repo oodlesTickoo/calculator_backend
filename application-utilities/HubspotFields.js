@@ -176,6 +176,11 @@ module.exports = {
     CONTACT_FIELD_174: 'what_major_would_your_second_child_like_to_choose_at_university',
     CONTACT_FIELD_175: 'who_own_s_the_life_cover',
     CONTACT_FIELD_176: 'investment_return_amount',
-    CONTACT_FIELD_177: 'cses' 
+    CONTACT_FIELD_177: 'cses',
+    CONTACT_FIELD_178: 'do_you_own_a_house',
+    CONTACT_FIELD_179: 'do_you_smoke',
+    CONTACT_FIELD_180: 'gender',
+    CONTACT_FIELD_181: 'postal_code',
+    CONTACT_FIELD_182: 'does_your_spouse_work'
 
 };
