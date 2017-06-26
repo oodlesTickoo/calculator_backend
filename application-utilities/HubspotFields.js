@@ -181,6 +181,12 @@ module.exports = {
     CONTACT_FIELD_179: 'do_you_smoke',
     CONTACT_FIELD_180: 'gender',
     CONTACT_FIELD_181: 'postal_code',
-    CONTACT_FIELD_182: 'does_your_spouse_work'
+    CONTACT_FIELD_182: 'does_your_spouse_work',
+    CONTACT_FIELD_183: 'day_of_birth',
+    CONTACT_FIELD_184: 'month_of_birth',
+    CONTACT_FIELD_185: 'year_of_birth',
+    CONTACT_FIELD_186: 'day_of_birth_spouse',
+    CONTACT_FIELD_187: 'month_of_birth_spouse',
+    CONTACT_FIELD_188: 'year_of_birth_spouse'
 
 };
