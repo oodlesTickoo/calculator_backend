@@ -11,7 +11,8 @@ module.exports.CalculatorController = (function() {
 
     var requestPdf = function(req, res) {
          CalculatorService.requestPdf(req.body, req.loggedInUser, res);
-         // console.log('initiallllllllll',req.body);
+          console.log('initiallllllllll',req.body);
+          console.log('initiallllllllll111111111',req.body.iaObj);
 
         //CalculatorService.requestPdf(req.body, res);
     };
