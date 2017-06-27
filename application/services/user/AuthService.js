@@ -24,8 +24,13 @@ module.exports.AuthService = (function() {
 
 	function _getUserRoleFromUserObject(userObj){
 		var role = '';
+		console.log("userObj",userObj);
+		console.log("FieldName.USER_TYPE",FieldName.USER_TYPE);
+		console.log("FieldName",FieldName);
+
 		for(var i=0; i < userObj.CUSTOMFIELDS.length; i++){
 			if(userObj.CUSTOMFIELDS[i].CUSTOM_FIELD_ID === FieldName.USER_TYPE){
+				console.log("userObj.CUSTOMFIELDS[i].FIELD_VALUE",userObj.CUSTOMFIELDS[i].FIELD_VALUE);
 				role = userObj.CUSTOMFIELDS[i].FIELD_VALUE;
 				break;
 			}

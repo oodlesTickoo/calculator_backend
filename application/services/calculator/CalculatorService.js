@@ -206,14 +206,13 @@ module.exports.CalculatorService = (function () {
             },
 
             webshotTTR: function (next, results) {
-              console.log('ia data:',data.ttrObj);
+              // console.log('ia data:',data.ttrObj);
                 
 
                 generateWebShot(next, 'ttr', data.ttrObj);
             },
 
             webshotAsset: function (next, results) {
-              console.log('ia data:',data.aaObj);
             
 
                 generateWebShot(next, 'aa', data.aaObj);
