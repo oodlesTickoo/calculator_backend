@@ -46,7 +46,7 @@ module.exports.FileService = (function() {
                     method: "GET"
                 };
                 if(format === 'pdf'){
-                    rconfigurationHolder.ResponseUtil.responseHandler(res, {}, 'File url', false, 200);
+                    configurationHolder.ResponseUtil.responseHandler(res, {}, 'File url', false, 200);
                 }else{
                     configurationHolder.ResponseUtil.responseHandler(res, {}, 'File not found', true, 400);   
                 }
