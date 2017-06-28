@@ -76,6 +76,7 @@ module.exports.CalculatorController = (function() {
         getMasterClientList:getMasterClientList,
         getMasterAdvisorList:getMasterAdvisorList,
         getFile: getFile,
+        checkFile:checkFile,
         upload: upload,
         linkAdvisorToClient: linkAdvisorToClient,
         customFieldUpdate: customFieldUpdate,
