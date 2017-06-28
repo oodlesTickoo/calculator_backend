@@ -135,6 +135,7 @@ module.exports.FileService = (function() {
 
     return {
     	get: get,
+        checkFile: checkFile,
     	upload: upload,
     	isfileExists: isfileExists
     }
