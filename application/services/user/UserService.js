@@ -179,7 +179,7 @@ var request = require('request');
         var map = {};
         data.forEach(function(user){
             user.CUSTOMFIELDS.forEach(function(customField){
-                if(customField.CUSTOM_FIELD_ID === FieldName.USER_TYPE && customField.FIELD_VALUE === 'ADVISOR'){
+                if(customField.CUSTOM_FIELD_ID === FieldName.USER_TYPE && (customField.FIELD_VALUE === 'ADVISOR' || customField.FIELD_VALUE === 'ADMINISTRATOR')){
                     if(!map[user.CONTACT_ID+'']){
                         map[user.CONTACT_ID+''] = {};
                     }
