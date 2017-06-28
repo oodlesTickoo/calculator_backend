@@ -34,6 +34,28 @@ module.exports.FileService = (function() {
 		})
     }
 
+    function checkFile (res, contactId, format) {
+
+        _getFileId(contactId, format, function(fileId){
+            if(fileId.length > 0){
+                var options = {
+                    url: configurationHolder.config.insightly.url.replace('/Contacts','') + configurationHolder.config.insightly.saveAttachment + '/'+ fileId,
+                    headers: {
+                        'Authorization': configurationHolder.config.insightly.auth
+                    },
+                    method: "GET"
+                };
+                if(format === 'pdf'){
+                    request(options).pipe(res);
+                }else{
+                    configurationHolder.ResponseUtil.responseHandler(res, {}, 'File found', false, 200);   
+                }
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, {}, 'File not found', true, 400);
+            }
+        })
+    }
+
     function _getFileId(contactId, format, callback) {
     	var project = {
     		'CUSTOMFIELDS.$': 1

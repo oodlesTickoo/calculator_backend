@@ -44,6 +44,10 @@ module.exports.CalculatorController = (function() {
         FileService.get(res, Number(req.query.contact_id), req.query.file_format);
     };
 
+    var checkFile = function(req, res) {
+        FileService.checkFile(res, Number(req.query.contact_id), req.query.file_format);
+    };
+
     var upload = function(req, res) {
         FileService.upload(req.files.file, req.query.contact_id, res);
     };
