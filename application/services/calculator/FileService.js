@@ -38,15 +38,9 @@ module.exports.FileService = (function() {
 
         _getFileId(contactId, format, function(fileId){
             if(fileId.length > 0){
-                var options = {
-                    url: configurationHolder.config.insightly.url.replace('/Contacts','') + configurationHolder.config.insightly.saveAttachment + '/'+ fileId,
-                    headers: {
-                        'Authorization': configurationHolder.config.insightly.auth
-                    },
-                    method: "GET"
-                };
                 if(format === 'pdf'){
-                    configurationHolder.ResponseUtil.responseHandler(res, {}, 'File url', false, 200);
+                    console.log("3333333333333",res);
+                    configurationHolder.ResponseUtil.responseHandler({}, {}, 'File url', false, 200);
                 }else{
                     configurationHolder.ResponseUtil.responseHandler(res, {}, 'File not found', true, 400);   
                 }
