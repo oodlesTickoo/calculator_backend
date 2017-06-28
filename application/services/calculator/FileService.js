@@ -35,14 +35,16 @@ module.exports.FileService = (function() {
     }
 
     function _getFileId(contactId, format, callback) {
-    	
-    	var query;
-
     	var project = {
     		'CUSTOMFIELDS.$': 1
     	 };
 
-    	if(format === 'pdf'){
+        var query = {
+                'CONTACT_ID': contactId,
+                'CUSTOMFIELDS.CUSTOM_FIELD_ID': format === 'pdf'?FieldName.FILE_ID:FieldName.DOC_FILE
+            };
+
+    	/*if(format === 'pdf'){
     		query = {
     			'CONTACT_ID': contactId,
     			'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.FILE_ID
@@ -54,11 +56,14 @@ module.exports.FileService = (function() {
     			'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.DOC_FILE
     		};
     	}
-
+*/
     	domain.User.findOne(query, project, function(err, doc){
-    		fileId = (doc && doc.CUSTOMFIELDS.length > 0)? doc.CUSTOMFIELDS[0].FIELD_VALUE: '';
-    		console.log('File id')
-    		callback(fileId);
+            if(err){
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message , true, 400);
+            }else{
+                fileId = (doc && doc.CUSTOMFIELDS.length > 0)? doc.CUSTOMFIELDS[0].FIELD_VALUE: '';
+                callback(fileId);   
+            }    		
     	});
     }
 
@@ -96,12 +101,13 @@ module.exports.FileService = (function() {
     function isfileExists(contactId, format, res) {
     	
     	_getFileId(contactId, format, function(result){
-    		if(result === '' || !result){
+            configurationHolder.ResponseUtil.responseHandler(res, {'status': !!result}, 'File exists', false, 200);
+    		/*if(result === '' || !result){
     			configurationHolder.ResponseUtil.responseHandler(res, {'status': false}, 'File not exists', true, 400);
 
     		}else{
     			configurationHolder.ResponseUtil.responseHandler(res, {'status': true}, 'File exists', false, 200);
-    		}
+    		}*/
     	})
     }
 

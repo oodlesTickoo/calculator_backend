@@ -38,8 +38,6 @@ module.exports.ClientAdvisorService = (function() {
 		})	
 	}
 
-
-
 	function _getUserByContactId(CONTACT_ID) {
     	return new Promise(function(resolve, reject) {
         	domain.User.findOne({
