@@ -228,9 +228,12 @@ module.exports.CalculatorService = (function () {
                     results.webshotAsset,data.customFieldMap,loggedInUser);
             }]
         }, function (err, results) {
+            console.log("hhhhhhhhhhhhhhhhhhh",err,results);
             if (err) {
+                console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
+                console.log("ffffffffffffffffff");
                 configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", false, 200);
             }
         });
