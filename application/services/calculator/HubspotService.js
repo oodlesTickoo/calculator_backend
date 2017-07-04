@@ -146,8 +146,6 @@ module.exports.HubspotService = (function() {
         	    	console.log('Error :: ',error)
     	            reject(error);
 	            } else {
-	            	console.log("response1 hubspot", response);
-	            	console.log("body1 hubspot", body);
                 	resolve(body);
             	}
 			})
@@ -224,20 +222,14 @@ module.exports.HubspotService = (function() {
         };
         return new Promise(function(resolve, reject){
         	request(options, function(error, response, body) {
-        		console.log("error hubspot", error);
-        		console.log("response hubspot", response);
-        		console.log("body hubspot", body);
-
         	    if (error) {
         	    	console.log('Error :: ',error)
     	            reject(error);
-	            } else {
+	            } else {console.log("body hubspot", body);
 	            	body = JSON.parse(body);
 	            	if(body && body.objects && body.objects[0].id){
-	            		console.log("body.objects[0].id hubspot", body.objects[0].id);
 	            		resolve(body.objects[0].id);
 	            	} else{
-	            		console.log("File not uploaded hubspot");
 	            		reject({message: 'File not uploaded'})
 	            	}
             	}
@@ -257,7 +249,6 @@ module.exports.HubspotService = (function() {
     function uploadFile(email, filePath){
 
     	_uploadFile(filePath).then(function(fileId){
-    		console.log("fileId hubspot", fileId);
     		var properties = {'properties': []};
     		properties.properties.push({
     			'property': (filePath.split('.')[filePath.split('.').length - 1] === 'pdf')?Fields.CONTACT_FIELD_152: Fields.CONTACT_FIELD_153,
