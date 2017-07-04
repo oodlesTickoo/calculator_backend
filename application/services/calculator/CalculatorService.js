@@ -259,7 +259,8 @@ module.exports.CalculatorService = (function() {
 
                         saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function(fileData) {
                             console.log('file id saved111111111');
-                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID)).then(function(responseData) {
+                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
+                            /*HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID)).then(function(responseData) {
 
                                 console.log("responseData hubspottttttttttt",responseData);
                                 updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function() {
@@ -267,12 +268,12 @@ module.exports.CalculatorService = (function() {
                                     // next(null, null);
                                     next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                                 });
-                            });
-                            /*updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
+                            });*/
+                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                 console.log('file id saved');
                                 // next(null, null);
                                 next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
-                            });*/
+                            });
                         }).catch(function(err) {
                             console.log(err);
                             next(err, null);
