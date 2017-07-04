@@ -6,7 +6,7 @@ const FieldName = require('./../../../application-utilities/FieldName');
 const path = require('path');
 var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
 
-module.exports.CalculatorService = (function () {
+module.exports.CalculatorService = (function() {
     var pdf = require('html-pdf');
     var fs = require('fs');
     var webshot = require('webshot');
@@ -18,11 +18,11 @@ module.exports.CalculatorService = (function () {
     // require('request-debug')(request);
 
     function renderFile(next, fileName, data) {
-        console.log("data4:",data);
-        
+        console.log("data4:", data);
+
         ejs.renderFile(configurationHolder.config.publicFolder + fileName, {
             data: data,
-        }, function (err, htmlStr) {
+        }, function(err, htmlStr) {
             if (err) {
                 next(err, null);
             } else {
@@ -35,15 +35,14 @@ module.exports.CalculatorService = (function () {
         return path.join(__dirname, '..', '..', '..', 'uploads', contactId + '.pdf');
     }
 
-    function generateImage(next, html, imageFileName,data) {
-        console.log('data888:',data)
+    function generateImage(next, html, imageFileName, data) {
         webshot(html, 'uploads/' + imageFileName, {
             siteType: 'html',
             shotSize: {
                 width: data.width,
                 height: data.height
             }
-        }, function (err, res) {
+        }, function(err, res) {
             console.log(err, res);
             if (err) {
                 next(err, null);
@@ -84,7 +83,7 @@ module.exports.CalculatorService = (function () {
         return fileName;
     }
 
-     /*function getEjsFile(type) {
+    /*function getEjsFile(type) {
         var fileName;
         switch (type) {
             case 'ia':
@@ -115,23 +114,23 @@ module.exports.CalculatorService = (function () {
         return fileName;
     }
 */
-    
+
     function generateWebShot(next, type, data) {
         var fileName = getEjsFile(type);
-        console.log("data1:",data);
+        console.log("data1:", data);
         async.auto({
-            html: function (next, results) {
-        console.log("data2:",data);
+            html: function(next, results) {
+                console.log("data2:", data);
 
                 renderFile(next, fileName, data);
             },
-            image: ['html', function (next, results) {
-        console.log("data3:",data);
+            image: ['html', function(next, results) {
+                console.log("data3:", data);
 
                 var imageFileName = (new Date()).getTime() + ".png";
-                generateImage(next, results.html, imageFileName,data);
+                generateImage(next, results.html, imageFileName, data);
             }]
-        }, function (err, results) {
+        }, function(err, results) {
 
             if (err) {
                 next(err, null);
@@ -141,12 +140,12 @@ module.exports.CalculatorService = (function () {
         });
     }
 
-    var webShot = function (type, data, res) {
+    var webShot = function(type, data, res) {
         async.auto({
-            image: function (next, results) {
+            image: function(next, results) {
                 generateWebShot(next, type, data);
             }
-        }, function (err, results) {
+        }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -161,74 +160,69 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    var requestPdf = function (data, loggedInUser, res) {
+    var requestPdf = function(data, loggedInUser, res) {
         // console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT',data);
 
         async.auto({
-            webshotIa: function (next, results) {
-              console.log('ia data:',data.iaObj);
-                generateWebShot(next, 'ia', data.iaObj );
+            webshotIa: function(next, results) {
+                generateWebShot(next, 'ia', data.iaObj);
             },
 
-            webshotSFC: function (next, results) {
-              console.log('ia data:',data.sfcObj);
-           
+            webshotSFC: function(next, results) {
+                console.log('ia data:', data.sfcObj);
+
 
                 generateWebShot(next, 'sfc', data.sfcObj);
             },
 
-            webshotIT: function (next, results) {
-              console.log('ia data:',data.itObj);
-                
+            webshotIT: function(next, results) {
+
 
                 generateWebShot(next, 'it', data.itObj);
             },
 
-            webshotPSF: function (next, results) {
-              console.log('ia data:',data.psfObj);
-                
+            webshotPSF: function(next, results) {
+
 
                 generateWebShot(next, 'psf', data.psfObj);
             },
 
-            webshotRA: function (next, results) {
-              console.log('ia data:',data.raObj);
-                
+            webshotRA: function(next, results) {
+
 
                 generateWebShot(next, 'ra', data.raObj);
             },
 
-            webshotSSO: function (next, results) {
-              console.log('ia data:',data.ssoObj);
-                
+            webshotSSO: function(next, results) {
+
 
                 generateWebShot(next, 'sso', data.ssoObj);
             },
 
-            webshotTTR: function (next, results) {
-              // console.log('ia data:',data.ttrObj);
-                
+            webshotTTR: function(next, results) {
+                // console.log('ia data:',data.ttrObj);
+
 
                 generateWebShot(next, 'ttr', data.ttrObj);
             },
 
-            webshotAsset: function (next, results) {
-            
+            webshotAsset: function(next, results) {
+
 
                 generateWebShot(next, 'aa', data.aaObj);
             },
 
-            pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function (next, results) {
+            pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function(next, results) {
                 var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
                 // var pdfFileName = "x.pdf";
                 console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT11111111111111111111');
 
-           
+
                 generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
-                    results.webshotAsset,data.customFieldMap,loggedInUser);
+                    results.webshotAsset, data.customFieldMap, loggedInUser);
             }]
-        }, function (err, results) {
-            console.log("hhhhhhhhhhhhhhhhhhh",err,results);
+        }, function(err, results) {
+            console.log("hhhhhhhhhhhhhhhhhhh", err, results);
             if (err) {
                 console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiii");
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
@@ -239,10 +233,10 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8,customFieldMap,loggedInUser) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', { 
-            
-            image1: image1, 
+    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5, image6, image7, image8, customFieldMap, loggedInUser) {
+        ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', {
+
+            image1: image1,
             image2: image2,
             image3: image3,
             image4: image4,
@@ -250,11 +244,11 @@ module.exports.CalculatorService = (function () {
             image6: image6,
             image7: image7,
             image8: image8,
-            data:customFieldMap
+            data: customFieldMap
         }, {}, function(err, html) {
             if (html) {
-                var options = { width:'1169px',height:'827px', base: 'file://' + __dirname + '/../../../' };
-                console.log("file name:",pdfFileName)
+                var options = { width: '1169px', height: '827px', base: 'file://' + __dirname + '/../../../' };
+                console.log("file name:", pdfFileName);
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
                     if (err) {
@@ -263,15 +257,23 @@ module.exports.CalculatorService = (function () {
                         // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                         console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
 
-                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
+                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function(fileData) {
                             console.log('file id saved111111111');
-                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
-                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
+                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID)).then(function(responseData) {
+
+                                console.log("responseData hubspottttttttttt",responseData);
+                                updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function() {
+                                    console.log('file id saved');
+                                    // next(null, null);
+                                    next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                                });
+                            });
+                            /*updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                 console.log('file id saved');
                                 // next(null, null);
                                 next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
-                            });
-                        }).catch(function (err) {
+                            });*/
+                        }).catch(function(err) {
                             console.log(err);
                             next(err, null);
                         });
@@ -283,7 +285,7 @@ module.exports.CalculatorService = (function () {
         });
     }
 
-    
+
     /*function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8, loggedInUser) {
         ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
             image1: image1,
@@ -344,8 +346,8 @@ module.exports.CalculatorService = (function () {
             body: data,
             method: "POST"
         };
-        return new Promise(function (resolve, reject) {
-            request(options, function (error, response, body) {
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
                 // console.log('REQUEST RESULTS:', error, response.statusCode, body);
                 if (error) {
                     reject(error);
@@ -364,8 +366,8 @@ module.exports.CalculatorService = (function () {
             }
         };
 
-        return new Promise(function (resolve, reject) {
-            request(options, function (error, response, body) {
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -388,8 +390,8 @@ module.exports.CalculatorService = (function () {
             }
         };
 
-        return new Promise(function (resolve, reject) {
-            request(options, function (error, response, body) {
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -432,8 +434,8 @@ module.exports.CalculatorService = (function () {
             body: data,
             method: "PUT"
         };
-        return new Promise(function (resolve, reject) {
-            request(options, function (error, response, body) {
+        return new Promise(function(resolve, reject) {
+            request(options, function(error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
@@ -460,7 +462,7 @@ module.exports.CalculatorService = (function () {
             }
         };
 
-        request(options, function (error, response, body) {
+        request(options, function(error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -481,7 +483,7 @@ module.exports.CalculatorService = (function () {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function (error, response, body) {
+        request(options, function(error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -517,7 +519,7 @@ module.exports.CalculatorService = (function () {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function (error, response, body) {
+        request(options, function(error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -554,7 +556,7 @@ module.exports.CalculatorService = (function () {
                 'Authorization': 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
             }
         };
-        request(options, function (error, response, body) {
+        request(options, function(error, response, body) {
             if (error) {
                 next(error, null);
             } else {
@@ -580,17 +582,17 @@ module.exports.CalculatorService = (function () {
         });
     }
 
-    var login = function (data, res) {
+    var login = function(data, res) {
         var phoneNumber = _getPhoneNumberFromUserObject(data);
         /**
          * Search user by phone number on local db
          */
-        UserService.searchUser(phoneNumber).then(function (searchUser) {
+        UserService.searchUser(phoneNumber).then(function(searchUser) {
             if (!searchUser || searchUser.length === 0) {
                 /**
                  * Save user on insightly
                  */
-                createUser(data).then(function (result) {
+                createUser(data).then(function(result) {
                     /**
                      * Save user on Hotspot
                      */
@@ -599,9 +601,9 @@ module.exports.CalculatorService = (function () {
                      * Save user on local DB
                      */
                     return UserService.save(result)
-                }).then(function (result) {
+                }).then(function(result) {
                     _loginResponseData(result, res);
-                }).catch(function (err) {
+                }).catch(function(err) {
                     configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
                 })
             } else {
@@ -611,7 +613,7 @@ module.exports.CalculatorService = (function () {
     };
 
     function _loginResponseData(userObj, res) {
-        ClientAdvisorService.createClientAdvisor(userObj, function () {
+        ClientAdvisorService.createClientAdvisor(userObj, function() {
             var role = _getUserRoleFromUserObject(userObj);
             var promises = [];
             promises.push(AuthService.generateAuthToken(userObj));
@@ -629,7 +631,7 @@ module.exports.CalculatorService = (function () {
                         break;
                     }
             }
-            Promise.all(promises).then(function (results) {
+            Promise.all(promises).then(function(results) {
                 var returnOnject = {};
                 returnOnject.me = userObj;
                 returnOnject.token = results[0].auth_token;
@@ -649,18 +651,18 @@ module.exports.CalculatorService = (function () {
                         }
                 }
                 configurationHolder.ResponseUtil.responseHandler(res, returnOnject, "Successfully login", false, 200);
-            }).catch(function (err) {
+            }).catch(function(err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
             });
         })
     }
 
-    var getData = function (data, res) {
+    var getData = function(data, res) {
         async.auto({
-            userInfo: function (next) {
+            userInfo: function(next) {
                 getUser(next, data);
             }
-        }, function (err, results) {
+        }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -669,22 +671,22 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    var saveData = function (data, res) {
-        updateUser(data).then(function (result) {
+    var saveData = function(data, res) {
+        updateUser(data).then(function(result) {
             return UserService.update(data);
-        }).then(function (result) {
+        }).then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
-        }).catch(function (err) {
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
         })
     };
 
-    var saveAttachment = function (data, res) {
+    var saveAttachment = function(data, res) {
         async.auto({
-            sendAttachment: function (next) {
+            sendAttachment: function(next) {
                 addAttachment(next, data);
             }
-        }, function (err, results) {
+        }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -693,12 +695,12 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    var getAssignedClientList = function (data, res) {
+    var getAssignedClientList = function(data, res) {
         async.auto({
-            assignedClientList: function (next) {
+            assignedClientList: function(next) {
                 requestAssignedClientList(next, data);
             }
-        }, function (err, results) {
+        }, function(err, results) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
             } else {
@@ -707,20 +709,20 @@ module.exports.CalculatorService = (function () {
         });
     };
 
-    var getMasterClientList = function (res) {
+    var getMasterClientList = function(res) {
 
-        UserService.list('CLIENT').then(function (result) {
+        UserService.list('CLIENT').then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "Master Client list successfully captured", false, 200);
-        }).catch(function (err) {
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
     };
 
-    var getMasterAdvisorList = function (res) {
+    var getMasterAdvisorList = function(res) {
 
-        UserService.listAdvisorClient().then(function (result) {
+        UserService.listAdvisorClient().then(function(result) {
             configurationHolder.ResponseUtil.responseHandler(res, result, "User Data successfully captured", false, 200);
-        }).catch(function (err) {
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
 
@@ -729,7 +731,7 @@ module.exports.CalculatorService = (function () {
     function _getPhoneNumberFromUserObject(userObj) {
         var phoneNumber = null;
         if (userObj && userObj.CONTACTINFOS) {
-            userObj.CONTACTINFOS.forEach(function (contactInfo) {
+            userObj.CONTACTINFOS.forEach(function(contactInfo) {
                 if (contactInfo.TYPE === 'PHONE') {
                     phoneNumber = contactInfo.DETAIL;
                 }
@@ -766,12 +768,12 @@ module.exports.CalculatorService = (function () {
             }
         };
         console.log('promise aaaaaaaaaaaaaaaaaaaaaaaaaa');
-        return new Promise(function (resolve, reject) {
+        return new Promise(function(resolve, reject) {
             console.log('promise bbbbbbbbbbbbbbbbbbbbbbbbb');
-            request(options, function (error, response, body) {
+            request(options, function(error, response, body) {
                 console.log('promise ccccccccccccccccccccccccc');
                 if (error) {
-                    console.log('promise error',error);
+                    console.log('promise error', error);
                     reject(error);
                 } else {
                     console.log('promise success');
@@ -785,28 +787,28 @@ module.exports.CalculatorService = (function () {
 
     function updateFileToUser(contactId, fileId, filePath, callback) {
         var format = filePath.split('.')[filePath.split('.').length - 1]
-        UserService.updateFile(contactId, fileId, format).then(function (userData) {
+        UserService.updateFile(contactId, fileId, format).then(function(userData) {
             delete userData['_id'];
             return updateUser(userData);
-        }).then(function (userData) {
+        }).then(function(userData) {
             //fs.unlinkSync(filePath);
             callback();
-        }).catch(function (err) {
+        }).catch(function(err) {
             console.log("Error ", err)
             callback()
         });
     }
 
     function linkAdvisorToClient(clientId, advisorId, res) {
-        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function (result) {
+        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result) {
 
-            getById(clientId).then(function (clientObj) {
+            getById(clientId).then(function(clientObj) {
 
                 clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
                 /**
                  * Update advisor on insightly
                  */
-                updateUser(clientObj).then(function (results) {
+                updateUser(clientObj).then(function(results) {
                     /**
                      * Update advisor on hubspot
                      */
@@ -814,12 +816,12 @@ module.exports.CalculatorService = (function () {
                     /**
                      * Update advisor on local DB
                      */
-                    UserService.update(clientObj).then(function (updatedUser) {
+                    UserService.update(clientObj).then(function(updatedUser) {
                         configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
                     });
                 })
             })
-        }).catch(function (err) {
+        }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
         })
     }
