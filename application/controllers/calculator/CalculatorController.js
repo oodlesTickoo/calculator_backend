@@ -6,6 +6,8 @@ var UserService = require("../../services/user/UserService").UserService;
 module.exports.CalculatorController = (function() {
 
     var webShot = function(req, res) {
+        
+        console.log("data",req);
         CalculatorService.webShot(req.query.type, req.body, res);
     };
 

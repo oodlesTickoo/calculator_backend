@@ -1,63 +1,6 @@
 app.controller("RAController", ['$scope', '$timeout', 'AgeCalculator', 'ChartServiceHc', 'AreaChartService', function($scope, $timeout, AgeCalculator, ChartServiceHc, AreaChartService) {
 
-    RAObj = {
-        "spouseOption": false,
-        "houseOption": true,
-        "targetIncome": 10000,
-        "userDetails": {
-            "gender": "male",
-            "age": 56,
-            "retirementAge": 65,
-            "annualSalary": 260000,
-            "superBalance": 500000,
-            "salarySacrifice": 15384,
-            "pensionStartAge": 57
-        },
-        "userAssumptions": {
-            "insurancePremium": 0,
-            "investmentReturn": 5.30,
-            "variableFee": 1.11,
-            "fixedFee": 300,
-            "employerContributionLevel": 9.50,
-            "inflation": 3.50,
-            "wageIncrease": 4.00,
-            "pensionDrawdown": 1,
-            "pensionDrawdownBase": 40000
-        },
-        "spouseDetails": {
-            "gender": "female",
-            "age": 50,
-            "retirementAge": 70,
-            "annualSalary": 90000,
-            "superBalance": 200000,
-            "salarySacrifice": 5000,
-            "pensionStartAge": 65
-        },
-        "spouseAssumptions": {
-            "insurancePremium": 0,
-            "investmentReturn": 5.30,
-            "variableFee": 1.11,
-            "fixedFee": 300,
-            "employerContributionLevel": 9.50,
-            "inflation": 3.50,
-            "wageIncrease": 4.00,
-            "pensionDrawdown": 1,
-            "pensionDrawdownBase": 30000
-        },
-        "otherAssets": {
-            "homeContents": 50000,
-            "vehicleCost": 0,
-            "investmentProperty": 2000,
-            "bankAssets": 20000,
-            "listedInvestments": 0,
-            "marginLoans": 0,
-            "otherInvestment": 20000,
-            "netRentalIncome": 0,
-            "otherIncome": 0,
-            "pensionIncome": 0,
-            "allocatedPension": 60000
-        }
-    };
+    
     
     
     var maleExpectancy = [80.3, 79.6, 78.6, 77.6, 76.6, 75.6, 74.6, 73.6, 72.7, 71.7, 70.7, 69.7, 68.7, 67.7, 66.7, 65.7, 64.7, 63.7, 62.8, 61.8, 60.8, 59.9, 58.9, 57.9, 57, 56, 55, 54.1, 53.1, 52.2, 51.2, 50.2, 49.3, 48.3, 47.3, 46.4, 45.4, 44.5, 43.5, 42.6, 41.6, 40.7, 39.8, 38.8, 37.9, 37, 36, 35.1, 34.2, 33.3, 32.4, 31.4, 30.5, 29.6, 28.8, 27.9, 27, 26.1, 25.3, 24.4, 23.5, 22.7, 21.9, 21, 20.2, 19.4, 18.6, 17.8, 17, 16.3, 15.5, 14.8, 14, 13.3, 12.6, 11.9, 11.2, 10.6, 9.9, 9.3, 8.7, 8.2, 7.6, 7.1, 6.6, 6.1, 5.7, 5.3, 4.9, 4.5, 4.2, 3.9, 3.6, 3.4, 3.2, 3, 2.8, 2.6, 2.5, 2.4, 2.3];

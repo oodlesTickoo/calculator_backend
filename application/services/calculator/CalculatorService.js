@@ -36,6 +36,7 @@ module.exports.CalculatorService = (function() {
     }
 
     function generateImage(next, html, imageFileName, data) {
+        console.log("data123",data)
         webshot(html, 'uploads/' + imageFileName, {
             siteType: 'html',
             shotSize: {
@@ -143,6 +144,8 @@ module.exports.CalculatorService = (function() {
     var webShot = function(type, data, res) {
         async.auto({
             image: function(next, results) {
+                console.log("type",type);
+                console.log("data",data);
                 generateWebShot(next, type, data);
             }
         }, function(err, results) {
