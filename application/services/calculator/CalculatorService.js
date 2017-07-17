@@ -256,28 +256,17 @@ module.exports.CalculatorService = (function() {
                     } else {
                         // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                         console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
-
-                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function(fileData) {
-                            console.log('file id saved111111111');
-                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
-                            /*HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID)).then(function(responseData) {
-
-                                console.log("responseData hubspottttttttttt",responseData);
-                                updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function() {
+                         HubspotService.uploadFile(loggedInUser.CONTACT_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(err, hubspotFile){
+                            if(!err){
+                                updateFileToUser(loggedInUser.CONTACT_ID, hubspotFile.fileId, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                     console.log('file id saved');
                                     // next(null, null);
                                     next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                                 });
-                            });*/
-                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
-                                console.log('file id saved');
-                                // next(null, null);
-                                next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
-                            });
-                        }).catch(function(err) {
-                            console.log(err);
-                            next(err, null);
-                        });
+                            } else {
+                                next(err, null);
+                            }
+                         });
                     }
                 });
             } else {
@@ -584,29 +573,34 @@ module.exports.CalculatorService = (function() {
     }
 
     var login = function(data, res) {
-        var phoneNumber = _getPhoneNumberFromUserObject(data);
+        console.log(data);
+        var email = _getEmailFromUserObject(data);
         /**
          * Search user by phone number on local db
          */
-        UserService.searchUser(phoneNumber).then(function(searchUser) {
+        UserService.searchUser(email).then(function(searchUser) {
             if (!searchUser || searchUser.length === 0) {
                 /**
-                 * Save user on insightly
-                 */
-                createUser(data).then(function(result) {
-                    /**
-                     * Save user on Hotspot
-                     */
-                    HubspotService.save(data);
-                    /**
-                     * Save user on local DB
-                     */
-                    return UserService.save(result)
-                }).then(function(result) {
-                    _loginResponseData(result, res);
-                }).catch(function(err) {
-                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
-                })
+                 * Save data on hubspot
+                 */ 
+                HubspotService.save(data, function(err, hubspotResult){
+                    if(!err){
+                        console.log('Hubspot create contact response : ', hubspotResult);
+                        data.CONTACT_ID = hubspotResult.vid;
+                        /**
+                        * Save data on local user
+                        */ 
+                        UserService.save(data).then(function(userObj){
+                            _loginResponseData(data, res);
+                        }).catch(function(err){
+                            configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+                        });
+
+                    } else {
+                        configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+                    }
+                    
+                });
             } else {
                 _loginResponseData(searchUser[0], res);
             }
@@ -730,6 +724,18 @@ module.exports.CalculatorService = (function() {
     };
 
     function _getPhoneNumberFromUserObject(userObj) {
+        var phoneNumber = null;
+        if (userObj && userObj.CONTACTINFOS) {
+            userObj.CONTACTINFOS.forEach(function(contactInfo) {
+                if (contactInfo.TYPE === 'PHONE') {
+                    phoneNumber = contactInfo.DETAIL;
+                }
+            })
+        }
+        return phoneNumber;
+    }
+
+    function _getEmailFromUserObject(userObj) {
         var phoneNumber = null;
         if (userObj && userObj.CONTACTINFOS) {
             userObj.CONTACTINFOS.forEach(function(contactInfo) {

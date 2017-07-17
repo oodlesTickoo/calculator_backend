@@ -13,10 +13,7 @@ module.exports.FileService = (function() {
 		_getFileId(contactId, format, function(fileId){
 			if(fileId.length > 0){
 				var options = {
-            		url: configurationHolder.config.insightly.url.replace('/Contacts','') + configurationHolder.config.insightly.saveAttachment + '/'+ fileId,
-            		headers: {
-                		'Authorization': configurationHolder.config.insightly.auth
-            		},
+            		url: configurationHolder.config.hubspot.file_url + '/' + fileId + '/' +  configurationHolder.config.hubspot.folder + '/' + contactId + '.' + format.toLowerCase(),
             		method: "GET"
         		};
         		if(format === 'pdf'){

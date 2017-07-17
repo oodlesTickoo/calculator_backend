@@ -23,8 +23,10 @@ var configVariables = function() {
                     auth: 'Basic Y2U0NGU2ZDMtZmIxYy00NzhhLWJhNGEtOTVlNjQzMGM5MDZh'
                 },
                 hubspot:{
-                    url:'https://api.hubapi.com',
-                    hapikey: 'a359482e-a30d-42c1-bcf2-fcc727eb50fe'
+                    url: 'https://api.hubapi.com',
+                    hapikey: 'a359482e-a30d-42c1-bcf2-fcc727eb50fe',
+                    folder: 'dev_files',
+                    file_url: 'https://cdn2.hubspot.net/hubfs'
                 }
 
             };

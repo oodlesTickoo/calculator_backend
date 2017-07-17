@@ -23,7 +23,7 @@ module.exports = {
 	},
 	AUTH_HEADER: 'Authorization',
 
-	HOBSPOT_URL: {
+	HUBSPOT_URL: {
 		CONTACT: '/contacts/v1/contact/',
 		EMAIL_SEARCH: '/contacts/v1/contact/emails/batch/',
 		FILE: '/filemanager/api/v2/files'

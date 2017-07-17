@@ -42,10 +42,10 @@ var request = require('request');
         })
     }*/
 
-    function searchUser(phoneNumber) {
+    function searchUser(email) {
         return new Promise(function(resolve, reject) {
             domain.User.find({
-                'CONTACTINFOS.DETAIL': phoneNumber
+                'CONTACTINFOS.DETAIL': email
             }, function(err, result) {
                 if (!err) {
                     resolve(result);
