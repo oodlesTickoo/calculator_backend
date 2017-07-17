@@ -1,30 +1,6 @@
 app.controller("SFCController", ['$scope', '$timeout', 'AgeCalculator', 'ChartServiceHcSFC', function($scope, $timeout, AgeCalculator, ChartServiceHc) {
 
     
-     sfcObj = {
-        "age": 47,
-        "retirementAge": 67,
-        "annualSalary": 60000,
-        "superBalance": 100000,
-        "cc": 10000,
-        "ncc": 10000,
-        "ecLevel": 9.5,
-        "inflation": 2.5,
-        "wageIncrease": 3.5,
-        "insurancePremiumPerYear": 200,
-        "netReturn": 2.90,
-        "fundASelectedId": 0,
-        "fundNameA": "Special fund 1",
-        "contributionFeeA": 1.50,
-        "adminFeeA": 100,
-        "indirectCostRationA": 1.50,
-        "fundBSelectedId": 1,
-        "fundNameB": "Special fund 2",
-        "contributionFeeB": 1.50,
-        "adminFeeB": 100,
-        "indirectCostRationB": 1.50,
-
-    };
     
     $scope.fundsOb = [{ id: 0, name: "AMG Super ", annualPercentageFee: 0.01134 },
         { id: 1, name: "AMP No.1 Retirement Trust ", annualPercentageFee: 0.0085696 },

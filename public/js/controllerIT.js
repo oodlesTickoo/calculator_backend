@@ -1,10 +1,7 @@
 app.controller("ITController", ['$scope', '$timeout', 'TaxRateCalculator', 'ChartServiceHc', function($scope, $timeout, TaxRateCalculator, ChartServiceHc) {
     
     
- incomeTaxObj = {
-        "annualSalary": 60000,
-        "paymentFrequency": 1
-    };
+ 
 
     $scope.result = {};
 

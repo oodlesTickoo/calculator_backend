@@ -2,17 +2,6 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
 
 
 
-    ttrObj = {
-        "age": 46,
-        "cses": 80000,
-        "thp": 45000,
-        "fy": 2016,
-        "nra": 6,
-        "nrp": 7,
-        "balance": 50000,
-        "tfp": 2
-    };
-
     var age = ttrObj.age;
     var cses = ttrObj.cses;
     var thp = ttrObj.thp;
