@@ -156,32 +156,25 @@ module.exports.HubspotService = (function() {
         })
     }
 
-    function updateAdvisor(userObj, advisorId){
-    	_getHubspotContactByInsightlyContactId(advisorId).then(function(hubspotContactObject){
-    		var pro = {
-    			'properties':[
-	    			{
-    					'property': Fields.CONTACT_FIELD_151,
-    					'value': hubspotContactObject[Object.keys(hubspotContactObject)[0]].vid
-    				}
-    			]
-    		};
-    		_updateToHubspot(_getEmail(userObj), pro);
-    	})
+    function updateAdvisor(clientId, advisorId){
+    	var pro = {
+    		'properties':[
+	    		{
+    				'property': Fields.CONTACT_FIELD_151,
+    				'value': advisorId
+    			}
+    		]
+    	};
+    	return _updateToHubspot(clientId, pro);
     }
 
-    function _updateToHubspot(email, data){
-    	var url = Constants.HUBSPOT_URL.EMAIL_SEARCH + '?email='+ email + '&' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-		_callToHubspot(GET, url, null).then(function(contactObject){
-			if(contactObject && Object.keys(contactObject).length > 0){
-				var contactUrl = Constants.HUBSPOT_URL.CONTACT + 'vid/' + contactObject[Object.keys(contactObject)[0]].vid + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-				_callToHubspot(POST, contactUrl, data).then(function(updatedObj){
-					console.log('Data successfully updated on Hubspot',updatedObj);
-				}).catch(function(error){
-					console.log(error);
-				});
-			}
-		})
+    function _updateToHubspot(vid, data){
+		var contactUrl = Constants.HUBSPOT_URL.CONTACT + 'vid/' + vid + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
+		_callToHubspot(POST, contactUrl, data).then(function(updatedObj){
+				console.log('Data successfully updated on Hubspot',updatedObj);
+		}).catch(function(error){
+			console.log(error);
+		});    	
     }
 
     function _getHubspotContactByInsightlyContactId(insightlyContactId){
@@ -207,7 +200,7 @@ module.exports.HubspotService = (function() {
     	var properties = {
     		'properties': createObjectFormArray('CUSTOMFIELDS', data)
     	};
-    	_updateToHubspot(_getEmail(userObj), properties);
+    	return _updateToHubspot(userObj.CONTACT_ID, properties);
     }
 
     function _uploadFile(filePath){
@@ -242,12 +235,18 @@ module.exports.HubspotService = (function() {
 
     }
 
+    function get(vid){
+    	var path = Constants.HUBSPOT_URL.CONTACT + 'vid/' + vid + '/profile'+ '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
+    	return _callToHubspot(GET, path);
+    }
+
     function saveFile(filePath, contactId){
+    	/*uploadFile(contactId, filePath);
     	domain.User.findOne({CONTACT_ID: Number(contactId+'')}, function(err, doc){
     		if(doc){
     			uploadFile(_getEmail(doc), filePath);
     		}
-    	})
+    	})*/
     }
 
     function uploadFile(vid, filePath, cb){
@@ -280,7 +279,8 @@ module.exports.HubspotService = (function() {
 		uploadByOtherUser: uploadByOtherUser,
 		updateAdvisor: updateAdvisor,
 		update: update,
-		saveFile:saveFile
+		saveFile:saveFile,
+		get: get
 	}
 
 })();

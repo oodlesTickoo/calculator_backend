@@ -207,19 +207,23 @@ var request = require('request');
     }
 
     function customFieldUpdate(contactId, customField, res){
-        _getById(contactId).then(function(result){
-            HubspotService.update(result, customField);
-       
-
-            var userObject = _setCustomFieldValue(customField, result);
-            _updateUser(userObject).then(function(result){
-
-            update(userObject);
-
-                configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
-            });
-        }).catch(function(err){
-            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+        domain.User.findOne({'CONTACT_ID': contactId}, function(err, result){
+            if(result){
+                delete result._id;
+                HubspotService.update(result, customField).then(function(resultData){
+                    if(!resultData){
+                        configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
+                    } else {
+                        var userObject = _setCustomFieldValue(customField, result);
+                        update(userObject);
+                        configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
+                    }
+                }).catch(function(error){
+                    configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
+                });
+            } else{
+                configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
+            }
         });
     }
 

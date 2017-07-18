@@ -99,15 +99,15 @@ module.exports.FileService = (function() {
     }
 
     function _updateFile(fileName, contactId, res){
-    	CalculatorService.saveAttachmentToInsightly(_getPdfFilePath(fileName),contactId).then(function(fileData){
-            HubspotService.saveFile(_getPdfFilePath(fileName), contactId);
-            CalculatorService.updateFileToUser(contactId, fileData.FILE_ID, _getPdfFilePath(fileName), function(){
-                configurationHolder.ResponseUtil.responseHandler(res, {}, 'Success', false, 200);
-            });
-        }).catch(function(err){
-            console.log(err)
-            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-        });
+        HubspotService.uploadFile(contactId, _getPdfFilePath(fileName), function(err, fileData){
+            if(!err){
+                CalculatorService.updateFileToUser(contactId, fileData.fileId, _getPdfFilePath(fileName), function(){
+                    configurationHolder.ResponseUtil.responseHandler(res, {}, 'Success', false, 200);
+                });
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+            }
+        })
     }
 
     function isfileExists(contactId, format, res) {

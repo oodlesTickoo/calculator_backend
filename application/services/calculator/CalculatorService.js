@@ -812,24 +812,23 @@ module.exports.CalculatorService = (function() {
     function linkAdvisorToClient(clientId, advisorId, res) {
         ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result) {
 
-            getById(clientId).then(function(clientObj) {
+            Hubspot.get(clientId).then(function(clientObj) {
 
                 clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
                 /**
-                 * Update advisor on insightly
+                    * Update advisor on hubspot
                  */
-                updateUser(clientObj).then(function(results) {
+                HubspotService.updateAdvisor(clientId, advisorId).then(function(updatedData){
                     /**
-                     * Update advisor on hubspot
-                     */
-                    HubspotService.updateAdvisor(clientObj, advisorId);
-                    /**
-                     * Update advisor on local DB
-                     */
+                    * Update advisor on local DB
+                    */
                     UserService.update(clientObj).then(function(updatedUser) {
                         configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
                     });
-                })
+                }).catch(function(err){
+                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
+                });
+                
             })
         }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);

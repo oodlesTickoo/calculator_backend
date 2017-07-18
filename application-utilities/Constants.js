@@ -26,7 +26,8 @@ module.exports = {
 	HUBSPOT_URL: {
 		CONTACT: '/contacts/v1/contact/',
 		EMAIL_SEARCH: '/contacts/v1/contact/emails/batch/',
-		FILE: '/filemanager/api/v2/files'
+		FILE: '/filemanager/api/v2/files',
+
 	},
 	HUBSPOT:{
 		FOLDER_NAME: 'demo'
