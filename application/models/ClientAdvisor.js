@@ -1,5 +1,4 @@
 var ClientAdvisorSchema = new mongooseSchema({
-    
     client:{
         CONTACT_ID:{ type: Number, required: true },
         FIRST_NAME: { type: String, trim: true },
@@ -11,13 +10,6 @@ var ClientAdvisorSchema = new mongooseSchema({
         LAST_NAME: { type: String, trim: true }
     }
 });
-
-
-function stringNotNull(obj) {
-    return obj.length
-}
-
-
 
 var ClientAdvisor = mongoose.model('ClientAdvisor', ClientAdvisorSchema);
 module.exports = ClientAdvisor

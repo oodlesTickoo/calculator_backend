@@ -264,7 +264,8 @@ module.exports.CalculatorService = (function() {
                                 updateFileToUser(loggedInUser.CONTACT_ID, hubspotFile.fileId, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
                                     console.log('file id saved');
                                     // next(null, null);
-                                    next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
+                                    next(null, { 'filePath': 'http://localhost:3000/download/' + pdfFileName, 'fileName': pdfFileName });
+                                    // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                                 });
                             } else {
                                 next(err, null);
@@ -416,9 +417,8 @@ module.exports.CalculatorService = (function() {
     }
 
     function updateUser(data) {
-
         var options = {
-            url: configurationHolder.config.insightly.url,
+            url: configurationHolder.config.hubspot.url,
             headers: {
                 'Authorization': configurationHolder.config.insightly.auth,
                 'Content-Type': 'application/json'
@@ -669,7 +669,7 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var saveData = function(data, res) {
+    var saveFactfindData = function(data, res) {
         updateUser(data).then(function(result) {
             return UserService.update(data);
         }).then(function(result) {
@@ -841,7 +841,7 @@ module.exports.CalculatorService = (function() {
         requestPdf: requestPdf,
         login: login,
         getData: getData,
-        saveData: saveData,
+        saveFactfindData: saveFactfindData,
         saveAttachment: saveAttachment,
         getAssignedClientList: getAssignedClientList,
         getMasterClientList: getMasterClientList,

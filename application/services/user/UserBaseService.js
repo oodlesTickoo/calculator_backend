@@ -2,8 +2,6 @@ module.exports.UserService = (function () {
 
 
    var createUser =  function (next,results,userObject,addressObject,res) {
-
-
        var newUser = new domain.User(userObject)
        newUser.save(function(err,createdUserObj) {
            if (err){
@@ -12,9 +10,7 @@ module.exports.UserService = (function () {
             else{
                next(null,createdUserObj)
            }
-
        });
-
     }
 
     /* generate registrationToken and return it to the calling function
@@ -33,7 +29,6 @@ module.exports.UserService = (function () {
     }
 
     var emailSendToUser = function(next,results,res){
-
         configurationHolder.EmailUtil.email("",results.saveUser.email,"dddd",results.generateRegistrationToken.registrationToken);
         next(null,"email sent");
     }
@@ -55,13 +50,11 @@ module.exports.UserService = (function () {
             }else{
                 configurationHolder.ResponseUtil.responseHandler(res,results,"User Created Successfully",false,200)
             }
-
         });
     }
    
 
-   var verifyUser = function (req,res) {
-       
+   var verifyUser = function (req,res) {   
    }
    
    var resetPasword = function (req,res) {

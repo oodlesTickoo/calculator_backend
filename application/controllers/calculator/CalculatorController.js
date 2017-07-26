@@ -6,8 +6,6 @@ var UserService = require("../../services/user/UserService").UserService;
 module.exports.CalculatorController = (function() {
 
     var webShot = function(req, res) {
-        
-        console.log("data",req);
         CalculatorService.webShot(req.query.type, req.body, res);
     };
 
@@ -23,8 +21,8 @@ module.exports.CalculatorController = (function() {
         CalculatorService.getData(req.body, res);
     };
 
-    var saveData = function(req, res) {
-        CalculatorService.saveData(req.body, res);
+    var saveFactfindData = function(req, res) {
+        CalculatorService.saveFactfindData(req.body, res);
     };
 
     var saveAttachment = function(req, res) {
@@ -42,6 +40,7 @@ module.exports.CalculatorController = (function() {
     var getMasterAdvisorList = function(req, res) {
         CalculatorService.getMasterAdvisorList(res);
     };
+
     var getFile = function(req, res) {
         FileService.get(res, Number(req.query.contact_id), req.query.file_format);
     };
@@ -59,7 +58,6 @@ module.exports.CalculatorController = (function() {
 
     var customFieldUpdate = function(req, res) {
         UserService.customFieldUpdate(req.loggedInUser.CONTACT_ID, req.body.custom_field, res);
-
     };
 
     var isFileExists = function(req, res) {
@@ -72,7 +70,7 @@ module.exports.CalculatorController = (function() {
         requestPdf: requestPdf,
         login: login,
         getData: getData,
-        saveData: saveData,
+        saveFactfindData: saveFactfindData,
         saveAttachment: saveAttachment,
         getAssignedClientList:getAssignedClientList,
         getMasterClientList:getMasterClientList,
@@ -84,5 +82,4 @@ module.exports.CalculatorController = (function() {
         customFieldUpdate: customFieldUpdate,
         isFileExists: isFileExists
     };
-
 })();

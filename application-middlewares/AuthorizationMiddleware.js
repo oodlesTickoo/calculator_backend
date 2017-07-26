@@ -54,7 +54,6 @@ module.exports.AuthorizationMiddleware = (function() {
             console.log("authToken",authToken);
             console.log("accessLevel",accessLevel);
             if (accessLevel === Constants.ROUTE_ACCESS_ROLE.ANONYMOUS) {
-                console.log("if");
                 CustomLogger.info("executed in accesslevel ");
                 req.loggedInUser = null;
                 next();
