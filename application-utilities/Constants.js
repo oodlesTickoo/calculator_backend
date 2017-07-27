@@ -27,9 +27,11 @@ module.exports = {
 		CONTACT: '/contacts/v1/contact/',
 		EMAIL_SEARCH: '/contacts/v1/contact/emails/batch/',
 		FILE: '/filemanager/api/v2/files',
+		QUERY_SEARCH:'/contacts/v1/search/query'
 
 	},
 	HUBSPOT:{
 		FOLDER_NAME: 'demo'
 	}
 }
+

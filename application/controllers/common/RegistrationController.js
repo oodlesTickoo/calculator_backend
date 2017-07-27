@@ -1,5 +1,5 @@
 var UserService = require("../../services/user/UserService").UserService;
-var RegistrationService = require("../../services/common/RegistrationService");
+var RegistrationService = require("../../services/common/RegistrationService").RegistrationService;
 
 var async = require('async');
 
@@ -63,10 +63,12 @@ module.exports.RegistrationController = (function() {
         userObject.mobile = req.body.mobile;
         userObject.isNewUser = true;
 
-        var authorizationFlag = authorizeUserRegistrationRequest(loggedInUser, role, res)
+        RegistrationService.registerUser(userObject, res);
+
+        /*var authorizationFlag = authorizeUserRegistrationRequest(loggedInUser, role, res)
         if (authorizationFlag) {
             RegistrationService.registerUser(userObject, res)
-        }
+        }*/
     }
 
     //public methods are  return

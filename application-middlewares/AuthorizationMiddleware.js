@@ -14,6 +14,7 @@ module.exports.AuthorizationMiddleware = (function() {
         var authorized = false
         if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
             authorized = true
+            console.log("ggggggggggggggggggggggggggg")
             req.loggedInUser = {
                 CONTACT_ID: results.authorizationTokenObject.contact_id,
                 ROLE: results.authorizationTokenObject.role,
@@ -61,9 +62,11 @@ module.exports.AuthorizationMiddleware = (function() {
                 console.log("else");
                 async.auto({
                     authorizationTokenObject: function(next, results) {
+                        console.log("ddddddddddddddddddd")
                         return findRoleByAuthToken(next, results, req, res, authToken);
                     },
                     isRoleInAccessLevel: ['authorizationTokenObject', function(next, results) {
+                        console.log("eeeeeeeeeeeeeeeeee",results.authorizationTokenObject)
                         verifyIsRoleInAccessLevel(next, results, res, req, accessLevel);
                     }]
                 }, function(err, results) {

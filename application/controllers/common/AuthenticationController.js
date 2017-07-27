@@ -22,7 +22,7 @@ module.exports.AuthenticationController = (function() {
 
     var resendOtp = function(req, res){
       AuthenticationService.resendOtp(req.body.mobile, res);
-    }
+    };
 
     //public methods are  return
     return {

@@ -394,5 +394,5 @@ module.exports.UserService = (function() {
         dataForHomePage: dataForHomePage,
         createUser: createUser,
         registerUser: registerUser
-    }
+    };
 })();

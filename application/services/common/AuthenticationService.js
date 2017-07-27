@@ -1,4 +1,7 @@
-var UserService = require('./../user/UserService');
+var UserService = require('../user/UserService').UserService;
+var SmsService = require('../sms/SmsService.js').SmsService;
+var HubspotService = require('../calculator/HubspotService.js').HubspotService;
+var uuid = require('uuid/v1');
 
 module.exports.AuthenticationService = (function() {
 
@@ -6,12 +9,14 @@ module.exports.AuthenticationService = (function() {
      * @payload  User's mobile
      * return authenticationToken
      */
-    var generateAuthenticationToken = function(mobile) {
+    var generateAuthenticationToken = function(mobile, role) {
         return new Promise(function(resolve, reject) {
             var authenticationObj = new domain.AuthenticationToken({
+                auth_token: uuid(),
                 mobile: mobile,
-                authToken: uuid.v1()
+                role: role
             });
+
             authenticationObj.save(function(err, authObj) {
                 if (err) {
                     reject(err);
@@ -26,10 +31,12 @@ module.exports.AuthenticationService = (function() {
      * generate the authentiction token 
      */
     var authenticate = function(mobile, res) {
-        userService.searchUserByMobile(mobile)
+        UserService.searchUserByMobile(mobile)
             .then(user => {
                 if (user) {
-                    generateOtp({ mobile: mobile })
+                    generateOtp({
+                            mobile: mobile
+                        })
                         .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, "OTP generated successfully", false, 200));
                 } else {
                     configurationHolder.ResponseUtil.responseHandler(res, null, "Mobile is not registered", true, 401);
@@ -42,7 +49,7 @@ module.exports.AuthenticationService = (function() {
      */
     var generateOtp = function(userObj) {
         return new Promise(function(resolve, reject) {
-            var sms = require('../sms/SmsServie.js');
+
             //generate random 4 digit OTP number
             userObj.otp = Math.floor(1000 + Math.random() * 9000);
 
@@ -52,11 +59,15 @@ module.exports.AuthenticationService = (function() {
                     reject(err);
                 } else {
                     //TODO: check callback parameter
-                    sms.send(mobileNumber, otp, function(err, smsRes) {
+                    console.log("doc", doc);
+                    SmsService.send(doc.mobile, doc.otp, function(err, smsRes) {
+                        console.log("smsRes", smsRes);
                         if (err) {
                             reject(err);
                         } else {
-                            resolve({ id: doc._id });
+                            resolve({
+                                id: doc._id
+                            });
                         }
                     });
                 }
@@ -68,21 +79,63 @@ module.exports.AuthenticationService = (function() {
     // and generate the authentication token to maintain session
 
     var verifyOtp = function(id, otp, res) {
-        domain.Otp.findOne({ _id: id, otp: otp }, function(err, result) {
+        domain.Otp.findOne({
+            _id: id,
+            otp: otp
+        }, function(err, result) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else if (result) {
                 if (result.isNewUser) {
                     delete result.isNewUser;
                     delete result.otp;
-                    UserService.createUser(result)
-                        .then(userObj => {
-                            generateAuthenticationToken(result.mobile)
-                                .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200));
-                        });
+                    HubspotService.searchUser(result.mobile)
+                        .then(hubspotUserObj => {
+                            if (!hubspotUserObj.total) {
+                                var hubspotUserReqObj = {
+                                    firstName: result.firstName,
+                                    lastName: result.lastName,
+                                    mobile: result.mobile,
+                                    role: result.role,
+                                    email: result.email
+                                };
+
+                                HubspotService.createUser(hubspotUserReqObj)
+                                    .then(hubspotResult => {
+                                        console.log("hubspotResult", hubspotResult);
+                                        if (!err && hubspotResult.status != 'error') {
+                                            result.hubspotUserId = hubspotResult.vid;
+                                            /**
+                                             * Save user in DB
+                                             */
+                                            UserService.createUser(result)
+                                                .then(userObj => {
+                                                    generateAuthenticationToken(result.mobile, result.role)
+                                                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
+                                                        .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                                                })
+                                                .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                                        } else {
+                                            configurationHolder.ResponseUtil.responseHandler(res, err || hubspotResult, err.message || hubspotResult.message, true, 400);
+                                        }
+                                    })
+                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));;
+                            } /*else {
+                                result.hubspotUserId = '';
+                                UserService.createUser(result)
+                                    .then(userObj => {
+                                        generateAuthenticationToken(result.mobile, result.role)
+                                            .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
+                                            .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                                    })
+                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                            }*/
+                        })
+                        .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
-                    generateAuthenticationToken(result.mobile)
-                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200));
+                    generateAuthenticationToken(result.mobile, result.role)
+                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
+                        .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 }
             } else {
                 configurationHolder.ResponseUtil.responseHandler(res, null, "invalid otp", true, 401);
@@ -91,7 +144,9 @@ module.exports.AuthenticationService = (function() {
     };
 
     var resendOtp = function(mobile, res) {
-        domain.Otp.findOne({ mobile: mobile }, function(err, result) {
+        domain.Otp.findOne({
+            mobile: mobile
+        }, function(err, result) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else if (result) {
@@ -99,7 +154,9 @@ module.exports.AuthenticationService = (function() {
                     if (err) {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
                     } else {
-                        configurationHolder.ResponseUtil.responseHandler(res, { id: doc._id }, "OTP sent successfully", false, 200);
+                        configurationHolder.ResponseUtil.responseHandler(res, {
+                            id: doc._id
+                        }, "OTP sent successfully", false, 200);
                     }
                 });
             } else {

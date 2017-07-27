@@ -36,7 +36,7 @@ module.exports.CalculatorService = (function() {
     }
 
     function generateImage(next, html, imageFileName, data) {
-        console.log("data123",data)
+        console.log("data123", data)
         webshot(html, 'uploads/' + imageFileName, {
             siteType: 'html',
             shotSize: {
@@ -144,8 +144,8 @@ module.exports.CalculatorService = (function() {
     var webShot = function(type, data, res) {
         async.auto({
             image: function(next, results) {
-                console.log("type",type);
-                console.log("data",data);
+                console.log("type", type);
+                console.log("data", data);
                 generateWebShot(next, type, data);
             }
         }, function(err, results) {
@@ -250,7 +250,11 @@ module.exports.CalculatorService = (function() {
             data: customFieldMap
         }, {}, function(err, html) {
             if (html) {
-                var options = { width: '1169px', height: '827px', base: 'file://' + __dirname + '/../../../' };
+                var options = {
+                    width: '1169px',
+                    height: '827px',
+                    base: 'file://' + __dirname + '/../../../'
+                };
                 console.log("file name:", pdfFileName);
 
                 pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
@@ -259,18 +263,21 @@ module.exports.CalculatorService = (function() {
                     } else {
                         // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                         console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
-                         HubspotService.uploadFile(loggedInUser.CONTACT_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(err, hubspotFile){
-                            if(!err){
-                                updateFileToUser(loggedInUser.CONTACT_ID, hubspotFile.fileId, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
+                        HubspotService.uploadFile(loggedInUser.CONTACT_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(err, hubspotFile) {
+                            if (!err) {
+                                updateFileToUser(loggedInUser.CONTACT_ID, hubspotFile.fileId, _getPdfFilePath(loggedInUser.CONTACT_ID), function() {
                                     console.log('file id saved');
                                     // next(null, null);
-                                    next(null, { 'filePath': 'http://localhost:3000/download/' + pdfFileName, 'fileName': pdfFileName });
+                                    next(null, {
+                                        'filePath': 'http://localhost:3000/download/' + pdfFileName,
+                                        'fileName': pdfFileName
+                                    });
                                     // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
                                 });
                             } else {
                                 next(err, null);
                             }
-                         });
+                        });
                     }
                 });
             } else {
@@ -585,24 +592,24 @@ module.exports.CalculatorService = (function() {
             if (!searchUser || searchUser.length === 0) {
                 /**
                  * Save data on hubspot
-                 */ 
-                HubspotService.save(data, function(err, hubspotResult){
-                    if(!err){
+                 */
+                HubspotService.save(data, function(err, hubspotResult) {
+                    if (!err) {
                         console.log('Hubspot create contact response : ', hubspotResult);
                         data.CONTACT_ID = hubspotResult.vid;
                         /**
-                        * Save data on local user
-                        */ 
-                        UserService.save(data).then(function(userObj){
+                         * Save data on local user
+                         */
+                        UserService.save(data).then(function(userObj) {
                             _loginResponseData(data, res);
-                        }).catch(function(err){
+                        }).catch(function(err) {
                             configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
                         });
 
                     } else {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
                     }
-                    
+
                 });
             } else {
                 _loginResponseData(searchUser[0], res);
@@ -669,13 +676,25 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-    var saveFactfindData = function(data, res) {
-        updateUser(data).then(function(result) {
-            return UserService.update(data);
-        }).then(function(result) {
-            configurationHolder.ResponseUtil.responseHandler(res, result, "User updated", false, 200);
-        }).catch(function(err) {
-            configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Error while updating User', true, 400);
+    var saveFactfindData = function(data, user, res) {
+        data.user = user._id;
+        var factFindObj = new domain.FactFind(data);
+        domain.FactFind.update({
+            user: user._id
+        }, data, {
+            upsert: true
+        }, function(err, obj) {
+            if (err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+            } else {
+                //delete user key before sending to hubspot because user field does not exits in hubspot
+                delete data.user;
+                HubspotService.updateUser(data, user.hubspotUserId).then(function(resultData) {
+                    configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
+                }).catch(function(error) {
+                    configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
+                });
+            }
         })
     };
 
@@ -816,19 +835,19 @@ module.exports.CalculatorService = (function() {
 
                 clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
                 /**
-                    * Update advisor on hubspot
+                 * Update advisor on hubspot
                  */
-                HubspotService.updateAdvisor(clientId, advisorId).then(function(updatedData){
+                HubspotService.updateAdvisor(clientId, advisorId).then(function(updatedData) {
                     /**
-                    * Update advisor on local DB
-                    */
+                     * Update advisor on local DB
+                     */
                     UserService.update(clientObj).then(function(updatedUser) {
                         configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
                     });
-                }).catch(function(err){
+                }).catch(function(err) {
                     configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
                 });
-                
+
             })
         }).catch(function(err) {
             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);

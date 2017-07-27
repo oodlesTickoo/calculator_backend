@@ -1,4 +1,4 @@
-var AuthenticationService =require('./AuthenticationService');
+var AuthenticationService =require('./AuthenticationService').AuthenticationService;
 
 module.exports.RegistrationService = (function() {
 

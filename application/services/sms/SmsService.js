@@ -1,16 +1,25 @@
-var Nexmo = require('nexmo');
+module.exports.SmsService = (function() {
 
-var nexmo = new Nexmo({
-  apiKey: '514d3d3a',
-  apiSecret: '290949b35aafb9f7',
-});
+    var Nexmo = require('nexmo');
 
-var send = function(recipient, otp, callback){
-	var sender = 'NEXMO';
-	var message = 'your otp is '+otp;
-	var options = {};
-	nexmo.message.sendSms(from, to, text);
-	nexmo.message.sendSms(sender, recipient, message, options, callback);
-};
+    var nexmo = new Nexmo({
+        apiKey: '514d3d3a',
+        apiSecret: '290949b35aafb9f7',
+    });
 
-module.exports = send;
+    var send = function(recipient, otp, callback) {
+        var sender = 'NEXMO';
+        var message = 'your otp is ' + otp;
+        var options = {
+            debug:true
+        };
+        //recipient="919818572692";
+        nexmo.message.sendSms(sender, recipient, message, options, callback);
+    };
+
+    //return the method which you want it to be public
+    return {
+        send: send
+    };
+
+})();

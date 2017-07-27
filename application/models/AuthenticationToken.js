@@ -6,9 +6,11 @@ var AuthenticationTokenSchema = new mongooseSchema({
         trim: true,
         validate: [stringNotNull, 'Authentocation token required']
     },
-    user:{
-        type: mongooseSchema.ObjectId,
-        ref: 'user'
+    mobile:{
+        type:String
+    },
+    role:{
+        type:String
     }
 });
 

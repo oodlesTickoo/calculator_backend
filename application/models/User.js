@@ -14,9 +14,8 @@ var UserSchema = new mongooseSchema({
     role:{
         type:String
     },
-    factFindId:{
-        type: mongooseSchema.ObjectId,
-        ref: 'factFind'
+    hubspotUserId:{
+        type:String
     }
 });
 

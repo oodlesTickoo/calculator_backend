@@ -22,7 +22,7 @@ module.exports.CalculatorController = (function() {
     };
 
     var saveFactfindData = function(req, res) {
-        CalculatorService.saveFactfindData(req.body, res);
+        CalculatorService.saveFactfindData(req.body,req.loggedInUser, res);
     };
 
     var saveAttachment = function(req, res) {
