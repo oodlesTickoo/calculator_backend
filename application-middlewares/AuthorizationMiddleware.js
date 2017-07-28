@@ -13,16 +13,16 @@ module.exports.AuthorizationMiddleware = (function() {
         var roleInAccessLevel = Constants.ROUTE_ACCESS[accessLevel];
         var authorized = false
         if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
-            authorized = true
-            console.log("ggggggggggggggggggggggggggg")
-            req.loggedInUser = {
-                CONTACT_ID: results.authorizationTokenObject.contact_id,
-                ROLE: results.authorizationTokenObject.role,
-                FIRST_NAME: results.authorizationTokenObject.first_name,
-                LAST_NAME: results.authorizationTokenObject.last_name,
-                EMAIL: results.authorizationTokenObject.email
-            }
-            next(results, authorized)
+            authorized = true;
+            domain.User.findOne({mobile:results.authorizationTokenObject.mobile},function(err,userObj){
+                if(err){
+                    next(true,err);
+                }else{
+                    req.loggedInUser = userObj.toJSON();
+                    next(null, authorized)
+                }
+                
+            })
         } else{
             configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
         }
@@ -59,14 +59,11 @@ module.exports.AuthorizationMiddleware = (function() {
                 req.loggedInUser = null;
                 next();
             } else {
-                console.log("else");
                 async.auto({
                     authorizationTokenObject: function(next, results) {
-                        console.log("ddddddddddddddddddd")
-                        return findRoleByAuthToken(next, results, req, res, authToken);
+                        findRoleByAuthToken(next, results, req, res, authToken);
                     },
                     isRoleInAccessLevel: ['authorizationTokenObject', function(next, results) {
-                        console.log("eeeeeeeeeeeeeeeeee",results.authorizationTokenObject)
                         verifyIsRoleInAccessLevel(next, results, res, req, accessLevel);
                     }]
                 }, function(err, results) {

@@ -16,6 +16,10 @@ var UserSchema = new mongooseSchema({
     },
     hubspotUserId:{
         type:String
+    },
+    adviser:{
+        type: mongooseSchema.ObjectId,
+        ref: 'User'
     }
 });
 

@@ -33,9 +33,9 @@ module.exports.AuthenticationService = (function() {
     var authenticate = function(mobile, res) {
         UserService.searchUserByMobile(mobile)
             .then(user => {
-                if (user) {
-                    generateOtp({
-                            mobile: mobile
+                if (user) {                    generateOtp({
+                            mobile: mobile,
+                            role:user.role
                         })
                         .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, "OTP generated successfully", false, 200));
                 } else {
@@ -49,7 +49,6 @@ module.exports.AuthenticationService = (function() {
      */
     var generateOtp = function(userObj) {
         return new Promise(function(resolve, reject) {
-
             //generate random 4 digit OTP number
             userObj.otp = Math.floor(1000 + Math.random() * 9000);
 
@@ -58,10 +57,7 @@ module.exports.AuthenticationService = (function() {
                 if (err) {
                     reject(err);
                 } else {
-                    //TODO: check callback parameter
-                    console.log("doc", doc);
                     SmsService.send(doc.mobile, doc.otp, function(err, smsRes) {
-                        console.log("smsRes", smsRes);
                         if (err) {
                             reject(err);
                         } else {
@@ -91,16 +87,15 @@ module.exports.AuthenticationService = (function() {
                     delete result.otp;
                     HubspotService.searchUser(result.mobile)
                         .then(hubspotUserObj => {
-                            if (!hubspotUserObj.total) {
-                                var hubspotUserReqObj = {
+                            var createUserReqObj = {
                                     firstName: result.firstName,
                                     lastName: result.lastName,
                                     mobile: result.mobile,
                                     role: result.role,
                                     email: result.email
                                 };
-
-                                HubspotService.createUser(hubspotUserReqObj)
+                            if (!hubspotUserObj.total) {
+                                HubspotService.createUser(createUserReqObj)
                                     .then(hubspotResult => {
                                         console.log("hubspotResult", hubspotResult);
                                         if (!err && hubspotResult.status != 'error') {
@@ -120,16 +115,16 @@ module.exports.AuthenticationService = (function() {
                                         }
                                     })
                                     .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));;
-                            } /*else {
-                                result.hubspotUserId = '';
-                                UserService.createUser(result)
+                            } else {
+                                createUserReqObj.hubspotUserId = hubspotUserObj.contacts[0].vid;
+                                UserService.createUser(createUserReqObj)
                                     .then(userObj => {
-                                        generateAuthenticationToken(result.mobile, result.role)
+                                        generateAuthenticationToken(createUserReqObj.mobile, createUserReqObj.role)
                                             .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                                             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                                     })
                                     .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
-                            }*/
+                            }
                         })
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {

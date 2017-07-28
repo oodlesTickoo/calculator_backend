@@ -58,11 +58,9 @@ module.exports.UserService = (function() {
         })
     }
 
-    function update(userObj) {
+    function updateUser(query, objToBeUpdated) {
         return new Promise(function(resolve, reject) {
-            domain.User.update({
-                'CONTACT_ID': userObj.CONTACT_ID
-            }, userObj, function(err, result) {
+            domain.User.update(query, {$set:objToBeUpdated}, function(err, result) {
                 if (!err && result.nModified > 0) {
                     resolve(userObj);
                 } else {
@@ -216,7 +214,7 @@ module.exports.UserService = (function() {
         });
     }
 
-    function customFieldUpdate(contactId, customField, res) {
+   /* function customFieldUpdate(contactId, customField, res) {
         domain.User.findOne({
             'CONTACT_ID': contactId
         }, function(err, result) {
@@ -237,7 +235,7 @@ module.exports.UserService = (function() {
                 configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
             }
         });
-    }
+    }*/
 
     function _setCustomFieldValue(customField, userObject) {
 
@@ -361,7 +359,7 @@ module.exports.UserService = (function() {
 
     function searchUserByMobile(mobile) {
         return new Promise(function(resolve, reject) {
-            domain.User.find({
+            domain.User.findOne({
                 'mobile': mobile
             }, function(err, result) {
                 if (!err) {
@@ -381,18 +379,52 @@ module.exports.UserService = (function() {
             });
     }
 
+    function getClientList(loggedInUser, userId, res) {
+        var query = {}
+        if ((loggedInUser.role == 'ADVISOR' || loggedInUser.role == 'ADMINISTRATOR') && userId) {
+            query = {
+                advisor: loggedInUser._id,
+                role: 'CLIENT'
+            }
+        } else {
+            query = {
+                role: 'CLIENT'
+            }
+        }
+        domain.User.find(query, function(err, result) {
+            if (err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, result, "Client list successfully retrieved", false, 200)
+            }
+        });
+    }
+
+    function getAdvisorList(loggedInUser, res) {
+        domain.User.find({
+            role: 'ADVISOR'
+        }, function(err, result) {
+            if (err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, result, "Advisor list successfully retrieved", false, 200)
+            }
+        });
+    }
+
     return {
         save: save,
-        update: update,
+        updateUser: updateUser,
         searchUser: searchUser,
         searchUserByMobile: searchUserByMobile,
         list: list,
         listAdvisorClient: listAdvisorClient,
         clientsOfAnAdvisor: clientsOfAnAdvisor,
         updateFile: updateFile,
-        customFieldUpdate: customFieldUpdate,
         dataForHomePage: dataForHomePage,
         createUser: createUser,
-        registerUser: registerUser
+        registerUser: registerUser,
+        getClientList: getClientList,
+        getAdvisorList: getAdvisorList
     };
 })();

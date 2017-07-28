@@ -3,6 +3,15 @@ var FactFindSchema = new mongooseSchema({
         type: mongooseSchema.ObjectId,
         ref: 'User'
     },
+    advisorId:{
+        type:String
+    },
+    pdfFile:{
+        type:String
+    },
+    docFile:{
+        type:String
+    },
     healthOption: {
         type: String
     },

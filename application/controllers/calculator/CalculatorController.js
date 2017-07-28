@@ -41,8 +41,8 @@ module.exports.CalculatorController = (function() {
         CalculatorService.getMasterAdvisorList(res);
     };
 
-    var getFile = function(req, res) {
-        FileService.get(res, Number(req.query.contact_id), req.query.file_format);
+    var getUserFile = function(req, res) {
+        FileService.getUserFile(req.loggedInUser, req.params.userId, req.params.fileType, res);
     };
 
     var checkFile = function(req, res) {
@@ -50,10 +50,10 @@ module.exports.CalculatorController = (function() {
     };
 
     var upload = function(req, res) {
-        FileService.upload(req.files.file, req.query.contact_id, res);
+        FileService.upload(req.files.file, req.params.userId, res);
     };
     var linkAdvisorToClient = function(req, res) {
-        CalculatorService.linkAdvisorToClient(Number(req.body.client_id), Number(req.body.advisor_id), res);
+        CalculatorService.linkAdvisorToClient(req.body.clientId, req.body.advisorId, res);
     };
 
     var customFieldUpdate = function(req, res) {
@@ -75,7 +75,7 @@ module.exports.CalculatorController = (function() {
         getAssignedClientList:getAssignedClientList,
         getMasterClientList:getMasterClientList,
         getMasterAdvisorList:getMasterAdvisorList,
-        getFile: getFile,
+        getUserFile: getUserFile,
         checkFile:checkFile,
         upload: upload,
         linkAdvisorToClient: linkAdvisorToClient,

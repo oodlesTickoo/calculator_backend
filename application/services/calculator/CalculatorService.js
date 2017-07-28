@@ -4,6 +4,7 @@ var HubspotService = require('./HubspotService').HubspotService;
 const Constants = require('./../../../application-utilities/Constants');
 const FieldName = require('./../../../application-utilities/FieldName');
 const path = require('path');
+const _ = require('lodash');
 var ClientAdvisorService = require('./../user/ClientAdvisorService').ClientAdvisorService;
 
 module.exports.CalculatorService = (function() {
@@ -164,179 +165,130 @@ module.exports.CalculatorService = (function() {
     };
 
     var requestPdf = function(data, loggedInUser, res) {
-        // console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT',data);
+        return new Promise(function(resolve, reject) {
+            async.auto({
+                webshotIa: function(next, results) {
+                    generateWebShot(next, 'ia', data.iaObj);
+                },
 
-        async.auto({
-            webshotIa: function(next, results) {
-                generateWebShot(next, 'ia', data.iaObj);
-            },
+                webshotSFC: function(next, results) {
+                    generateWebShot(next, 'sfc', data.sfcObj);
+                },
 
-            webshotSFC: function(next, results) {
-                console.log('ia data:', data.sfcObj);
+                webshotIT: function(next, results) {
+                    generateWebShot(next, 'it', data.itObj);
+                },
 
+                webshotPSF: function(next, results) {
+                    generateWebShot(next, 'psf', data.psfObj);
+                },
 
-                generateWebShot(next, 'sfc', data.sfcObj);
-            },
+                webshotRA: function(next, results) {
+                    generateWebShot(next, 'ra', data.raObj);
+                },
 
-            webshotIT: function(next, results) {
+                webshotSSO: function(next, results) {
+                    generateWebShot(next, 'sso', data.ssoObj);
+                },
 
+                webshotTTR: function(next, results) {
+                    generateWebShot(next, 'ttr', data.ttrObj);
+                },
 
-                generateWebShot(next, 'it', data.itObj);
-            },
+                webshotAsset: function(next, results) {
+                    generateWebShot(next, 'aa', data.aaObj);
+                },
 
-            webshotPSF: function(next, results) {
-
-
-                generateWebShot(next, 'psf', data.psfObj);
-            },
-
-            webshotRA: function(next, results) {
-
-
-                generateWebShot(next, 'ra', data.raObj);
-            },
-
-            webshotSSO: function(next, results) {
-
-
-                generateWebShot(next, 'sso', data.ssoObj);
-            },
-
-            webshotTTR: function(next, results) {
-                // console.log('ia data:',data.ttrObj);
-
-
-                generateWebShot(next, 'ttr', data.ttrObj);
-            },
-
-            webshotAsset: function(next, results) {
-
-
-                generateWebShot(next, 'aa', data.aaObj);
-            },
-
-            pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function(next, results) {
-                var pdfFileName = loggedInUser.CONTACT_ID + ".pdf";
-                // var pdfFileName = "x.pdf";
-                console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT11111111111111111111');
-
-
-                generatePdf(next, pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
-                    results.webshotAsset, data.customFieldMap, loggedInUser);
-            }]
-        }, function(err, results) {
-            console.log("hhhhhhhhhhhhhhhhhhh", err, results);
-            if (err) {
-                console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                console.log("ffffffffffffffffff");
-                configurationHolder.ResponseUtil.responseHandler(res, results.pdf, "Pdf successfully created", false, 200);
-            }
+                pdf: ['webshotIa', 'webshotSFC', 'webshotIT', 'webshotPSF', 'webshotRA', 'webshotSSO', 'webshotTTR', 'webshotAsset', function(next, results) {
+                    var pdfFileName = loggedInUser.hubspotUserId + ".pdf";
+                    generatePdf(pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
+                            results.webshotAsset, data.customFieldMap, loggedInUser)
+                        .then(pdfResultObj => next(null, pdfResultObj))
+                        .catch(pdfError => next(pdfError, null));
+                }]
+            }, function(err, results) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results.pdf);
+                }
+            });
         });
     };
 
-    function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5, image6, image7, image8, customFieldMap, loggedInUser) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', {
+    function generatePdf(pdfFileName, image1, image2, image3, image4, image5, image6, image7, image8, customFieldMap, loggedInUser) {
+        return new Promise(function(resolve, reject) {
+            ejs.renderFile(configurationHolder.config.publicFolder + '/indexHTP.ejs', {
+                image1: image1,
+                image2: image2,
+                image3: image3,
+                image4: image4,
+                image5: image5,
+                image6: image6,
+                image7: image7,
+                image8: image8,
+                data: customFieldMap
+            }, {}, function(err, html) {
+                if (html) {
+                    var options = {
+                        width: '1169px',
+                        height: '827px',
+                        base: 'file://' + __dirname + '/../../../'
+                    };
 
-            image1: image1,
-            image2: image2,
-            image3: image3,
-            image4: image4,
-            image5: image5,
-            image6: image6,
-            image7: image7,
-            image8: image8,
-            data: customFieldMap
-        }, {}, function(err, html) {
-            if (html) {
-                var options = {
-                    width: '1169px',
-                    height: '827px',
-                    base: 'file://' + __dirname + '/../../../'
-                };
-                console.log("file name:", pdfFileName);
-
-                pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
-                    if (err) {
-                        next(err, null);
-                    } else {
-                        // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
-                        console.log('REQUESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT222222222222222222222');
-                        HubspotService.uploadFile(loggedInUser.CONTACT_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function(err, hubspotFile) {
-                            if (!err) {
-                                updateFileToUser(loggedInUser.CONTACT_ID, hubspotFile.fileId, _getPdfFilePath(loggedInUser.CONTACT_ID), function() {
-                                    console.log('file id saved');
-                                    // next(null, null);
-                                    next(null, {
-                                        'filePath': 'http://localhost:3000/download/' + pdfFileName,
-                                        'fileName': pdfFileName
-                                    });
-                                    // next(null, { 'filePath': configurationHolder.config.downloadUrl + pdfFileName, 'fileName': pdfFileName });
-                                });
-                            } else {
-                                next(err, null);
-                            }
-                        });
-                    }
-                });
-            } else {
-                next(err, null);
-            }
+                    pdf.create(html, options).toFile('uploads/' + pdfFileName, function(err, result) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            HubspotService.uploadFile(loggedInUser.hubspotUserId, _getPdfFilePath(loggedInUser.hubspotUserId))
+                                .then(hubspotFile => updateFileToUser(loggedInUser, hubspotFile.fileId, _getPdfFilePath(loggedInUser.hubspotUserId)))
+                                .then(updatedObj => resolve({
+                                    'filePath': configurationHolder.config.downloadUrl + pdfFileName,
+                                    'fileName': pdfFileName
+                                }))
+                                .catch(err => reject(err))
+                        }
+                    });
+                } else {
+                    reject(err);
+                }
+            });
         });
     }
 
+    function updateFileToUser(user, fileId, filePath) {
+        return new Promise(function(resolve, reject) {
+            var format = filePath.split('.')[filePath.split('.').length - 1];
+            var fileTypeFieldName = format == 'pdf' ? 'pdfFile' : 'docFile';
 
-    /*function generatePdf(next, pdfFileName, image1, image2, image3, image4, image5 ,image6 ,image7, image8, loggedInUser) {
-        ejs.renderFile(configurationHolder.config.publicFolder + '/pdf.ejs', {
-            image1: image1,
-            image2: image2,
-            image3: image3,
-            image4: image4,
-            image5: image5,
-            image6: image6,
-            image7: image7,
-            image8: image8
-        }, {}, function (err, html) {
-            if (html) {
-                var options = {
-                    height: '827px', width: '1169px',
-                    base: 'file://' + __dirname + '/../../../'
-                };
+            domain.FactFind.update({
+                user: user._id
+            }, {
+                $set: {
+                    [fileTypeFieldName]: fileId
+                }
+            }, function(err, updatedObj) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            });
 
-                pdf.create(html, options).toFile('uploads/' + pdfFileName, function (err, result) {
-                    if (err) {
-                        next(err, null);
-                    } else {
-                        saveAttachmentToInsightly(_getPdfFilePath(loggedInUser.CONTACT_ID), loggedInUser.CONTACT_ID).then(function (fileData) {
-                            HubspotService.uploadFile(loggedInUser.EMAIL, _getPdfFilePath(loggedInUser.CONTACT_ID));
-                            updateFileToUser(loggedInUser.CONTACT_ID, fileData.FILE_ID, _getPdfFilePath(loggedInUser.CONTACT_ID), function () {
-                                next(null, null);
-                            });
-                        }).catch(function (err) {
-                            console.log(err)
-                            next(err, null);
-                        });
-                    }
-                });
-            } else {
-                next(err, null);
-            }
+            /* UserService.updateFile(hubspotUserId, fileId, format).then(function(userData) {
+                 delete userData['_id'];
+                 return updateUser(userData);
+             }).then(function(userData) {
+                 //fs.unlinkSync(filePath);
+                 callback();
+             }).catch(function(err) {
+                 console.log("Error ", err)
+                 callback()
+             });*/
         });
-    }*/
+    }
 
     function createUser(data) {
-        /*var body = {
-            "FIRST_NAME": data.firstName,
-            "LAST_NAME": data.lastName,
-            "CONTACTINFOS": [{
-                "TYPE": "PHONE",
-                "DETAIL": data.mobile
-            }, {
-                "TYPE": "EMAIL",
-                "DETAIL": data.email
-            }],
-        };*/
         var options = {
             url: configurationHolder.config.insightly.url,
             headers: {
@@ -600,11 +552,13 @@ module.exports.CalculatorService = (function() {
                         /**
                          * Save data on local user
                          */
-                        UserService.save(data).then(function(userObj) {
-                            _loginResponseData(data, res);
-                        }).catch(function(err) {
-                            configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
-                        });
+                        UserService.save(data)
+                            .then(function(userObj) {
+                                _loginResponseData(data, res);
+                            })
+                            .catch(function(err) {
+                                configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
+                            });
 
                     } else {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message || 'Login failed', true, 400);
@@ -677,11 +631,11 @@ module.exports.CalculatorService = (function() {
     };
 
     var saveFactfindData = function(data, user, res) {
-        data.user = user._id;
-        var factFindObj = new domain.FactFind(data);
+        var factFindData = JSON.parse(JSON.stringify(data));
+        factFindData.user = user._id;
         domain.FactFind.update({
             user: user._id
-        }, data, {
+        }, factFindData, {
             upsert: true
         }, function(err, obj) {
             if (err) {
@@ -689,13 +643,12 @@ module.exports.CalculatorService = (function() {
             } else {
                 //delete user key before sending to hubspot because user field does not exits in hubspot
                 delete data.user;
-                HubspotService.updateUser(data, user.hubspotUserId).then(function(resultData) {
-                    configurationHolder.ResponseUtil.responseHandler(res, result, 'Successfully updated.', false, 200);
-                }).catch(function(error) {
-                    configurationHolder.ResponseUtil.responseHandler(res, err, 'Contact not found.', true, 400);
-                });
+                HubspotService.updateUser(data, user.hubspotUserId)
+                    .then(resultData => requestPdf(data, user))
+                    .then(pdfResultObj => configurationHolder.ResponseUtil.responseHandler(res, pdfResultObj, 'Pdf successfully created', false, 200))
+                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400));
             }
-        })
+        });
     };
 
     var saveAttachment = function(data, res) {
@@ -814,44 +767,35 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function updateFileToUser(contactId, fileId, filePath, callback) {
-        var format = filePath.split('.')[filePath.split('.').length - 1]
-        UserService.updateFile(contactId, fileId, format).then(function(userData) {
-            delete userData['_id'];
-            return updateUser(userData);
-        }).then(function(userData) {
-            //fs.unlinkSync(filePath);
-            callback();
-        }).catch(function(err) {
-            console.log("Error ", err)
-            callback()
-        });
-    }
+
 
     function linkAdvisorToClient(clientId, advisorId, res) {
-        ClientAdvisorService.clientAdvisor(clientId, advisorId).then(function(result) {
+        domain.User.find({
+            _id: {
+                $in: [clientId, advisorId]
+            }
+        }, function(err, users) {
+            if (users.length < 2) {
+                configurationHolder.ResponseUtil.responseHandler(res, {}, 'client or advisor not found', true, 400);
+                return;
+            }
 
-            Hubspot.get(clientId).then(function(clientObj) {
+            var advisor = _.find(users, function(o) {
+                return o.role == 'ADVISOR';
+            });
+            var client = _.find(users, function(o) {
+                return o.role == 'CLIENT';
+            });
 
-                clientObj = ClientAdvisorService.setAdvisorToClientObject(clientObj, advisorId);
-                /**
-                 * Update advisor on hubspot
-                 */
-                HubspotService.updateAdvisor(clientId, advisorId).then(function(updatedData) {
-                    /**
-                     * Update advisor on local DB
-                     */
-                    UserService.update(clientObj).then(function(updatedUser) {
-                        configurationHolder.ResponseUtil.responseHandler(res, results, 'Client successfully updated.', false, 200);
-                    });
-                }).catch(function(err) {
-                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-                });
-
-            })
-        }).catch(function(err) {
-            configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-        })
+            HubspotService.updateUser({
+                    advisorId: advisor.hubspotUserId
+                }, client.hubspotUserId)
+                .then(updatedHubspotUser => UserService.updateUser({_id:clientId}, {
+                    advisor: advisorId
+                }))
+                .then(updatedUser => configurationHolder.ResponseUtil.responseHandler(res, updatedUser, 'Client successfully updated.', false, 200))
+                .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400));
+        });
     }
 
     //public methods are  return

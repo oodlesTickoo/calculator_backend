@@ -1,7 +1,7 @@
 module.exports = {
 	"firstName":"firstname",
     "lastName":"lastname",
-    "mobile":"mobilephone",
+    "mobile":"phone",
     "email":"email",
     "role":"user_type"
 }

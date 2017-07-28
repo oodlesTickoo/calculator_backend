@@ -1,4 +1,7 @@
 module.exports = {
+    "advisorId":"advisor_id",
+    "pdfFile":"pdf_file",
+    "docFile":"doc_file",
     "healthOption": "your_health",
     "spouseOption": "have_spouse",
     "diseaseOption": "any_family_history_of_disease",
