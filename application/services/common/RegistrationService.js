@@ -1,4 +1,4 @@
-var AuthenticationService =require('./AuthenticationService').AuthenticationService;
+var AuthenticationService = require('./AuthenticationService').AuthenticationService;
 
 module.exports.RegistrationService = (function() {
 
@@ -10,7 +10,7 @@ module.exports.RegistrationService = (function() {
             });
     }
 
-    //return the method which you want it to be public
+    //return the method which you want to be public
     return {
         registerUser: registerUser
     };

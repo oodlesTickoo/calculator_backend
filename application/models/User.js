@@ -1,23 +1,23 @@
 var UserSchema = new mongooseSchema({
-    firstName:{
-        type:String
+    firstName: {
+        type: String
     },
-    lastName:{
-        type:String
+    lastName: {
+        type: String
     },
-    mobile:{
-        type:String
+    mobile: {
+        type: String, unique: true
     },
-    email:{
-        type:String
+    email: {
+        type: String
     },
-    role:{
-        type:String
+    role: {
+        type: String
     },
-    hubspotUserId:{
-        type:String
+    hubspotUserId: {
+        type: String
     },
-    adviser:{
+    advisor: {
         type: mongooseSchema.ObjectId,
         ref: 'User'
     }

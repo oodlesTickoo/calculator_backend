@@ -7,8 +7,8 @@
 var initApp = function() {
     createAdmin()
         .then(result => bootApplication())
-        .catch(err => console.log(err))
-}
+        .catch(err => console.log(err));
+};
 
 function createAdmin() {
     return new Promise(function(resolve, reject) {
@@ -16,7 +16,7 @@ function createAdmin() {
             role: 'ADMINISTRATOR'
         }, function(err, doc) {
             if (err) {
-                console.log("Error in finding ADMINISTRATOR", err)
+                console.log("Error in finding ADMINISTRATOR", err);
                 reject(err);
             } else if (!doc) {
                 var adminObj = new domain.User({

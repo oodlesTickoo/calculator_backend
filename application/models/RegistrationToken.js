@@ -29,10 +29,10 @@ var RegistrationTokenSchema = new mongooseSchema({
 
 
 function stringNotNull(obj) {
-    return obj.length
+    return obj.length;
 }
 
 
 
 var RegistrationToken = mongoose.model('RegistrationToken', RegistrationTokenSchema);
-module.exports = RegistrationToken
+module.exports = RegistrationToken;

@@ -1,16 +1,16 @@
 var FactFindSchema = new mongooseSchema({
-	user:{
+    user: {
         type: mongooseSchema.ObjectId,
         ref: 'User'
     },
-    advisorId:{
-        type:String
+    advisorId: {
+        type: String
     },
-    pdfFile:{
-        type:String
+    pdfFile: {
+        type: String
     },
-    docFile:{
-        type:String
+    docFile: {
+        type: String
     },
     healthOption: {
         type: String

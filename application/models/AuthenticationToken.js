@@ -6,17 +6,17 @@ var AuthenticationTokenSchema = new mongooseSchema({
         trim: true,
         validate: [stringNotNull, 'Authentocation token required']
     },
-    mobile:{
-        type:String
+    mobile: {
+        type: String
     },
-    role:{
-        type:String
+    role: {
+        type: String
     }
 });
 
 function stringNotNull(obj) {
-    return obj.length
+    return obj.length;
 }
 
 var AuthenticationToken = mongoose.model('AuthenticationToken', AuthenticationTokenSchema);
-module.exports = AuthenticationToken
+module.exports = AuthenticationToken;

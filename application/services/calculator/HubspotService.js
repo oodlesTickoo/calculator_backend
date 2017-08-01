@@ -1,4 +1,3 @@
-const FieldName = require('../../../application-utilities/FieldName'),
     hubspotUserFields = require('../../../application-utilities/HubspotUserFields'),
     Constants = require('../../../application-utilities/Constants'),
     hubspotFactFindFields = require('../../../application-utilities/HubspotFactFindFields');
@@ -14,9 +13,8 @@ module.exports.HubspotService = (function() {
 
 
     function _convertToHubspotPostData(fields, obj) {
-        var convertedObj = {}
+        var convertedObj = {};
         convertedObj.properties = [];
-
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 if (fields[key]) {
@@ -27,12 +25,7 @@ module.exports.HubspotService = (function() {
                 }
             }
         }
-        console.log(JSON.stringify(convertedObj))
         return convertedObj;
-    }
-
-    function _objectType(object) {
-        return Object.prototype.toString.call(object).split(/\W/)[2];
     }
 
     function createUser(userObj) {
@@ -79,7 +72,6 @@ module.exports.HubspotService = (function() {
         });
     }
 
-
     function _callToHubspot(method, urlPath, data) {
         var options = {
             url: configurationHolder.config.hubspot.url + urlPath,
@@ -92,7 +84,6 @@ module.exports.HubspotService = (function() {
                 if (error) {
                     reject(error);
                 } else {
-
                     if (response.statusCode == 204) {
                         resolve(true);
                     } else {
@@ -119,7 +110,7 @@ module.exports.HubspotService = (function() {
         return new Promise(function(resolve, reject) {
             request(options, function(error, response, body) {
                 if (error) {
-                    console.log('Error :: ', error)
+                    console.log('Error :: ', error);
                     reject(error);
                 } else {
                     body = JSON.parse(body);
@@ -128,19 +119,12 @@ module.exports.HubspotService = (function() {
                     } else {
                         reject({
                             message: 'File not uploaded'
-                        })
+                        });
                     }
                 }
-            })
-        })
-
+            });
+        });
     }
-
-/*    function get(hubspotUserId) {
-        var path = Constants.HUBSPOT_URL.CONTACT + 'vid/' + hubspotUserId + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-        return _callToHubspot(GET, path);
-    }*/
-
 
     function uploadFile(hubspotUserId, filePath) {
         return new Promise(function(resolve, reject) {
@@ -160,7 +144,7 @@ module.exports.HubspotService = (function() {
                     fs.unlinkSync(filePath);
                     resolve({
                         'fileId': fileId
-                    })
+                    });
                 })
                 .catch(function(error) {
                     reject(error);
@@ -171,9 +155,9 @@ module.exports.HubspotService = (function() {
     return {
         createUser: createUser,
         searchUser: searchUser,
-        uploadFile: uploadFile,
+        updateUser: updateUser,
         updateAdvisor: updateAdvisor,
-        updateUser: updateUser
+        uploadFile: uploadFile
     };
 
 })();

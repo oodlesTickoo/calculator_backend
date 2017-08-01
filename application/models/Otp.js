@@ -1,33 +1,33 @@
 var otpSchema = new mongooseSchema({
-    firstName:{
-        type:String,
+    firstName: {
+        type: String,
         trim: true
     },
-    lastName:{
-        type:String,
+    lastName: {
+        type: String,
         trim: true
     },
-    mobile:{
-        type:String,
+    mobile: {
+        type: String,
         trim: true
     },
-    email:{
-        type:String,
+    email: {
+        type: String,
         trim: true
     },
     otp: {
         type: Number,
-        required: true 
+        required: true
     },
-    role:{
+    role: {
         type: String,
         trim: true
     },
-    isNewUser:{
-        type:Boolean,
-        default:false
+    isNewUser: {
+        type: Boolean,
+        default: false
     }
 });
 
 var Otp = mongoose.model('otp', otpSchema);
-module.exports = Otp
+module.exports = Otp;

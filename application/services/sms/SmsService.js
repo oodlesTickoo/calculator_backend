@@ -11,7 +11,7 @@ module.exports.SmsService = (function() {
         var sender = 'NEXMO';
         var message = 'your otp is ' + otp;
         var options = {
-            debug:true
+            debug: true
         };
         //recipient="919818572692";
         nexmo.message.sendSms(sender, recipient, message, options, callback);

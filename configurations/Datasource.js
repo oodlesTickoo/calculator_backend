@@ -20,9 +20,13 @@ var getDbConnection = function() {
             break;
     }
 
-    db = mongoose.connect('mongodb://' + dbUser + ':' + dbPassword + '@' + dbHost + ':' + dbPort + '/' + dbName);
-    checkMongooseConnection(db)
-}
+    var promise = mongoose.connect('mongodb://' + dbUser + ':' + dbPassword + '@' + dbHost + ':' + dbPort + '/' + dbName, {
+        useMongoClient: true
+    });
+    promise.then(function(db) {
+        checkMongooseConnection(db);
+    });
+};
 
 //function to check connection to database server
 function checkMongooseConnection(db) {

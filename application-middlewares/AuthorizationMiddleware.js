@@ -3,7 +3,7 @@
  *
  */
 var async = require('async');
-const Constants = require('./../application-utilities/Constants'); 
+const Constants = require('./../application-utilities/Constants');
 
 module.exports.AuthorizationMiddleware = (function() {
     /*
@@ -11,19 +11,19 @@ module.exports.AuthorizationMiddleware = (function() {
      */
     var verifyIsRoleInAccessLevel = function(next, results, res, req, accessLevel) {
         var roleInAccessLevel = Constants.ROUTE_ACCESS[accessLevel];
-        var authorized = false
+        var authorized = false;
         if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
             authorized = true;
-            domain.User.findOne({mobile:results.authorizationTokenObject.mobile},function(err,userObj){
-                if(err){
-                    next(true,err);
-                }else{
+            domain.User.findOne({ mobile: results.authorizationTokenObject.mobile }, function(err, userObj) {
+                if (err) {
+                    next(true, err);
+                } else {
                     req.loggedInUser = userObj.toJSON();
-                    next(null, authorized)
+                    next(null, authorized);
                 }
-                
-            })
-        } else{
+
+            });
+        } else {
             configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
         }
     };
@@ -35,7 +35,7 @@ module.exports.AuthorizationMiddleware = (function() {
         domain.AuthenticationToken.findOne({
             auth_token: authToken
         }, function(err, authObj) {
-            if (err || authObj == null) {
+            if (err || authObj === null) {
                 configurationHolder.ResponseUtil.responseHandler(res, null, configurationHolder.errorMessage.failedAuthorization, true, 401);
             } else {
                 next(null, authObj);
@@ -52,8 +52,8 @@ module.exports.AuthorizationMiddleware = (function() {
         return function(req, res, next) {
             const authToken = req.get(Constants.AUTH_HEADER);
 
-            console.log("authToken",authToken);
-            console.log("accessLevel",accessLevel);
+            console.log("authToken", authToken);
+            console.log("accessLevel", accessLevel);
             if (accessLevel === Constants.ROUTE_ACCESS_ROLE.ANONYMOUS) {
                 CustomLogger.info("executed in accesslevel ");
                 req.loggedInUser = null;

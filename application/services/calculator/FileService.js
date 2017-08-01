@@ -1,4 +1,3 @@
-const FieldName = require('./../../../application-utilities/FieldName');
 const CalculatorService = require('./CalculatorService').CalculatorService;
 const HubspotService = require('./HubspotService').HubspotService;
 
@@ -8,7 +7,6 @@ module.exports.FileService = (function() {
     var fs = require('fs');
     var path = require('path');
 
-    //function get(res, contactId, format) {
     function getUserFile(loggedInUser, userId, fileType, res) {
         domain.User.findOne({
             _id: userId
@@ -25,7 +23,7 @@ module.exports.FileService = (function() {
                         //soa stands for 'Statement of advice PDF'
                         var fileId;
                         if (fileType == 'soa' && factFindObj.pdfFile) {
-                            fileId = factFindObj.pdfFile 
+                            fileId = factFindObj.pdfFile ;
                         } else if (fileType == 'advisor_soa' && factFindObj.docFile) {
                             fileId = factFindObj.docFile; 
                         } else{
@@ -53,39 +51,6 @@ module.exports.FileService = (function() {
                 });
             } else {
                 configurationHolder.ResponseUtil.responseHandler(res, {}, "user not found", true, 400);
-            }
-        });
-    }
-
-    function _getFileId(hubspotUserId, format, callback) {
-        /*var project = {
-            'CUSTOMFIELDS.$': 1
-        };
-
-        var query = {
-            'CONTACT_ID': contactId,
-            'CUSTOMFIELDS.CUSTOM_FIELD_ID': format === 'pdf' ? FieldName.FILE_ID : FieldName.DOC_FILE
-        };
-*/
-        /*if(format === 'pdf'){
-            query = {
-                'CONTACT_ID': contactId,
-                'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.FILE_ID
-            };
-        } else {
-            console.log('DOC FILE')
-            query = {
-                'CONTACT_ID': contactId,
-                'CUSTOMFIELDS.CUSTOM_FIELD_ID': FieldName.DOC_FILE
-            };
-        }
-*/
-        domain.User.findOne(query, project, function(err, doc) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400);
-            } else {
-                fileId = (doc && doc.CUSTOMFIELDS.length > 0) ? doc.CUSTOMFIELDS[0].FIELD_VALUE : '';
-                callback(fileId);
             }
         });
     }
@@ -123,31 +88,15 @@ module.exports.FileService = (function() {
     function _updateFile(fileName, userObj, res) {
         return new Promise(function(resolve, reject) {
             HubspotService.uploadFile(userObj.hubspotUserId, _getPdfFilePath(fileName))
-                .then(fileData => CalculatorService.updateFileToUser(userObj, fileData.fileId, _getPdfFilePath(fileName)))
+                .then(fileData => CalculatorService.updateFileIdToUser(userObj, fileData.fileId, _getPdfFilePath(fileName)))
                 .then(result => resolve(result))
                 .catch(err => reject(err));
         });
     }
 
-    function isfileExists(contactId, format, res) {
-
-        _getFileId(contactId, format, function(result) {
-            configurationHolder.ResponseUtil.responseHandler(res, {
-                'status': !!result
-            }, 'File exists', false, 200);
-            /*if(result === '' || !result){
-                configurationHolder.ResponseUtil.responseHandler(res, {'status': false}, 'File not exists', true, 400);
-
-            }else{
-                configurationHolder.ResponseUtil.responseHandler(res, {'status': true}, 'File exists', false, 200);
-            }*/
-        });
-    }
-
     return {
         getUserFile: getUserFile,
-        upload: upload,
-        isfileExists: isfileExists
+        upload: upload
     };
 
 })();

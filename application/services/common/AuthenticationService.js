@@ -9,7 +9,7 @@ module.exports.AuthenticationService = (function() {
      * @payload  User's mobile
      * return authenticationToken
      */
-    var generateAuthenticationToken = function(mobile, role) {
+    var _generateAuthenticationToken = function(mobile, role) {
         return new Promise(function(resolve, reject) {
             var authenticationObj = new domain.AuthenticationToken({
                 auth_token: uuid(),
@@ -33,9 +33,10 @@ module.exports.AuthenticationService = (function() {
     var authenticate = function(mobile, res) {
         UserService.searchUserByMobile(mobile)
             .then(user => {
-                if (user) {                    generateOtp({
+                if (user) {
+                    generateOtp({
                             mobile: mobile,
-                            role:user.role
+                            role: user.role
                         })
                         .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, "OTP generated successfully", false, 200));
                 } else {
@@ -88,24 +89,24 @@ module.exports.AuthenticationService = (function() {
                     HubspotService.searchUser(result.mobile)
                         .then(hubspotUserObj => {
                             var createUserReqObj = {
-                                    firstName: result.firstName,
-                                    lastName: result.lastName,
-                                    mobile: result.mobile,
-                                    role: result.role,
-                                    email: result.email
-                                };
+                                firstName: result.firstName,
+                                lastName: result.lastName,
+                                mobile: result.mobile,
+                                role: result.role,
+                                email: result.email
+                            };
                             if (!hubspotUserObj.total) {
                                 HubspotService.createUser(createUserReqObj)
                                     .then(hubspotResult => {
                                         console.log("hubspotResult", hubspotResult);
                                         if (!err && hubspotResult.status != 'error') {
-                                            result.hubspotUserId = hubspotResult.vid;
+                                            createUserReqObj.hubspotUserId = hubspotResult.vid;
                                             /**
                                              * Save user in DB
                                              */
-                                            UserService.createUser(result)
+                                            UserService.createUser(createUserReqObj)
                                                 .then(userObj => {
-                                                    generateAuthenticationToken(result.mobile, result.role)
+                                                    _generateAuthenticationToken(result.mobile, result.role)
                                                         .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                                                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                                                 })
@@ -114,12 +115,12 @@ module.exports.AuthenticationService = (function() {
                                             configurationHolder.ResponseUtil.responseHandler(res, err || hubspotResult, err.message || hubspotResult.message, true, 400);
                                         }
                                     })
-                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));;
+                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                             } else {
                                 createUserReqObj.hubspotUserId = hubspotUserObj.contacts[0].vid;
                                 UserService.createUser(createUserReqObj)
                                     .then(userObj => {
-                                        generateAuthenticationToken(createUserReqObj.mobile, createUserReqObj.role)
+                                        _generateAuthenticationToken(createUserReqObj.mobile, createUserReqObj.role)
                                             .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                                             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                                     })
@@ -128,7 +129,7 @@ module.exports.AuthenticationService = (function() {
                         })
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
-                    generateAuthenticationToken(result.mobile, result.role)
+                    _generateAuthenticationToken(result.mobile, result.role)
                         .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 }
@@ -160,7 +161,7 @@ module.exports.AuthenticationService = (function() {
         });
     };
 
-    //return the method which you want it to be public
+    //return the method which you want to be public
     return {
         authenticate: authenticate,
         verifyOtp: verifyOtp,
