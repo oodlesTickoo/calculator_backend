@@ -7,6 +7,7 @@ module.exports.AuthenticationController = (function() {
     // user tries to login.
 
     var loginAction = function(req, res) {
+        console.log("1111111133333333")
         AuthenticationService.authenticate(req.body.mobile, res);
     };
 

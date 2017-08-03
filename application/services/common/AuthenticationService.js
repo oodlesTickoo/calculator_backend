@@ -49,13 +49,16 @@ module.exports.AuthenticationService = (function() {
     var authenticate = function(mobile, res) {
         UserService.searchUserByMobile(mobile)
             .then(user => {
+                console.log("2222222222");
                 if (user) {
+                    console.log("2222222222444444444");
                     generateOtp({
                             mobile: mobile,
                             role: user.role
                         })
                         .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, "OTP generated successfully", false, 200));
                 } else {
+                    console.log("11111111")
                     configurationHolder.ResponseUtil.responseHandler(res, null, "Mobile is not registered", true, 401);
                 }
             })
