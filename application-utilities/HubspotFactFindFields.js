@@ -1,5 +1,6 @@
 module.exports = {
-    "advisorId":"advisor_name",
+    "advisorName":"advisor_name",
+    "advisorId":"advisor_id",
     "pdfFile":"pdf_file",
     "docFile":"doc_file",
     "healthOption": "your_health",

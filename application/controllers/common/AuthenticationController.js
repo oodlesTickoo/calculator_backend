@@ -1,5 +1,5 @@
 var AuthenticationService = require("../../services/common/AuthenticationService").AuthenticationService;
-
+const Constants = require('./../../../application-utilities/Constants');
 
 module.exports.AuthenticationController = (function() {
 
@@ -14,7 +14,7 @@ module.exports.AuthenticationController = (function() {
     // user tries to logout.
 
     var logoutAction = function(req, res) {
-        console.log("logout action");
+        AuthenticationService.logout(req.loggedInUser, req.get(Constants.AUTH_HEADER), res);
     };
 
     // This function calls verifyOtp function to verify

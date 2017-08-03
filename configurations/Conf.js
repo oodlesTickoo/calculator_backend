@@ -26,7 +26,7 @@ var configVariables = function() {
                     url: 'https://api.hubapi.com',
                     hapikey: 'a359482e-a30d-42c1-bcf2-fcc727eb50fe',
                     folder: 'dev_files',
-                    file_url: 'https://cdn2.hubspot.net/hubfs'
+                    file_url: 'https://cdn2.hubspot.net/hub'
                 }
 
             };

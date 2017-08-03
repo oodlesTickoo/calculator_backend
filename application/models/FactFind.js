@@ -3,9 +3,6 @@ var FactFindSchema = new mongooseSchema({
         type: mongooseSchema.ObjectId,
         ref: 'User'
     },
-    advisorId: {
-        type: String
-    },
     pdfFile: {
         type: String
     },
@@ -13,7 +10,8 @@ var FactFindSchema = new mongooseSchema({
         type: String
     },
     healthOption: {
-        type: String
+        type: String,
+        default: 'Goood'
     },
     spouseOption: {
         type: String

@@ -8,7 +8,7 @@ module.exports.UserController = (function() {
 	}
 
 	function getAdvisorList(req, res){
-		UserService.getAdvisorList(req.loggedInUser, res);
+		UserService.getAdvisorList(res);
 	}
 	return {
 		getClientList:getClientList,

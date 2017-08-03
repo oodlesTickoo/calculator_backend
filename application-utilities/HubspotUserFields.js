@@ -3,5 +3,6 @@ module.exports = {
     "lastName":"lastname",
     "mobile":"phone",
     "email":"email",
-    "role":"user_type"
-}
+    "role":"user_type",
+    "lifecyclestage":"lifecyclestage"
+};

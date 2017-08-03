@@ -1,6 +1,8 @@
 var UserService = require('../user/UserService').UserService;
 var SmsService = require('../sms/SmsService.js').SmsService;
 var HubspotService = require('../calculator/HubspotService.js').HubspotService;
+var CalculatorService = require('../calculator/CalculatorService.js').CalculatorService;
+
 var uuid = require('uuid/v1');
 
 module.exports.AuthenticationService = (function() {
@@ -25,6 +27,20 @@ module.exports.AuthenticationService = (function() {
                 }
             });
         });
+    };
+
+
+    var logout = function(loggedInUser, authenticationToken, res) {
+        domain.AuthenticationToken.remove({
+            auth_token: authenticationToken,
+            mobile: loggedInUser.mobile
+        }, function(err, result) {
+            if (err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+            } else {
+                configurationHolder.ResponseUtil.responseHandler(res, null, "logout successfully", false, 200);
+            }
+        })
     };
 
     /* verify OTP
@@ -72,6 +88,21 @@ module.exports.AuthenticationService = (function() {
         });
     };
 
+    var _deleteOtp = function(id) {
+        return new Promise(function(resolve, reject) {
+            
+            domain.Otp.remove({
+                _id: id
+            }, function(err, doc) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
     // this function will verify OTP, it will create a new user 
     // and generate the authentication token to maintain session
 
@@ -84,52 +115,44 @@ module.exports.AuthenticationService = (function() {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else if (result) {
                 if (result.isNewUser) {
-                    delete result.isNewUser;
-                    delete result.otp;
+                    var createUserReqObj = {
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        mobile: result.mobile,
+                        role: result.role,
+                        email: result.email
+                    };
+
                     HubspotService.searchUser(result.mobile)
                         .then(hubspotUserObj => {
-                            var createUserReqObj = {
-                                firstName: result.firstName,
-                                lastName: result.lastName,
-                                mobile: result.mobile,
-                                role: result.role,
-                                email: result.email
-                            };
                             if (!hubspotUserObj.total) {
-                                HubspotService.createUser(createUserReqObj)
-                                    .then(hubspotResult => {
-                                        console.log("hubspotResult", hubspotResult);
-                                        if (!err && hubspotResult.status != 'error') {
-                                            createUserReqObj.hubspotUserId = hubspotResult.vid;
-                                            /**
-                                             * Save user in DB
-                                             */
-                                            UserService.createUser(createUserReqObj)
-                                                .then(userObj => {
-                                                    _generateAuthenticationToken(result.mobile, result.role)
-                                                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
-                                                        .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
-                                                })
-                                                .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
-                                        } else {
-                                            configurationHolder.ResponseUtil.responseHandler(res, err || hubspotResult, err.message || hubspotResult.message, true, 400);
-                                        }
-                                    })
-                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                                if(createUserReqObj.role ==="CLIENT"){
+                                    createUserReqObj.lifecyclestage= "customer";
+                                }                                
+                                return HubspotService.createUser(createUserReqObj);
                             } else {
-                                createUserReqObj.hubspotUserId = hubspotUserObj.contacts[0].vid;
-                                UserService.createUser(createUserReqObj)
-                                    .then(userObj => {
-                                        _generateAuthenticationToken(createUserReqObj.mobile, createUserReqObj.role)
-                                            .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
-                                            .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
-                                    })
-                                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                                return Promise.resolve({
+                                    vid: hubspotUserObj.contacts[0].vid
+                                });
                             }
                         })
+                        .then(hubspotResult => {
+                            if (hubspotResult.status != 'error') {
+                                delete createUserReqObj.lifecyclestage;
+                                createUserReqObj.hubspotUserId = hubspotResult.vid;
+                                return UserService.createUser(createUserReqObj);
+                            } else {
+                                throw new error(hubspotResult);
+                            }
+                        })
+                        .then(userObj => CalculatorService._saveFactfindData(null,userObj))
+                        .then(factFindObj => _deleteOtp(id))
+                        .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
+                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
-                    _generateAuthenticationToken(result.mobile, result.role)
+                    _deleteOtp(id)
+                        .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
                         .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 }
@@ -166,7 +189,8 @@ module.exports.AuthenticationService = (function() {
         authenticate: authenticate,
         verifyOtp: verifyOtp,
         generateOtp: generateOtp,
-        resendOtp: resendOtp
+        resendOtp: resendOtp,
+        logout: logout
     };
 
 })();

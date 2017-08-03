@@ -1,4 +1,4 @@
-    hubspotUserFields = require('../../../application-utilities/HubspotUserFields'),
+var hubspotUserFields = require('../../../application-utilities/HubspotUserFields'),
     Constants = require('../../../application-utilities/Constants'),
     hubspotFactFindFields = require('../../../application-utilities/HubspotFactFindFields');
 
@@ -50,7 +50,7 @@ module.exports.HubspotService = (function() {
     function updateUser(data, hubspotUserId) {
         return new Promise(function(resolve, reject) {
             var contactUrl = Constants.HUBSPOT_URL.CONTACT + 'vid/' + hubspotUserId + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-            _callToHubspot(POST, contactUrl, _convertToHubspotPostData(hubspotFactFindFields, data))
+            _callToHubspot(POST, contactUrl, _convertToHubspotPostData(hubspotFactFindFields, data.factFindData))
                 .then(updatedObj => resolve(updatedObj))
                 .catch(err => reject(err));
         });
@@ -128,8 +128,10 @@ module.exports.HubspotService = (function() {
 
     function uploadFile(hubspotUserId, filePath) {
         return new Promise(function(resolve, reject) {
+            var hubspotFileId;
             _uploadFile(filePath)
                 .then(fileId => {
+                    hubspotFileId = fileId;
                     var properties = {
                         'properties': []
                     };
@@ -143,7 +145,6 @@ module.exports.HubspotService = (function() {
                 .then(updatedObj => {
                     fs.unlinkSync(filePath);
                     resolve({
-                        'fileId': fileId
                     });
                 })
                 .catch(function(error) {
@@ -152,12 +153,27 @@ module.exports.HubspotService = (function() {
         });
     }
 
+    function getFile(fileId) {
+        return new Promise(function(resolve, reject) {
+            var contactUrl = Constants.HUBSPOT_URL.FILE + '/' + fileId + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
+            return _callToHubspot(GET, contactUrl, null)
+                .then(result => {
+                    resolve(result.url);
+                })
+                .catch(function(error) {
+                    reject(error);
+                });
+        });
+    }
+
+
     return {
         createUser: createUser,
         searchUser: searchUser,
         updateUser: updateUser,
         updateAdvisor: updateAdvisor,
-        uploadFile: uploadFile
+        uploadFile: uploadFile,
+        getFile:getFile
     };
 
 })();

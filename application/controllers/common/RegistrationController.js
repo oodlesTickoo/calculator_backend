@@ -15,7 +15,7 @@ module.exports.RegistrationController = (function() {
      * Condition like only superadmin can create User with Role Admin
      * SuperAdmin can update user details and user himself
      */
-    var authorizeUserRegistrationRequest = function(loggedInUser, role, res) {
+/*    var authorizeUserRegistrationRequest = function(loggedInUser, role, res) {
         var userRole = null;
 
         if (loggedInUser) {
@@ -38,7 +38,7 @@ module.exports.RegistrationController = (function() {
                 }
                 break;
         }
-    };
+    };*/
 
     var checkAuthorizationForCreatingUserWithRole = function(allowed_roles, role, res) {
         if (allowed_roles.indexOf(role) == -1) {
@@ -58,13 +58,6 @@ module.exports.RegistrationController = (function() {
         userObject.isNewUser = true;
 
         RegistrationService.registerUser(userObject, res);
-
-        //ask ravi sir
-
-        /*var authorizationFlag = authorizeUserRegistrationRequest(loggedInUser, role, res)
-        if (authorizationFlag) {
-            RegistrationService.registerUser(userObject, res)
-        }*/
     };
 
     //public methods are  return

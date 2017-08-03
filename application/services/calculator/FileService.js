@@ -7,7 +7,7 @@ module.exports.FileService = (function() {
     var fs = require('fs');
     var path = require('path');
 
-    function getUserFile(loggedInUser, userId, fileType, res) {
+    function getUserFile(userId, fileType, res) {
         domain.User.findOne({
             _id: userId
         }, function(err, userObj) {
@@ -22,19 +22,21 @@ module.exports.FileService = (function() {
                     } else {
                         //soa stands for 'Statement of advice PDF'
                         var fileId;
-                        if (fileType == 'soa' && factFindObj.pdfFile) {
-                            fileId = factFindObj.pdfFile ;
-                        } else if (fileType == 'advisor_soa' && factFindObj.docFile) {
-                            fileId = factFindObj.docFile; 
-                        } else{
+                        if (fileType == 'pdf' && factFindObj.pdfFile) {
+                            fileId = factFindObj.pdfFile;
+                        } else if (fileType == 'doc' && factFindObj.docFile) {
+                            fileId = factFindObj.docFile;
+                        } else {
                             configurationHolder.ResponseUtil.responseHandler(res, {}, "File not found", true, 400);
                             return;
                         }
-                        var options = {
-                            url: configurationHolder.config.hubspot.file_url + '/' + fileId + '/' + configurationHolder.config.hubspot.folder + '/' + userObj.hubspotUserId + '.' + format.toLowerCase(),
-                            method: "GET"
-                        };
-                        request(options).pipe(res);
+
+                        HubspotService.getFile(fileId)
+                            .then(path => {
+                                configurationHolder.ResponseUtil.responseHandler(res, {filePath:path}, 'Document successfully retrieved.', false, 200)
+                                //request(path).pipe(res);
+                            })
+                            .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                         /*if (format === 'pdf') {
                                
                            } else {
@@ -57,15 +59,17 @@ module.exports.FileService = (function() {
 
     function upload(file, clientId, res) {
         domain.User.findOne({
-            id: clientId
+            "_id": clientId
         }, function(err, userObj) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
+
                 var nameSplitArray = file.name.split('.');
                 var extension = nameSplitArray[nameSplitArray.length - 1];
                 var fileName = userObj.hubspotUserId + '.' + extension;
                 var folder = 'uploads/' + fileName;
+
                 fs.rename(
                     file.path, folder,
                     function(err) {
@@ -88,7 +92,7 @@ module.exports.FileService = (function() {
     function _updateFile(fileName, userObj, res) {
         return new Promise(function(resolve, reject) {
             HubspotService.uploadFile(userObj.hubspotUserId, _getPdfFilePath(fileName))
-                .then(fileData => CalculatorService.updateFileIdToUser(userObj, fileData.fileId, _getPdfFilePath(fileName)))
+                .then(fileData => CalculatorService.updateFileIdToUser(userObj, fileData.hubspotFileId, _getPdfFilePath(fileName)))
                 .then(result => resolve(result))
                 .catch(err => reject(err));
         });
