@@ -82,7 +82,8 @@ module.exports.AuthenticationService = (function() {
                             reject(err);
                         } else {
                             resolve({
-                                id: doc._id
+                                id: doc._id,
+                                mobile: doc.mobile,
                             });
                         }
                     });
