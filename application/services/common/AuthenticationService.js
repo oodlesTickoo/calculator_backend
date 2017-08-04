@@ -180,7 +180,7 @@ module.exports.AuthenticationService = (function() {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
                     } else {
                         configurationHolder.ResponseUtil.responseHandler(res, {
-                            id: doc._id,mobile: result.mobile
+                            id: result._id,mobile: result.mobile
                         }, "OTP sent successfully", false, 200);
                     }
                 });
