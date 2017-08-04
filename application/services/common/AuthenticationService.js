@@ -65,6 +65,8 @@ module.exports.AuthenticationService = (function() {
             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
     };
 
+    
+
     /* generate an otp and send to a number by SMS  
      */
     var generateOtp = function(userObj) {
@@ -83,7 +85,7 @@ module.exports.AuthenticationService = (function() {
                         } else {
                             resolve({
                                 id: doc._id,
-                                mobile: doc.mobile,
+                                mobile: doc.mobile
                             });
                         }
                     });
@@ -173,12 +175,12 @@ module.exports.AuthenticationService = (function() {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else if (result) {
-                sms.send(result.mobile, result.otp, function(err, smsRes) {
+                SmsService.send(result.mobile, result.otp, function(err, smsRes) {
                     if (err) {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
                     } else {
                         configurationHolder.ResponseUtil.responseHandler(res, {
-                            id: doc._id
+                            id: doc._id,mobile: result.mobile
                         }, "OTP sent successfully", false, 200);
                     }
                 });
@@ -187,6 +189,8 @@ module.exports.AuthenticationService = (function() {
             }
         });
     };
+
+    
 
     //return the method which you want to be public
     return {
