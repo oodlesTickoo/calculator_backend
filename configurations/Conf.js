@@ -5,9 +5,9 @@ var configVariables = function() {
         case 'development':
             config = {
                 port: 3000,
-                host: 'http://180.151.85.194:3000/',
-                verificationUrl: 'http://180.151.85.194:3000/verify/',
-                downloadUrl: 'http://180.151.85.194:3000/download/',
+                host: 'http://localhost:3000/',
+                verificationUrl: 'http://localhost:3000/verify/',
+                downloadUrl: 'http://localhost:3000/download/',
                 publicFolder: 'public/templates/',
                 uploadFolder: 'uploads',
                 awsAccessKeyId: '',

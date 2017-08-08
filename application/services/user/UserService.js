@@ -64,7 +64,7 @@ module.exports.UserService = (function() {
 
     function getClientList(loggedInUser, userId, res) {
         var query = {};
-        if ((loggedInUser.role == 'ADVISOR' || loggedInUser.role == 'ADMINISTRATOR') && userId) {
+        if ((loggedInUser.role == 'ADVISOR') && userId) {
             query = {
                 advisor: loggedInUser._id,
                 role: 'CLIENT'
@@ -74,7 +74,9 @@ module.exports.UserService = (function() {
                 role: 'CLIENT'
             };
         }
-        domain.User.find(query, function(err, result) {
+        console.log("query",query);
+        domain.User.find(query).populate('advisor').exec(function(err, result) {
+            console.log("result",result);
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
@@ -87,10 +89,11 @@ module.exports.UserService = (function() {
         domain.User.find({
             role: 'ADVISOR'
         }, function(err, result) {
+            console.log("11111111111111111",res);
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
-                configurationHolder.ResponseUtil.responseHandler(res, result, "Advisor list successfully retrieved", false, 200)
+                configurationHolder.ResponseUtil.responseHandler(res, result, "Advisor list successfully retrieved", false, 200);
             }
         });
     }

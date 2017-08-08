@@ -40,32 +40,56 @@ module.exports.AuthenticationService = (function() {
             } else {
                 configurationHolder.ResponseUtil.responseHandler(res, null, "logout successfully", false, 200);
             }
-        })
+        });
     };
 
     /* verify OTP
      * generate the authentiction token 
      */
+
+    var getEncryptedPassword = function(password, saltString) {
+        return crypto.createHmac('sha1', saltString).update(password).digest('hex');
+    };
+
+
+    var adminAuthenticate = function(email, password, res) {
+        console.log("adminObj :",email,password); 
+        domain.User.findOne({
+            email: email
+        }, function(err, adminObj) {
+            if (err) {
+                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+            } else {
+                console.log("adminObj :",adminObj); 
+                if (adminObj.password === getEncryptedPassword(password,adminObj.salt)) {
+                    _generateAuthenticationToken(adminObj.mobile, adminObj.role)
+                    .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Administrator login successful", false, 200))
+                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                } else {
+                    configurationHolder.ResponseUtil.responseHandler(res, null, "Incorrect password", false, 401);
+                }
+            }
+        });
+        
+    };
+
     var authenticate = function(mobile, res) {
         UserService.searchUserByMobile(mobile)
             .then(user => {
-                console.log("2222222222");
                 if (user) {
-                    console.log("2222222222444444444");
                     generateOtp({
                             mobile: mobile,
                             role: user.role
                         })
                         .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, "OTP generated successfully", false, 200));
                 } else {
-                    console.log("11111111")
                     configurationHolder.ResponseUtil.responseHandler(res, null, "Mobile is not registered", true, 401);
                 }
             })
             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
     };
 
-    
+
 
     /* generate an otp and send to a number by SMS  
      */
@@ -96,7 +120,7 @@ module.exports.AuthenticationService = (function() {
 
     var _deleteOtp = function(id) {
         return new Promise(function(resolve, reject) {
-            
+
             domain.Otp.remove({
                 _id: id
             }, function(err, doc) {
@@ -132,9 +156,9 @@ module.exports.AuthenticationService = (function() {
                     HubspotService.searchUser(result.mobile)
                         .then(hubspotUserObj => {
                             if (!hubspotUserObj.total) {
-                                if(createUserReqObj.role ==="CLIENT"){
-                                    createUserReqObj.lifecyclestage= "customer";
-                                }                                
+                                if (createUserReqObj.role === "CLIENT") {
+                                    createUserReqObj.lifecyclestage = "customer";
+                                }
                                 return HubspotService.createUser(createUserReqObj);
                             } else {
                                 return Promise.resolve({
@@ -151,7 +175,7 @@ module.exports.AuthenticationService = (function() {
                                 throw new error(hubspotResult);
                             }
                         })
-                        .then(userObj => CalculatorService._saveFactfindData(null,userObj))
+                        .then(userObj => CalculatorService._saveFactfindData(null, userObj))
                         .then(factFindObj => _deleteOtp(id))
                         .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
                         .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
@@ -159,7 +183,13 @@ module.exports.AuthenticationService = (function() {
                 } else {
                     _deleteOtp(id)
                         .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
-                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
+                        .then(authObj => {
+                            authObj = authObj.toJSON();
+                            authObj.firstName = createUserReqObj.firstName;
+                            authObj.lastName = createUserReqObj.lastName;
+
+                            configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200);
+                        })
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 }
             } else {
@@ -180,7 +210,8 @@ module.exports.AuthenticationService = (function() {
                         configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
                     } else {
                         configurationHolder.ResponseUtil.responseHandler(res, {
-                            id: result._id,mobile: result.mobile
+                            id: result._id,
+                            mobile: result.mobile
                         }, "OTP sent successfully", false, 200);
                     }
                 });
@@ -190,10 +221,11 @@ module.exports.AuthenticationService = (function() {
         });
     };
 
-    
+
 
     //return the method which you want to be public
     return {
+        adminAuthenticate: adminAuthenticate,
         authenticate: authenticate,
         verifyOtp: verifyOtp,
         generateOtp: generateOtp,

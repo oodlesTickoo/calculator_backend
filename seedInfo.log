@@ -1504,3 +1504,6 @@
 {"level":"info","message":"Connected to mongo server.","timestamp":"2017-08-01T10:05:04.030Z"}
 {"level":"info","message":"Connected to mongo server.","timestamp":"2017-08-01T10:05:19.826Z"}
 {"level":"info","message":"Connected to mongo server.","timestamp":"2017-08-01T10:05:40.211Z"}
+{"level":"info","message":"passwordEncryption == Rusty@.159006a15510-78f0-11e7-b9d9-49f207b2cbeb","timestamp":"2017-08-04T08:36:35.685Z"}
+{"level":"info","message":"passwordEncryption == Rusty@.1590850dd590-78f0-11e7-aebd-8f8863d420f6","timestamp":"2017-08-04T08:40:07.789Z"}
+{"level":"info","message":"passwordEncryption == Rusty@.1590be7544d0-78f0-11e7-a7e9-91bb6563d04f","timestamp":"2017-08-04T08:41:44.097Z"}

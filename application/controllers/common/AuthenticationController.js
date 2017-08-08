@@ -6,6 +6,10 @@ module.exports.AuthenticationController = (function() {
     // This function calls authenticate function when
     // user tries to login.
 
+    var adminLoginAction = function(req, res) {
+        AuthenticationService.adminAuthenticate(req.body.email,req.body.password, res);
+    };
+
     var loginAction = function(req, res) {
         AuthenticationService.authenticate(req.body.mobile, res);
     };
@@ -33,6 +37,7 @@ module.exports.AuthenticationController = (function() {
 
     //public methods returned.
     return {
+        adminLoginAction: adminLoginAction,
         loginAction: loginAction,
         logoutAction: logoutAction,
         verifyOtp: verifyOtp,

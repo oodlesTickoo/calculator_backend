@@ -20,7 +20,14 @@ var UserSchema = new mongooseSchema({
     advisor: {
         type: mongooseSchema.ObjectId,
         ref: 'User'
+    },
+    password: {
+        type: String
+    },
+    salt: {
+        type: String
     }
+
 });
 
 var User = mongoose.model('User', UserSchema);
