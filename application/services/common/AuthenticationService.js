@@ -63,7 +63,12 @@ module.exports.AuthenticationService = (function() {
                 console.log("adminObj :",adminObj); 
                 if (adminObj.password === getEncryptedPassword(password,adminObj.salt)) {
                     _generateAuthenticationToken(adminObj.mobile, adminObj.role)
-                    .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Administrator login successful", false, 200))
+                    .then(authObj => {
+                            authObj = authObj.toJSON();
+                            authObj.firstName = adminObj.firstName;
+                            authObj.lastName = adminObj.lastName;
+                            configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200);
+                        })
                     .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
                     configurationHolder.ResponseUtil.responseHandler(res, null, "Incorrect password", false, 401);
@@ -97,6 +102,8 @@ module.exports.AuthenticationService = (function() {
         return new Promise(function(resolve, reject) {
             //generate random 4 digit OTP number
             userObj.otp = Math.floor(1000 + Math.random() * 9000);
+            console.log("222222222222",userObj);
+
 
             var otpObj = new domain.Otp(userObj);
             otpObj.save(function(err, doc) {
@@ -178,16 +185,21 @@ module.exports.AuthenticationService = (function() {
                         .then(userObj => CalculatorService._saveFactfindData(null, userObj))
                         .then(factFindObj => _deleteOtp(id))
                         .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
-                        .then(authObj => configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200))
+                        .then(authObj => {
+                            authObj = authObj.toJSON();
+                            authObj.firstName = createUserReqObj.firstName;
+                            authObj.lastName = createUserReqObj.lastName;
+
+                            configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200);
+                        })
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
                     _deleteOtp(id)
                         .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
                         .then(authObj => {
                             authObj = authObj.toJSON();
-                            authObj.firstName = createUserReqObj.firstName;
-                            authObj.lastName = createUserReqObj.lastName;
-
+                            authObj.firstName = result.firstName;
+                            authObj.lastName = result.lastName;
                             configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200);
                         })
                         .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
@@ -221,6 +233,13 @@ module.exports.AuthenticationService = (function() {
         });
     };
 
+    var verifyAuthToken = function(loggedInUser, res){
+        if(loggedInUser){
+            configurationHolder.ResponseUtil.responseHandler(res, null, "Authorized", true, 200);
+        }else{
+            configurationHolder.ResponseUtil.responseHandler(res, null, "Not authorized", true, 401);
+        }
+    }
 
 
     //return the method which you want to be public
@@ -230,7 +249,8 @@ module.exports.AuthenticationService = (function() {
         verifyOtp: verifyOtp,
         generateOtp: generateOtp,
         resendOtp: resendOtp,
-        logout: logout
+        logout: logout,
+        verifyAuthToken:verifyAuthToken
     };
 
 })();

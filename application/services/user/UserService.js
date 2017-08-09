@@ -34,10 +34,9 @@ module.exports.UserService = (function() {
 
     function updateUser(query, objToBeUpdated) {
         return new Promise(function(resolve, reject) {
-            console.log("query", query);
-            console.log("objToBeUpdated", objToBeUpdated);
-
-            domain.User.update(query, { $set: objToBeUpdated }, function(err, result) {
+            domain.User.update(query, {
+                $set: objToBeUpdated
+            }, function(err, result) {
                 if (!err && result.nModified > 0) {
                     resolve(result);
                 } else {
@@ -45,11 +44,6 @@ module.exports.UserService = (function() {
                         'message': err ? err : 'User not updated'
                     });
                 }
-                /*else {
-                                   reject({
-                                       'message': 'User not updated'
-                                   });
-                               }*/
             });
         });
     }
@@ -64,9 +58,9 @@ module.exports.UserService = (function() {
 
     function getClientList(loggedInUser, userId, res) {
         var query = {};
-        if ((loggedInUser.role == 'ADVISOR') && userId) {
+        if ((loggedInUser.role == 'ADVISOR' || loggedInUser.role == 'ADMINISTRATOR') && userId) {
             query = {
-                advisor: loggedInUser._id,
+                advisor: userId,
                 role: 'CLIENT'
             };
         } else {
@@ -74,9 +68,9 @@ module.exports.UserService = (function() {
                 role: 'CLIENT'
             };
         }
-        console.log("query",query);
+        console.log("query", query);
         domain.User.find(query).populate('advisor').exec(function(err, result) {
-            console.log("result",result);
+            console.log("result", result);
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
@@ -97,12 +91,24 @@ module.exports.UserService = (function() {
         });
     }
 
+    function getMyProfile(loggedInUser, res) {
+        configurationHolder.ResponseUtil.responseHandler(res, {
+            firstName: loggedInUser.firstName,
+            lastName: loggedInUser.lastName,
+            email: loggedInUser.email,
+            mobile: loggedInUser.mobile,
+            role: loggedInUser.role,
+            _id: loggedInUser._id
+        }, "Profile successfully retrieved", false, 200);
+    }
+
     return {
         createUser: createUser,
         searchUserByMobile: searchUserByMobile,
         updateUser: updateUser,
         registerUser: registerUser,
         getClientList: getClientList,
-        getAdvisorList: getAdvisorList
+        getAdvisorList: getAdvisorList,
+        getMyProfile: getMyProfile
     };
 })();
