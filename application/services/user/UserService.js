@@ -89,7 +89,6 @@ module.exports.UserService = (function() {
         domain.User.find({
             role: 'ADVISOR'
         }, function(err, result) {
-            console.log("11111111111111111",res);
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
