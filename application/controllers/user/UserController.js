@@ -10,8 +10,13 @@ module.exports.UserController = (function() {
 	function getAdvisorList(req, res){
 		UserService.getAdvisorList(req.loggedInUser,res);
 	}
+
+	function getMyProfile(req, res){
+		UserService.getMyProfile(req.loggedInUser, res);
+	}
 	return {
 		getClientList:getClientList,
-		getAdvisorList:getAdvisorList
+		getAdvisorList:getAdvisorList,
+		getMyProfile:getMyProfile
 	};
 })();

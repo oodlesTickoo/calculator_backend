@@ -35,13 +35,18 @@ module.exports.AuthenticationController = (function() {
       AuthenticationService.resendOtp(req.body.mobile, res);
     };
 
+    var verifyAuthToken = function(req,res){
+        AuthenticationService.verifyAuthToken(req.loggedInUser, res);
+    }
+
     //public methods returned.
     return {
         adminLoginAction: adminLoginAction,
         loginAction: loginAction,
         logoutAction: logoutAction,
         verifyOtp: verifyOtp,
-        resendOtp:resendOtp
+        resendOtp:resendOtp,
+        verifyAuthToken:verifyAuthToken
     };
 
 })();

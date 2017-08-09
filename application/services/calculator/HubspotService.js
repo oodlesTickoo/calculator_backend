@@ -50,7 +50,7 @@ module.exports.HubspotService = (function() {
     function updateUser(data, hubspotUserId) {
         return new Promise(function(resolve, reject) {
             var contactUrl = Constants.HUBSPOT_URL.CONTACT + 'vid/' + hubspotUserId + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-            _callToHubspot(POST, contactUrl, _convertToHubspotPostData(hubspotFactFindFields, data.factFindData))
+            _callToHubspot(POST, contactUrl, _convertToHubspotPostData(hubspotFactFindFields, data))
                 .then(updatedObj => resolve(updatedObj))
                 .catch(err => reject(err));
         });
