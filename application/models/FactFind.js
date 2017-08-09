@@ -11,556 +11,739 @@ var FactFindSchema = new mongooseSchema({
     },
     healthOption: {
         type: String,
-        default: 'Goood'
+        default: 'Excellent'
     },
     spouseOption: {
-        type: String
+        type: String,
+        default: 'No'
     },
     diseaseOption: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     hospitalCoverOption: {
-        type: String
+        type: String,
+        default: 'Full Cover'
     },
     willOption: {
-        type: String
+        type: String,
+        default: 'No'
     },
     spouseDetails_firstName: {
-        type: String
+        type: String,
+        default: 'Rachel'
     },
     spouseDetails_lastName: {
-        type: String
+        type: String,
+        default: 'Payne'
     },
     genderOptionSpouse: {
-        type: String
+        type: String,
+        default: 'Female'
     },
     dobSpouse: {
-        type: String
+        type: String,
+        default: 'Sun Jan 01 1984 04: 09: 09 GMT + 0530(IST)'
     },
     spouseDetails_mobile: {
-        type: String
+        type: String,
+        default: '4123333333'
     },
     fy: {
-        type: String
+        type: String,
+        default: '2016'
     },
     annualSalary: {
-        type: String
+        type: String,
+        default: '$260,000'
     },
     grossAnnualIncome: {
-        type: String
+        type: String,
+        default: '$120,000'
     },
     superBalance: {
-        type: String
+        type: String,
+        default: '$100,000'
     },
     cashAtBank: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     salarySacrifice: {
-        type: String
+        type: String,
+        default: '$10,384'
     },
     ncc: {
-        type: String
+        type: String,
+        default: '$10,000'
     },
     superTaxRate: {
-        type: String
+        type: String,
+        default: '15.00%'
     },
     thp: {
-        type: String
+        type: String,
+        default: '$45,000'
     },
     insurancePremium: {
-        type: String
+        type: String,
+        default: '$0'
     },
     investmentReturn: {
-        type: String
+        type: String,
+        default: '$5,000'
     },
     variableFee: {
-        type: String
+        type: String,
+        default: '1.11%'
     },
     fixedFee: {
-        type: String
+        type: String,
+        default: '$300'
     },
     employerContributionLevel: {
-        type: String
+        type: String,
+        default: '9.50%'
     },
     inflation: {
-        type: String
+        type: String,
+        default: '2%'
     },
     wageIncrease: {
-        type: String
+        type: String,
+        default: '4.00%'
     },
     rateOfReturn: {
-        type: String
+        type: String,
+        default: '5%'
     },
     retirementAge: {
-        type: String
+        type: String,
+        default: '65'
     },
     pensionStart: {
-        type: String
+        type: String,
+        default: '57'
     },
     showPensionOption: {
-        type: String
+        type: String,
+        default: 'Select Your Own Value'
     },
     pensionDrawdownBase: {
-        type: String
+        type: String,
+        default: '$40,000'
     },
     target: {
-        type: String
+        type: String,
+        default: '$40,000'
     },
     annualSalarySpouse: {
-        type: String
+        type: String,
+        default: '$90,000'
     },
     superBalanceSpouse: {
-        type: String
+        type: String,
+        default: '$200,000'
     },
     salarySacrificeSpouse: {
-        type: String
+        type: String,
+        default: '$5,000'
     },
     insurancePremiumSpouse: {
-        type: String
+        type: String,
+        default: '$0'
     },
     investmentReturnSpouse: {
-        type: String
+        type: String,
+        default: '5.30%'
     },
     variableFeeSpouse: {
-        type: String
+        type: String,
+        default: '1.11%'
     },
     fixedFeeSpouse: {
-        type: String
+        type: String,
+        default: '$300'
     },
     employerContributionLevelSpouse: {
-        type: String
+        type: String,
+        default: '9.50%'
     },
     inflationSpouse: {
-        type: String
+        type: String,
+        default: '3.50%'
     },
     wageIncreaseSpouse: {
-        type: String
+        type: String,
+        default: '4.00%'
     },
     retirementAgeSpouse: {
-        type: String
+        type: String,
+        default: '70'
     },
     pensionStartSpouse: {
-        type: String
+        type: String,
+        default: '65'
     },
     showPensionOptionSpouse: {
-        type: String
+        type: String,
+        default: 'Minimum Pension Only'
     },
     pensionDrawdownBaseSpouse: {
-        type: String
+        type: String,
+        default: '$30,000'
     },
     spFundAType: {
-        type: String
+        type: String,
+        default: 'MySuper Fund'
     },
     spFundBType: {
-        type: String
+        type: String,
+        default: 'MySuper Fund'
     },
     spFundAName: {
-        type: String
+        type: String,
+        default: 'Asgard Infinity Ewrap Super'
     },
     spFundBName: {
-        type: String
+        type: String,
+        default: 'ING Direct Living Super'
     },
     netReturn: {
-        type: String
+        type: String,
+        default: '2.9'
     },
     fundNameA: {
-        type: String
+        type: String,
+        default: 'Fund A'
     },
     contributionFeeA: {
-        type: String
+        type: String,
+        default: '1.50%'
     },
     adminFeeA: {
-        type: String
+        type: String,
+        default: '$100'
     },
     indirectCostRationA: {
-        type: String
+        type: String,
+        default: '1.50%'
     },
     fundNameB: {
-        type: String
+        type: String,
+        default: 'Fund B'
     },
     contributionFeeB: {
-        type: String
+        type: String,
+        default: '1.50%"'
     },
     adminFeeB: {
-        type: String
+        type: String,
+        default: '$100'
     },
     indirectCostRationB: {
-        type: String
+        type: String,
+        default: '1.50%'
     },
     homeMortgage: {
-        type: String
+        type: String,
+        default: '$500,000'
     },
     investmentPropertyMortgage: {
-        type: String
+        type: String,
+        default: '$0'
     },
     creditCardDebt: {
-        type: String
+        type: String,
+        default: '$2,000'
     },
     carLoan: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     personalLoan: {
-        type: String
+        type: String,
+        default: '$0'
     },
     otherLoan: {
-        type: String
+        type: String,
+        default: '$0'
     },
     numChildren: {
-        type: String
+        type: String,
+        default: '2'
     },
     ageChildren1: {
-        type: String
+        type: String,
+        default: '3'
     },
     ageChildren2: {
-        type: String
+        type: String,
+        default: '5'
     },
     ageChildren3: {
-        type: String
+        type: String,
+        default: '10'
     },
     ageChildren4: {
-        type: String
+        type: String,
+        default: '10'
     },
     ageChildren5: {
-        type: String
+        type: String,
+        default: '10'
     },
     funeralCost: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     spEducationOption: {
-        type: String
+        type: String,
+        default: '$5,000'
     },
     spState: {
-        type: String
+        type: String,
+        default: '$90,000'
     },
     spSchoolType: {
-        type: String
+        type: String,
+        default: '$250,000'
     },
     spSchoolName: {
-        type: String
+        type: String,
+        default: '$0'
     },
     educationExpensePerYearPerChild: {
-        type: String
+        type: String,
+        default: '$0'
     },
     familyLivingCostPerYear: {
-        type: String
+        type: String,
+        default: '$0'
     },
     buyOption: {
-        type: String
+        type: String,
+        default: '10'
     },
     valueOfNewProperty: {
-        type: String
+        type: String,
+        default: '$800,000'
     },
     moneyToBeBorrowed: {
-        type: String
+        type: String,
+        default: '$50,000'
     },
     ecLife: {
-        type: String
+        type: String,
+        default: '$0'
     },
     ecTPD: {
-        type: String
+        type: String,
+        default: '$2,000'
     },
     ecIP: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     ecTrauma: {
-        type: String
+        type: String,
+        default: '$0'
     },
     sickLeaves: {
-        type: String
+        type: String,
+        default: '$0'
     },
     lifeOption: {
-        type: String
+        type: String,
+        default: '$60,000'
     },
     homeValue: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     homeContents: {
-        type: String
+        type: String,
+        default: '$0'
     },
     vehicleCost: {
-        type: String
+        type: String,
+        default: '$0'
     },
     investmentProperty: {
-        type: String
+        type: String,
+        default: '$0'
     },
     bankAssets: {
-        type: String
+        type: String,
+        default: '6%'
     },
     listedInvestment: {
-        type: String
+        type: String,
+        default: '2%'
     },
     marginLoans: {
-        type: String
+        type: String,
+        default: '7%'
     },
     allocatedPension: {
-        type: String
+        type: String,
+        default: '$50,000'
     },
     otherInvestment: {
-        type: String
+        type: String,
+        default: '$50,000'
     },
     netRentalIncome: {
-        type: String
+        type: String,
+        default: '10%'
     },
     otherIncome: {
-        type: String
+        type: String,
+        default: '10%'
     },
     pensionIncome: {
-        type: String
+        type: String,
+        default: '10%'
     },
     nra: {
-        type: String
+        type: String,
+        default: '10%'
     },
     tfp: {
-        type: String
+        type: String,
+        default: '10%'
     },
     nrp: {
-        type: String
+        type: String,
+        default: '10%'
     },
     beforeTTR: {
-        type: String
+        type: String,
+        default: '10%'
     },
     cses: {
-        type: String
+        type: String,
+        default: '10%'
     },
     initialInvestmentAmount: {
-        type: String
+        type: String,
+        default: '20%'
     },
     australianShares1: {
-        type: String
+        type: String,
+        default: '100%'
     },
     internationalShares1: {
-        type: String
+        type: String,
+        default: 'No'
     },
     internationalSharesHedged1: {
-        type: String
+        type: String,
+        default: '5'
     },
     usShares1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     australianBonds1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     internationalBondsHedged1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     cash1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     australianListedProperty1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     internationalListedProperty1: {
-        type: String
+        type: String,
+        default: '10%'
     },
     asset1Total: {
-        type: String
+        type: String,
+        default: '10%'
     },
     alterOption: {
-        type: String
+        type: String,
+        default: '10%'
     },
     alterYear: {
-        type: String
+        type: String,
+        default: '20%'
     },
     australianShares2: {
-        type: String
+        type: String,
+        default: '100%'
     },
     internationalShares2: {
-        type: String
+        type: String,
+        default: '2017'
     },
     internationalSharesHedged2: {
-        type: String
+        type: String,
+        default: '2017'
     },
     usShares2: {
-        type: String
+        type: String,
+        default: 'Conservative Cautious'
     },
     australianBonds2: {
-        type: String
+        type: String,
+        default: 'Max'
     },
     internationalBondsHedged2: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     cash2: {
-        type: String
+        type: String,
+        default: '2017'
     },
     australianListedProperty2: {
-        type: String
+        type: String,
+        default: '6'
     },
     internationalListedProperty2: {
-        type: String
+        type: String,
+        default: 'Major in Commerce'
     },
     asset2Total: {
-        type: String
+        type: String,
+        default: 'Monica'
     },
     begnYearInvestment: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     contStartYear: {
-        type: String
+        type: String,
+        default: '2017'
     },
     investmentReturnAmount: {
-        type: String
+        type: String,
+        default: '6'
     },
     spPort: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     c1Name: {
-        type: String
+        type: String,
+        default: 'Adele'
     },
     spStudyingOption1: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     schoolYear1: {
-        type: String
+        type: String,
+        default: '2017'
     },
     schoolDuration1: {
-        type: String
+        type: String,
+        default: '6'
     },
     schoolSelected1: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     majorSelected1: {
-        type: String
+        type: String,
+        default: 'Major in Commerce'
     },
     c2Name: {
-        type: String
+        type: String,
+        default: 'Rita'
     },
     spStudyingOption2: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     schoolYear2: {
-        type: String
+        type: String,
+        default: '2017'
     },
     schoolDuration2: {
-        type: String
+        type: String,
+        default: '6'
     },
     schoolSelected2: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     majorSelected2: {
-        type: String
+        type: String,
+        default: 'Major in Commerce'
     },
     c3Name: {
-        type: String
+        type: String,
+        default: 'Tom'
     },
     spStudyingOption3: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     schoolYear3: {
-        type: String
+        type: String,
+        default: '2017'
     },
     schoolDuration3: {
-        type: String
+        type: String,
+        default: '6'
     },
     schoolSelected3: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     majorSelected3: {
-        type: String
+        type: String,
+        default: 'Major in Commerce'
     },
     c4Name: {
-        type: String
+        type: String,
+        default: 'Select from the list of high schools in the living state.'
     },
     spStudyingOption4: {
-        type: String
+        type: String,
+        default: 'NSW'
     },
     schoolYear4: {
-        type: String
+        type: String,
+        default: 'Private School'
     },
     schoolDuration4: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     schoolSelected4: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     majorSelected4: {
-        type: String
+        type: String,
+        default: '$500,000'
     },
     c5Name: {
-        type: String
+        type: String,
+        default: '$400,000'
     },
     spStudyingOption5: {
-        type: String
+        type: String,
+        default: 'Sydney Grammar School Darlinghurst'
     },
     schoolYear5: {
-        type: String
+        type: String,
+        default: 'Major in Commerce'
     },
     schoolDuration5: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     schoolSelected5: {
-        type: String
+        type: String,
+        default: '$3000'
     },
     majorSelected5: {
-        type: String
+        type: String,
+        default: '$20,000'
     },
     goalBasedAdvice_0_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_1_severity: {
-        type: String
+        type: String,
+        default: 'Low'
     },
     goalBasedAdvice_2_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_3_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_4_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_5_severity: {
-        type: String
+        type: String,
+        default: 'Medium'
     },
     goalBasedAdvice_6_severity: {
-        type: String
+        type: String,
+        default: 'High'
     },
     goalBasedAdvice_7_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_8_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_9_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_10_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     goalBasedAdvice_11_severity: {
-        type: String
+        type: String,
+        default: 'false'
     },
     houseOption: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     smokeOption: {
-        type: String
+        type: String,
+        default: 'No'
     },
     genderOption: {
-        type: String
+        type: String,
+        default: 'Male'
     },
     personalDetails_postalCode: {
-        type: String
+        type: String,
+        default: '1234'
     },
     spouseWorkOption: {
-        type: String
+        type: String,
+        default: 'Yes'
     },
     dayOfBirth: {
-        type: String
+        type: String,
+        default: '10'
     },
     monthOfBirth: {
-        type: String
+        type: String,
+        default: '10'
     },
     yearOfBirth: {
-        type: String
+        type: String,
+        default: '1985'
     },
     dayOfBirthSpouse: {
-        type: String
+        type: String,
+        default: '02'
     },
     monthOfBirthSpouse: {
-        type: String
+        type: String,
+        default: '05'
     },
     yearOfBirthSpouse: {
-        type: String
+        type: String,
+        default: '1987'
     },
 
 });
