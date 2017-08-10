@@ -101,7 +101,7 @@ module.exports.AuthenticationService = (function() {
     var generateOtp = function(userObj) {
         return new Promise(function(resolve, reject) {
             //generate random 4 digit OTP number
-            userObj.otp = Math.floor(1000 + Math.random() * 9000);
+            userObj.otp = 1111;//Math.floor(1000 + Math.random() * 9000);
             console.log("222222222222", userObj);
 
 
