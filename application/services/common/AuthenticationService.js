@@ -53,29 +53,29 @@ module.exports.AuthenticationService = (function() {
 
 
     var adminAuthenticate = function(email, password, res) {
-        console.log("adminObj :",email,password); 
+        console.log("adminObj :", email, password);
         domain.User.findOne({
             email: email
         }, function(err, adminObj) {
             if (err) {
                 configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
             } else {
-                console.log("adminObj :",adminObj); 
-                if (adminObj.password === getEncryptedPassword(password,adminObj.salt)) {
+                console.log("adminObj :", adminObj);
+                if (adminObj.password === getEncryptedPassword(password, adminObj.salt)) {
                     _generateAuthenticationToken(adminObj.mobile, adminObj.role)
-                    .then(authObj => {
+                        .then(authObj => {
                             authObj = authObj.toJSON();
                             authObj.firstName = adminObj.firstName;
                             authObj.lastName = adminObj.lastName;
                             configurationHolder.ResponseUtil.responseHandler(res, authObj, "Login successfully", false, 200);
                         })
-                    .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
+                        .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                 } else {
                     configurationHolder.ResponseUtil.responseHandler(res, null, "Incorrect password", false, 401);
                 }
             }
         });
-        
+
     };
 
     var authenticate = function(mobile, res) {
@@ -102,7 +102,7 @@ module.exports.AuthenticationService = (function() {
         return new Promise(function(resolve, reject) {
             //generate random 4 digit OTP number
             userObj.otp = Math.floor(1000 + Math.random() * 9000);
-            console.log("222222222222",userObj);
+            console.log("222222222222", userObj);
 
 
             var otpObj = new domain.Otp(userObj);
@@ -182,7 +182,13 @@ module.exports.AuthenticationService = (function() {
                                 throw new error(hubspotResult);
                             }
                         })
-                        .then(userObj => CalculatorService._saveFactfindData(null, userObj))
+                        .then(userObj => {
+                            if (createUserReqObj.role === "CLIENT") {
+                                return CalculatorService._saveFactfindData(null, userObj);
+                            }else{
+                                return Promise.resolve();
+                            }
+                        })
                         .then(factFindObj => _deleteOtp(id))
                         .then(deletedObj => _generateAuthenticationToken(result.mobile, result.role))
                         .then(authObj => {
@@ -233,10 +239,10 @@ module.exports.AuthenticationService = (function() {
         });
     };
 
-    var verifyAuthToken = function(loggedInUser, res){
-        if(loggedInUser){
+    var verifyAuthToken = function(loggedInUser, res) {
+        if (loggedInUser) {
             configurationHolder.ResponseUtil.responseHandler(res, null, "Authorized", true, 200);
-        }else{
+        } else {
             configurationHolder.ResponseUtil.responseHandler(res, null, "Not authorized", true, 401);
         }
     }
@@ -250,7 +256,7 @@ module.exports.AuthenticationService = (function() {
         generateOtp: generateOtp,
         resendOtp: resendOtp,
         logout: logout,
-        verifyAuthToken:verifyAuthToken
+        verifyAuthToken: verifyAuthToken
     };
 
 })();
