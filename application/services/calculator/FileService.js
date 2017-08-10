@@ -1,4 +1,4 @@
-const CalculatorService = require('./CalculatorService').CalculatorService;
+const CalculatorService = require('./CalculatorService');
 const HubspotService = require('./HubspotService').HubspotService;
 
 module.exports.FileService = (function() {
@@ -8,6 +8,8 @@ module.exports.FileService = (function() {
     var path = require('path');
 
     function getUserFile(userId, fileType, res) {
+        console.log("userId",userId)
+        console.log("fileType",fileType)
         domain.User.findOne({
             _id: userId
         }, function(err, userObj) {
@@ -22,6 +24,7 @@ module.exports.FileService = (function() {
                     } else {
                         //soa stands for 'Statement of advice PDF'
                         var fileId;
+                        console.log("factFindObj",factFindObj)
                         if (fileType == 'pdf' && factFindObj.pdfFile) {
                             fileId = factFindObj.pdfFile;
                         } else if (fileType == 'doc' && factFindObj.docFile) {
@@ -57,7 +60,7 @@ module.exports.FileService = (function() {
         });
     }
 
-    function upload(file, clientId, res) {
+    function upload(file, clientId, fileType,res) {
         domain.User.findOne({
             "_id": clientId
         }, function(err, userObj) {
@@ -76,7 +79,7 @@ module.exports.FileService = (function() {
                         if (err) {
                             configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
                         } else {
-                            _updateFile(fileName, userObj, res)
+                            _updateFile(fileName, userObj,fileType, res)
                                 .then(result => configurationHolder.ResponseUtil.responseHandler(res, result, 'File uploaded successfully', false, 200))
                                 .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500));
                         }
@@ -89,10 +92,10 @@ module.exports.FileService = (function() {
         return path.join(__dirname, '..', '..', '..', 'uploads', fileName);
     }
 
-    function _updateFile(fileName, userObj, res) {
+    function _updateFile(fileName, userObj, fileType,res) {
         return new Promise(function(resolve, reject) {
             HubspotService.uploadFile(userObj.hubspotUserId, _getPdfFilePath(fileName))
-                .then(fileData => CalculatorService.updateFileIdToUser(userObj, fileData.hubspotFileId, _getPdfFilePath(fileName)))
+                .then(fileData => CalculatorService.CalculatorService.updateFileIdToUser(userObj, fileData.hubspotFileId, _getPdfFilePath(fileName),fileType))
                 .then(result => resolve(result))
                 .catch(err => reject(err));
         });

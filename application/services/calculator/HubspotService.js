@@ -13,18 +13,20 @@ module.exports.HubspotService = (function() {
 
 
     function _convertToHubspotPostData(fields, obj) {
-        var convertedObj = {};
-        convertedObj.properties = [];
+        var properties = []; 
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 if (fields[key]) {
-                    convertedObj.properties.push({
+                    properties.push({
                         'property': fields[key],
                         'value': obj[key]
                     });
                 }
             }
         }
+
+        var convertedObj={};
+        convertedObj["properties"]=properties;
         return convertedObj;
     }
 
@@ -50,7 +52,9 @@ module.exports.HubspotService = (function() {
     function updateUser(data, hubspotUserId) {
         return new Promise(function(resolve, reject) {
             var contactUrl = Constants.HUBSPOT_URL.CONTACT + 'vid/' + hubspotUserId + '/profile' + '?' + ACCESS_KEY + '=' + configurationHolder.config.hubspot.hapikey;
-            _callToHubspot(POST, contactUrl, _convertToHubspotPostData(hubspotFactFindFields, data))
+            var temp=_convertToHubspotPostData(hubspotFactFindFields, data);
+
+            _callToHubspot(POST, contactUrl, temp)
                 .then(updatedObj => resolve(updatedObj))
                 .catch(err => reject(err));
         });
@@ -145,6 +149,7 @@ module.exports.HubspotService = (function() {
                 .then(updatedObj => {
                     fs.unlinkSync(filePath);
                     resolve({
+                        hubspotFileId:hubspotFileId
                     });
                 })
                 .catch(function(error) {

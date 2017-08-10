@@ -191,7 +191,6 @@ module.exports.CalculatorService = (function() {
                     var pdfFileName = loggedInUser.hubspotUserId + ".pdf";
                     generatePdf(pdfFileName, results.webshotIa, results.webshotSFC, results.webshotIT, results.webshotPSF, results.webshotRA, results.webshotSSO, results.webshotTTR,
                             results.webshotAsset, data.factFindData, loggedInUser)
-                        // .then(hubspotFileId => next(null, pdfResultObj))
                         .then(hubspotFileId => HubspotService.getFile(hubspotFileId))
                         .then(path => next(null, path))
                         .catch(pdfError => next(pdfError, null));
@@ -231,7 +230,7 @@ module.exports.CalculatorService = (function() {
                             reject(err);
                         } else {
                             HubspotService.uploadFile(loggedInUser.hubspotUserId, _getPdfFilePath(loggedInUser.hubspotUserId))
-                                .then(hubspotFile => updateFileIdToUser(loggedInUser, hubspotFile.hubspotFileId, _getPdfFilePath(loggedInUser.hubspotUserId)))
+                                .then(hubspotFile => updateFileIdToUser(loggedInUser, hubspotFile.hubspotFileId, _getPdfFilePath(loggedInUser.hubspotUserId),'pdf'))
                                 .then(hubspotFile => resolve(hubspotFile.hubspotFileId))
                                 .catch(err => reject(err));
 
@@ -245,10 +244,10 @@ module.exports.CalculatorService = (function() {
         });
     }
 
-    function updateFileIdToUser(user, fileId, filePath) {
+    function updateFileIdToUser(user, fileId, filePath,fileType) {
         return new Promise(function(resolve, reject) {
-            var format = filePath.split('.')[filePath.split('.').length - 1];
-            var fileTypeFieldName = format == 'pdf' ? 'pdfFile' : 'docFile';
+            //var format = filePath.split('.')[filePath.split('.').length - 1];
+            var fileTypeFieldName = fileType == 'pdf' ? 'pdfFile' : 'docFile';
             domain.FactFind.update({
                 user: user._id
             }, {
@@ -272,31 +271,35 @@ module.exports.CalculatorService = (function() {
     var saveFactfindDataAndGeneratePdf = function(data, user, res) {
         _saveFactfindData(data, user)
             .then(resultData => _requestPdf(data, user))
-            .then(hubspotFileUrl => request(hubspotFileUrl).pipe(res))
+            .then(hubspotFileUrl => configurationHolder.ResponseUtil.responseHandler(res, {filePath:hubspotFileUrl}, 'pdf created successfully', false, 200))
             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400));
     };
 
     var _saveFactfindData = function(data, user) {
         return new Promise(function(resolve, reject) {
-            var factFindData = data?JSON.parse(JSON.stringify(data.factfindData)):{};
+            var factFindData = data ? JSON.parse(JSON.stringify(data.factFindData)) : {};
             factFindData.user = user._id;
-
             domain.FactFind.update({
                 user: user._id
             }, factFindData, {
-                upsert: true
+                upsert: true,
+                setDefaultsOnInsert: true
             }, function(err, obj) {
                 if (err) {
                     reject(err);
                 } else {
                     data && delete data.user;
-                    HubspotService.updateUser(data || obj, user.hubspotUserId)
-                        .then(resultData => resolve(resultData))
-                        .catch(err => reject(err));
-
-                    /*.then(resultData => _requestPdf(data, user))
-                    .then(hubspotFileUrl => request(hubspotFileUrl).pipe(res))
-                    */
+                    domain.FactFind.findOne({
+                        user: user._id
+                    }, '-_id -user -__v', function(err, factFindObj) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            HubspotService.updateUser(factFindObj.toJSON(), user.hubspotUserId)
+                                .then(resultData => resolve(resultData))
+                                .catch(err => reject(err));
+                        }
+                    });
                 }
             });
         });
@@ -314,17 +317,17 @@ module.exports.CalculatorService = (function() {
         });
     };
 
-/*    var getFactfindData = function(loggedInUser, res) {
-        domain.FactFind.findOne({
-            user: loggedInUser._id
-        }, function(err, factFindData) {
-            if (err) {
-                configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
-            } else {
-                configurationHolder.ResponseUtil.responseHandler(res, factFindData, 'Factfind data retrieved successfully', false, 200);
-            }
-        });
-    };*/
+    /*    var getFactfindData = function(loggedInUser, res) {
+            domain.FactFind.findOne({
+                user: loggedInUser._id
+            }, function(err, factFindData) {
+                if (err) {
+                    configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 500);
+                } else {
+                    configurationHolder.ResponseUtil.responseHandler(res, factFindData, 'Factfind data retrieved successfully', false, 200);
+                }
+            });
+        };*/
 
     function linkAdvisorToClient(clientId, advisorId, res) {
         domain.User.find({
@@ -346,7 +349,7 @@ module.exports.CalculatorService = (function() {
 
             HubspotService.updateUser({
                     advisorId: advisor.hubspotUserId,
-                    advisorName: advisor.firstName + " "+advisor.lastName
+                    advisorName: advisor.firstName + " " + advisor.lastName
                 }, client.hubspotUserId)
                 .then(updatedHubspotUser => UserService.updateUser({
                     "_id": clientId

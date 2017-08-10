@@ -14,10 +14,10 @@ module.exports.CalculatorController = (function() {
         CalculatorService.getFactfindData(req.loggedInUser, res);
     };
     var getUserFile = function(req, res) {
-        FileService.getUserFile(req.loggedInUser, req.params.userId, req.params.fileType, res);
+        FileService.getUserFile(req.params.userId, req.params.fileType, res);
     };
     var upload = function(req, res) {
-        FileService.upload(req.files.advisor_soa, req.params.userId, res);
+        FileService.upload(req.files.file, req.params.userId, req.params.fileType,res);
     };
     var linkAdvisorToClient = function(req, res) {
         CalculatorService.linkAdvisorToClient(req.body.clientId, req.body.advisorId, res);
