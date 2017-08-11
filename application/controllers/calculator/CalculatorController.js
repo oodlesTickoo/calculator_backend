@@ -30,6 +30,7 @@ module.exports.CalculatorController = (function() {
     return {
         webShot: webShot,
         saveFactfindDataAndGeneratePdf: saveFactfindDataAndGeneratePdf,
+        saveFactfindData: saveFactfindData,
         getUserFile: getUserFile,
         upload: upload,
         linkAdvisorToClient: linkAdvisorToClient,
