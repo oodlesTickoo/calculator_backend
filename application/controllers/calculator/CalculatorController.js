@@ -10,6 +10,9 @@ module.exports.CalculatorController = (function() {
     var saveFactfindDataAndGeneratePdf = function(req, res) {
         CalculatorService.saveFactfindDataAndGeneratePdf(req.body, req.loggedInUser, res);
     };
+    var saveFactfindData= function(req, res) {
+        CalculatorService.saveFactfindData(req.body, req.loggedInUser, res);
+    };
     var getFactfindData = function(req, res) {
         CalculatorService.getFactfindData(req.loggedInUser, res);
     };

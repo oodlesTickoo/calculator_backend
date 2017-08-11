@@ -275,6 +275,12 @@ module.exports.CalculatorService = (function() {
             .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400));
     };
 
+    var saveFactfindData = function(data, user, res) {
+        _saveFactfindData(data, user)
+            .then(resultObj => configurationHolder.ResponseUtil.responseHandler(res, {}, 'Data saved successfully', false, 200))
+            .catch(err => configurationHolder.ResponseUtil.responseHandler(res, err, err.message, true, 400));
+    };
+
     var _saveFactfindData = function(data, user) {
         return new Promise(function(resolve, reject) {
             var factFindData = data ? JSON.parse(JSON.stringify(data.factFindData)) : {};
@@ -368,7 +374,8 @@ module.exports.CalculatorService = (function() {
         getFactfindData: getFactfindData,
         updateFileIdToUser: updateFileIdToUser,
         linkAdvisorToClient: linkAdvisorToClient,
-        _saveFactfindData: _saveFactfindData
+        _saveFactfindData: _saveFactfindData,
+        saveFactfindData: saveFactfindData,
     };
 
 })();
