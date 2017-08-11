@@ -299,51 +299,51 @@ var FactFindSchema = new mongooseSchema({
     },
     spEducationOption: {
         type: String,
-        default: '$5,000'
+        default: 'Select from the list of high schools in the living state.'
     },
     spState: {
         type: String,
-        default: '$90,000'
+        default: 'NSW'
     },
     spSchoolType: {
         type: String,
-        default: '$250,000'
+        default: 'Private School'
     },
     spSchoolName: {
         type: String,
-        default: '$0'
+        default: 'Sydney Grammar School Darlinghurst'
     },
     educationExpensePerYearPerChild: {
         type: String,
-        default: '$0'
+        default: '$5,000'
     },
     familyLivingCostPerYear: {
         type: String,
-        default: '$0'
+        default: '$90,000'
     },
     buyOption: {
         type: String,
-        default: '10'
+        default: 'Yes'
     },
     valueOfNewProperty: {
         type: String,
-        default: '$800,000'
+        default: '$500,000'
     },
     moneyToBeBorrowed: {
         type: String,
-        default: '$50,000'
+        default: '$400,000'
     },
     ecLife: {
         type: String,
-        default: '$0'
+        default: '$250,000'
     },
     ecTPD: {
         type: String,
-        default: '$2,000'
+        default: '$0'
     },
     ecIP: {
         type: String,
-        default: '$20,000'
+        default: '$0'
     },
     ecTrauma: {
         type: String,
@@ -351,19 +351,19 @@ var FactFindSchema = new mongooseSchema({
     },
     sickLeaves: {
         type: String,
-        default: '$0'
+        default: '10'
     },
     lifeOption: {
         type: String,
-        default: '$60,000'
+        default: 'Yes'
     },
     homeValue: {
         type: String,
-        default: '$20,000'
+        default: '$800,000'
     },
     homeContents: {
         type: String,
-        default: '$0'
+        default: '$50,000'
     },
     vehicleCost: {
         type: String,
@@ -371,75 +371,75 @@ var FactFindSchema = new mongooseSchema({
     },
     investmentProperty: {
         type: String,
-        default: '$0'
+        default: '$2,000'
     },
     bankAssets: {
         type: String,
-        default: '6%'
+        default: '$20,000'
     },
     listedInvestment: {
         type: String,
-        default: '2%'
+        default: '$0'
     },
     marginLoans: {
         type: String,
-        default: '7%'
+        default: '$0'
     },
     allocatedPension: {
         type: String,
-        default: '$50,000'
+        default: '$60,000'
     },
     otherInvestment: {
         type: String,
-        default: '$50,000'
+        default: '$20,000'
     },
     netRentalIncome: {
         type: String,
-        default: '10%'
+        default: '$0'
     },
     otherIncome: {
         type: String,
-        default: '10%'
+        default: '$0'
     },
     pensionIncome: {
         type: String,
-        default: '10%'
+        default: '$0'
     },
     nra: {
         type: String,
-        default: '10%'
+        default: '6%'
     },
     tfp: {
         type: String,
-        default: '10%'
+        default: '2%'
     },
     nrp: {
         type: String,
-        default: '10%'
+        default: '7%'
     },
     beforeTTR: {
         type: String,
-        default: '10%'
+        default: '$50,000'
     },
     cses: {
         type: String,
-        default: '10%'
+        default: '$20,000'
     },
     initialInvestmentAmount: {
         type: String,
-        default: '20%'
+        default: '$50,000'
     },
     australianShares1: {
         type: String,
-        default: '100%'
+        default: '10%'
     },
     internationalShares1: {
         type: String,
-        default: 'No'
+        default: '10%'
     },
     internationalSharesHedged1: {
         type: String,
-        default: '5'
+        default: '10%'
     },
     usShares1: {
         type: String,
@@ -463,63 +463,63 @@ var FactFindSchema = new mongooseSchema({
     },
     internationalListedProperty1: {
         type: String,
-        default: '10%'
+        default: '20%'
     },
     asset1Total: {
         type: String,
-        default: '10%'
+        default: '100%'
     },
     alterOption: {
         type: String,
-        default: '10%'
+        default: 'No'
     },
     alterYear: {
         type: String,
-        default: '20%'
+        default: '5'
     },
     australianShares2: {
         type: String,
-        default: '100%'
+        default: '10%'
     },
     internationalShares2: {
         type: String,
-        default: '2017'
+        default: '10%'
     },
     internationalSharesHedged2: {
         type: String,
-        default: '2017'
+        default: '10%'
     },
     usShares2: {
         type: String,
-        default: 'Conservative Cautious'
+        default: '10%'
     },
     australianBonds2: {
         type: String,
-        default: 'Max'
+        default: '10%'
     },
     internationalBondsHedged2: {
         type: String,
-        default: 'Yes'
+        default: '10%'
     },
     cash2: {
         type: String,
-        default: '2017'
+        default: '10%'
     },
     australianListedProperty2: {
         type: String,
-        default: '6'
+        default: '10%'
     },
     internationalListedProperty2: {
         type: String,
-        default: 'Major in Commerce'
+        default: '20%'
     },
     asset2Total: {
         type: String,
-        default: 'Monica'
+        default: '100%'
     },
     begnYearInvestment: {
         type: String,
-        default: 'Yes'
+        default: '2017'
     },
     contStartYear: {
         type: String,
@@ -527,15 +527,15 @@ var FactFindSchema = new mongooseSchema({
     },
     investmentReturnAmount: {
         type: String,
-        default: '6'
+        default: '$3000'
     },
     spPort: {
         type: String,
-        default: 'Sydney Grammar School Darlinghurst'
+        default: 'Conservative Cautious'
     },
     c1Name: {
         type: String,
-        default: 'Adele'
+        default: 'Max'
     },
     spStudyingOption1: {
         type: String,
@@ -559,7 +559,7 @@ var FactFindSchema = new mongooseSchema({
     },
     c2Name: {
         type: String,
-        default: 'Rita'
+        default: 'Monica'
     },
     spStudyingOption2: {
         type: String,
@@ -583,7 +583,7 @@ var FactFindSchema = new mongooseSchema({
     },
     c3Name: {
         type: String,
-        default: 'Tom'
+        default: 'Adele'
     },
     spStudyingOption3: {
         type: String,
@@ -607,51 +607,51 @@ var FactFindSchema = new mongooseSchema({
     },
     c4Name: {
         type: String,
-        default: 'Select from the list of high schools in the living state.'
+        default: 'Rita'
     },
     spStudyingOption4: {
         type: String,
-        default: 'NSW'
+        default: 'Yes'
     },
     schoolYear4: {
         type: String,
-        default: 'Private School'
+        default: '2017'
     },
     schoolDuration4: {
         type: String,
-        default: 'Sydney Grammar School Darlinghurst'
+        default: '6'
     },
     schoolSelected4: {
         type: String,
-        default: 'Yes'
+        default: 'Sydney Grammar School Darlinghurst'
     },
     majorSelected4: {
         type: String,
-        default: '$500,000'
+        default: 'Major in Commerce'
     },
     c5Name: {
         type: String,
-        default: '$400,000'
+        default: 'Tom'
     },
     spStudyingOption5: {
         type: String,
-        default: 'Sydney Grammar School Darlinghurst'
+        default: 'Yes'
     },
     schoolYear5: {
         type: String,
-        default: 'Major in Commerce'
+        default: '2017'
     },
     schoolDuration5: {
         type: String,
-        default: 'Yes'
+        default: '6'
     },
     schoolSelected5: {
         type: String,
-        default: '$3000'
+        default: 'Sydney Grammar School Darlinghurst'
     },
     majorSelected5: {
         type: String,
-        default: '$20,000'
+        default: 'Major in Commerce'
     },
     goalBasedAdvice_0_severity: {
         type: String,
