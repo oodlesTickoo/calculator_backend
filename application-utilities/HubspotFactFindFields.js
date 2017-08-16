@@ -170,9 +170,12 @@ module.exports = {
     "goalBasedAdvice_3_severity": "be_debt_free",
     "goalBasedAdvice_4_severity": "invest_in_property",
     "goalBasedAdvice_5_severity": "save_for_something_big",
+    "goalBasedAdvice_6_severity": "pursue_a_passion",
+    "goalBasedAdvice_7_severity": "buy_a_home",
     "goalBasedAdvice_8_severity": "we_re_married_now_what",
     "goalBasedAdvice_9_severity": "retirement_living_options",
     "goalBasedAdvice_10_severity": "start_accessing_my_super",
+    "goalBasedAdvice_11_severity": "give_them_the_best_chance",
     "genderOption": "gender",
     "personalDetails_postalCode": "postal_code_home",
     "spouseWorkOption": "does_your_spouse_work"

@@ -179,7 +179,7 @@ module.exports.AuthenticationService = (function() {
                                 createUserReqObj.hubspotUserId = hubspotResult.vid;
                                 return UserService.createUser(createUserReqObj);
                             } else {
-                                throw new error(hubspotResult);
+                                throw new Error(hubspotResult);
                             }
                         })
                         .then(userObj => {
