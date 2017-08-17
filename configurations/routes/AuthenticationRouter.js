@@ -7,5 +7,5 @@ module.exports.routePath = function() {
     router.post('/api/v1/verify', AuthenticationController.verifyOtp);
     router.post('/api/v1/resend', AuthenticationController.resendOtp);
 
-    router.post('/api/v1/verify', AuthenticationController.verifyAuthToken);
+    router.post('/api/v1/verifyAuth', configurationHolder.security.authority(Constants.ROUTE_ACCESS_ROLE.CLIENT), AuthenticationController.verifyAuthToken);
 };

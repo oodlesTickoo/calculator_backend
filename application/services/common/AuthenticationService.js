@@ -241,7 +241,7 @@ module.exports.AuthenticationService = (function() {
 
     var verifyAuthToken = function(loggedInUser, res) {
         if (loggedInUser) {
-            configurationHolder.ResponseUtil.responseHandler(res, null, "Authorized", true, 200);
+            configurationHolder.ResponseUtil.responseHandler(res, null, "Authorized", false, 200);
         } else {
             configurationHolder.ResponseUtil.responseHandler(res, null, "Not authorized", true, 401);
         }
