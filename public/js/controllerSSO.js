@@ -1,15 +1,9 @@
-app.controller("SSOController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', function($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc) {
+app.controller("SSOController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', function ($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc) {
 
-
-    
-    
-     var ageq = ssoObj.age;
+    var ageq = ssoObj.age;
     var csesq = ssoObj.cses;
     var thpq = ssoObj.thp;
     var fyq = ssoObj.fy;
-    console.log("affffff");
-
-
     $scope.resultWithSS = [0, 0, 0];
     $scope.resultWithoutSS = [0, 0, 0];
     $scope.unattainableTHP = false;
@@ -17,7 +11,7 @@ app.controller("SSOController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.unattainableTHPS = false;
     $scope.needSS = true;
 
-    $scope.submitForm2 = function(isValid) {
+    $scope.submitForm2 = function (isValid) {
         if (isValid) {
 
             $scope.needSS = true;
@@ -44,13 +38,10 @@ app.controller("SSOController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
                 ChartServiceHc.createChart(Number($scope.thpWithoutSS.toFixed(2)), Number($scope.thpWithSS.toFixed(2)), Number(($scope.taxWithoutSS - $scope.taxWithSS).toFixed(2)), Number($scope.optimisedSS.toFixed(2)));
             }
             $timeout(0);
-            console.log("complete2");
         } else {
             console.log("has errors");
         }
     };
 
     $scope.submitForm2(true);
-
-
 }]);

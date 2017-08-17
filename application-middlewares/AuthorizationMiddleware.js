@@ -14,14 +14,11 @@ module.exports.AuthorizationMiddleware = (function() {
         var authorized = false;
         if (roleInAccessLevel.indexOf(results.authorizationTokenObject.role) > -1) {
             authorized = true;
-            console.log("555555555",results.authorizationTokenObject)
             domain.User.findOne({ mobile: results.authorizationTokenObject.mobile }, function(err, userObj) {
                 if (err) {
-                    console.log("22222222222222222",err)
                     next(true, err);
                 } else {
                     req.loggedInUser = userObj.toJSON();
-                    console.log("333333333333",req.loggedInUser)
                     next(null, authorized);
                 }
 

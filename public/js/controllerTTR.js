@@ -1,7 +1,5 @@
 app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRateCalculator', 'SGCRate', 'WithoutSSCalculator', 'WithSSCalculator', 'ChartServiceHc', function ($scope, $timeout, AgeCalculator, TaxRateCalculator, SGCRate, WithoutSSCalculator, WithSSCalculator, ChartServiceHc) {
 
-
-
     var age = ttrObj.age;
     var cses = ttrObj.cses;
     var thp = ttrObj.thp;
@@ -11,10 +9,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     var balance = ttrObj.balance;
     var tfp = ttrObj.tfp;
 
-
     var dt = new Date();
-
-
 
     $scope.fy = fy;
 
@@ -41,9 +36,7 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     $scope.needSS = false;
 
     $scope.submitForm2 = function (isValid) {
-
         if (isValid) {
-
             $scope.resultWithoutSS = WithoutSSCalculator.getFinalAmountTTR($scope.age, $scope.fy, $scope.cses, $scope.beforeTTR,
                 $scope.tfp, $scope.nra, $scope.nrp, $scope.thp);
             // console.log("max thp ss is",$scope.maxTakeHomeSS());
@@ -72,6 +65,4 @@ app.controller("TTRController", ['$scope', '$timeout', 'AgeCalculator', 'TaxRate
     }
 
     $scope.submitForm2(true);
-
-
-    }]);
+}]);
