@@ -12,7 +12,7 @@ app.use(errorHandler());
 global.router = express.Router();
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
-app.use("/download", express.static(__dirname + '/uploads'));
+// app.use("/download", express.static(__dirname + '/uploads'));
 global.route = require('./configurations/routes');
 global.domain = require('./configurations/DomainInclude.js');
 app.use('/', router);
